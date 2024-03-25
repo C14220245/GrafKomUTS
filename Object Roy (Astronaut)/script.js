@@ -116,76 +116,10 @@ function main() {
 
     
 
-
-
-    var cube = [
-        //belakang
-        -1, -1, -1, 1, 1, 0,
-        1, -1, -1, 1, 1, 0,
-        1, 1, -1, 1, 1, 0,
-        -1, 1, -1, 1, 1, 0,
-
-
-        //depan
-        -1, -1, 1, 0, 0, 1,
-        1, -1, 1, 0, 0, 1,
-        1, 1, 1, 0, 0, 1,
-        -1, 1, 1, 0, 0, 1,
-
-
-        //kiri
-        -1, -1, -1, 0, 1, 1,
-        -1, 1, -1, 0, 1, 1,
-        -1, 1, 1, 0, 1, 1,
-        -1, -1, 1, 0, 1, 1,
-
-
-        //kanan
-        1, -1, -1, 1, 0, 0,
-        1, 1, -1, 1, 0, 0,
-        1, 1, 1, 1, 0, 0,
-        1, -1, 1, 1, 0, 0,
-
-
-        //bawah
-        -1, -1, -1, 1, 0, 1,
-        -1, -1, 1, 1, 0, 1,
-        1, -1, 1, 1, 0, 1,
-        1, -1, -1, 1, 0, 1,
-
-
-        //atas
-        -1, 1, -1, 0, 1, 0,
-        -1, 1, 1, 0, 1, 0,
-        1, 1, 1, 0, 1, 0,
-        1, 1, -1, 0, 1, 0
-    ]
+    var cone = generateCone(0, 0, 0, 1);
 
     // FACES:
-    var cube_faces = [
-        0, 1, 2,
-        0, 2, 3,
-
-
-        4, 5, 6,
-        4, 6, 7,
-
-
-        8, 9, 10,
-        8, 10, 11,
-
-
-        12, 13, 14,
-        12, 14, 15,
-
-
-        16, 17, 18,
-        16, 18, 19,
-
-
-        20, 21, 22,
-        20, 22, 23
-    ];
+    var cone_faces = coneElement();
 
 
     //matrix
@@ -198,9 +132,9 @@ function main() {
     LIBS.translateZ(VIEW_MATRIX, -25);
 
 
-    var object = new MyObject(cube, cube_faces, shader_vertex_source, shader_fragment_source);
+    var object = new MyObject(cone, cone_faces, shader_vertex_source, shader_fragment_source);
     object.setup();
-    var object2 = new MyObject(cube, cube_faces, shader_vertex_source, shader_fragment_source);
+    var object2 = new MyObject(cone, cone_faces, shader_vertex_source, shader_fragment_source);
     object2.setup();
 
     object.child.push(object2);

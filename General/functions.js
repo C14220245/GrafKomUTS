@@ -68,3 +68,42 @@ function generateBSpline(controlPoint, m, degree){
     }
     return curves;
   }
+
+function generateCone(x, y, z, rad) {
+  var list = []
+  var r = 0.05;
+  var g = 0.05;
+  var b = 0.05;
+  list.push(x, y, z + 2, r, g, b);
+  for (var i = 0; i <= 360; i++) {
+    var a = rad * Math.cos((i / 180) * Math.PI) + x;
+    var b = rad * Math.sin((i / 180) * Math.PI) + y;
+    list.push(a);
+    list.push(b);
+    list.push(z);
+    list.push(r);
+    list.push(g);
+    list.push(b);
+
+    r = r + 0.09;
+    g = g + 0.09;
+    b = b + 0.09;
+  }
+  list.push(x, y, z, 1.0, 0.5, 0.6);
+  return list;
+}
+
+function coneElement() {
+  var list = [];
+  for (var i = 1; i <= 360; i++) {
+    list.push(0);
+    list.push(i);
+    list.push(i + 1);
+  }
+  for (var i = 1; i < 360; i++) {
+    list.push(362);
+    list.push(i);
+    list.push(i + 1);
+  }
+  return list;
+}

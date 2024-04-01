@@ -20,7 +20,6 @@ class MyObject {
     SHADER_PROGRAM = null;
     _color = null;
     _position = null;
-    _uv = null;
 
 
     _MMatrix = LIBS.get_I4();
@@ -67,7 +66,7 @@ class MyObject {
         //vao
         this._color = GL.getAttribLocation(this.SHADER_PROGRAM, "color");
         this._position = GL.getAttribLocation(this.SHADER_PROGRAM, "position");
-        this._uv = GL.getAttribLocation(this.SHADER_PROGRAM, "uv");
+        
 
 
         //uniform
@@ -75,11 +74,10 @@ class MyObject {
         this._VMatrix = GL.getUniformLocation(this.SHADER_PROGRAM, "VMatrix"); //View
         this._MMatrix = GL.getUniformLocation(this.SHADER_PROGRAM, "MMatrix"); //Model
         this._greyScality = GL.getUniformLocation(this.SHADER_PROGRAM, "greyScality");//GreyScality
-        this._sampler = GL.getUniformLocation(this.SHADER_PROGRAM, "sampler");//sampler
+        
 
         GL.enableVertexAttribArray(this._color);
         GL.enableVertexAttribArray(this._position);
-        GL.enableVertexAttribArray(this._uv);
         GL.useProgram(this.SHADER_PROGRAM);
 
 
@@ -87,7 +85,7 @@ class MyObject {
 
         this.TRIANGLE_VERTEX = GL.createBuffer();
         this.TRIANGLE_FACES = GL.createBuffer();
-        this.texture = LIBS.load_texture("resources/textures.jpg")
+        
     }
 
 
@@ -111,19 +109,20 @@ class MyObject {
 
     render(VIEW_MATRIX, PROJECTION_MATRIX) {
         GL.useProgram(this.SHADER_PROGRAM);
+        GL.activeTexture(GL.TEXTURE0);
+        GL.bindTexture(GL.TEXTURE_2D, this.texture);
         GL.bindBuffer(GL.ARRAY_BUFFER, this.TRIANGLE_VERTEX);
         GL.bindBuffer(GL.ELEMENT_ARRAY_BUFFER, this.TRIANGLE_FACES);
         GL.vertexAttribPointer(this._position, 3, GL.FLOAT, false, 4 * (3 + 3), 0);
         GL.vertexAttribPointer(this._color, 3, GL.FLOAT, false, 4 * (3 + 3), 3 * 4);
-        GL.vertexAttribPointer(this._uv, 2, GL.FLOAT, false, 4 * (3+3+2), (3+3) * 4);
-        // GL.vertexAttribPointer(this._uv, 2, GL.FLOAT, false, 4 * (3 + 3 + 2), (3 + 3) * 4);
+        
 
 
         GL.uniformMatrix4fv(this._PMatrix, false, PROJECTION_MATRIX);
         GL.uniformMatrix4fv(this._VMatrix, false, VIEW_MATRIX);
         GL.uniformMatrix4fv(this._MMatrix, false, this.MODEL_MATRIX);
         GL.uniform1f(this._greyScality, 1);
-        GL.uniform1i(this._sampler, 0);
+        
 
         GL.drawElements(GL.TRIANGLES, this.faces.length, GL.UNSIGNED_SHORT, 0);
 

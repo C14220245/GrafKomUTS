@@ -1,4 +1,22 @@
 var LIBS = {
+    // diambil dari pert5 naga
+    load_texture: function (image_URL) {
+        var texture = GL.createTexture();
+
+        var image = new Image();
+        image.src = image_URL;
+        image.onload = function (e) {
+            GL.bindTexture(GL.TEXTURE_2D, texture);
+            GL.pixelStorei(GL.UNPACK_FLIP_Y_WEBGL, true);
+            GL.texImage2D(GL.TEXTURE_2D, 0, GL.RGBA, GL.RGBA, GL.UNSIGNED_BYTE, image);
+            GL.texParameteri(GL.TEXTURE_2D, GL.TEXTURE_MAG_FILTER, GL.LINEAR);
+            GL.texParameteri(GL.TEXTURE_2D, GL.TEXTURE_MIN_FILTER, GL.NEAREST_MIPMAP_LINEAR);
+            GL.generateMipmap(GL.TEXTURE_2D);
+            GL.bindTexture(GL.TEXTURE_2D, null);
+        };
+
+        return texture;
+    },
 
     degToRad: function (angle) {
   

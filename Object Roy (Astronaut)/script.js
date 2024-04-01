@@ -21,7 +21,7 @@ function main() {
     var ALPHA = 0;
 
 
-    var FRICTION = 0.990;
+    var FRICTION = 0;
 
 
     var mouseDown = function (e) {
@@ -115,11 +115,28 @@ function main() {
     // ];
 
     
+// -----------------------------------CONFIG VERTEX-----------------------------------
+    var sphere = generateSphere(0, 0, 0, 2, 24, 24)
+    var sphere_faces = sphereElements(24, 24);
 
-    var cone = generateCone(0, 0, 0, 1);
+    var cylinder = generateCylinder(0, 0, 0, 1.3, 4)
+    var cylinder_faces = cylinderElements();
 
-    // FACES:
-    var cone_faces = coneElement();
+    var leg1 = generateCylinder(0, 0.5, -3, 0.45, 3)
+    var leg1_faces = cylinderElements();
+
+    var leg2 = generateCylinder(0, -0.5, -3, 0.45, 3)
+    var leg2_faces = cylinderElements();
+
+    var hand1 = generateCylinder(0, 1, 5, 0.45, 3)
+    var hand1_faces = cylinderElements();
+
+    var hand2 = generateCylinder(0, 4, 5, 0.45, 3)
+    var hand2_faces = cylinderElements();
+
+
+
+// -----------------------------------------------------------------------------------
 
 
     //matrix
@@ -127,17 +144,30 @@ function main() {
     var VIEW_MATRIX = LIBS.get_I4();
     var MODEL_MATRIX = LIBS.get_I4();
     var MODEL_MATRIX2 = LIBS.get_I4();
-
+    var MODEL_MATRIX_HAND1 = LIBS.get_I4();
+    var MODEL_MATRIX_HAND2 = LIBS.get_I4();
 
     LIBS.translateZ(VIEW_MATRIX, -25);
 
 
-    var object = new MyObject(cone, cone_faces, shader_vertex_source, shader_fragment_source);
-    object.setup();
-    var object2 = new MyObject(cone, cone_faces, shader_vertex_source, shader_fragment_source);
-    object2.setup();
+    var sphereObject = new MyObject(sphere, sphere_faces, shader_vertex_source, shader_fragment_source);
+    sphereObject.setup();
 
-    object.child.push(object2);
+
+    var cylinderObject = new MyObject(cylinder, cylinder_faces, shader_vertex_source, shader_fragment_source);
+    cylinderObject.setup();
+
+    var leg1Object = new MyObject(leg1, leg1_faces, shader_vertex_source, shader_fragment_source);
+    leg1Object.setup();
+
+    var leg2Object = new MyObject(leg2, leg2_faces, shader_vertex_source, shader_fragment_source);
+    leg2Object.setup();
+
+    var hand1Object = new MyObject(hand1, hand1_faces, shader_vertex_source, shader_fragment_source);
+    hand1Object.setup();
+
+    var hand2Object = new MyObject(hand2, hand2_faces, shader_vertex_source, shader_fragment_source);
+    hand2Object.setup();
     /*========================= DRAWING ========================= */
     GL.clearColor(0, 0, 0.0, 0);
 
@@ -194,12 +224,25 @@ function main() {
 
 
 
-        object.MODEL_MATRIX = MODEL_MATRIX;
-        object.render(VIEW_MATRIX, PROJECTION_MATRIX);
+        sphereObject.MODEL_MATRIX = MODEL_MATRIX;
+        sphereObject.render(VIEW_MATRIX, PROJECTION_MATRIX);
+
+        cylinderObject.MODEL_MATRIX = MODEL_MATRIX;
+        cylinderObject.render(VIEW_MATRIX, PROJECTION_MATRIX);
+
+        leg1Object.MODEL_MATRIX = MODEL_MATRIX;
+        leg1Object.render(VIEW_MATRIX, PROJECTION_MATRIX);
+
+        leg2Object.MODEL_MATRIX = MODEL_MATRIX;
+        leg2Object.render(VIEW_MATRIX, PROJECTION_MATRIX);
+
+        // hand1Object.MODEL_MATRIX = MODEL_MATRIX;
+        // hand1Object.render(VIEW_MATRIX, PROJECTION_MATRIX);
+
+        // hand2Object.MODEL_MATRIX = MODEL_MATRIX;
+        // hand2Object.render(VIEW_MATRIX, PROJECTION_MATRIX);
 
 
-        object2.MODEL_MATRIX = MODEL_MATRIX2;
-        // object2.render(VIEW_MATRIX, PROJECTION_MATRIX);
 
 
         window.requestAnimationFrame(animate);

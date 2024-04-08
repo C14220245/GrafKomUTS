@@ -21,7 +21,7 @@ function main() {
     var ALPHA = 0;
 
 
-    var FRICTION = 0;
+    var FRICTION = 0.9;
 
 
     var mouseDown = function (e) {
@@ -117,13 +117,13 @@ function main() {
 // -----------------------------------CONFIG VERTEX-----------------------------------
     var cube = [
         // belakang
-        -1, -1, -1, 1, 1, 0, 0, 0,
-        1, -1, -1, 1, 1, 0, 1, 0,
-        1, 1, -1, 1, 1, 0, 1, 1,
-        -1, 1, -1, 1, 1, 0, 0, 1,
+        -1, -1, -1, 1, 1, 0,    0, 0,
+        1, -1, -1, 1, 1, 0,     1, 0,
+        1, 1, -1, 1, 1, 0,      1, 1,
+        -1, 1, -1, 1, 1, 0,      0, 1,
 
         // depan
-        -1, -1, 1, 0, 0, 1, 0, 0,
+        -1, -1, 1, 0, 0, 1,     0, 0,
         1, -1, 1, 0, 0, 1, 1, 0,
         1, 1, 1, 0, 0, 1, 1, 1,
         -1, 1, 1, 0, 0, 1, 0, 1,
@@ -180,8 +180,13 @@ function main() {
     ];
 
 
-    var sphere = generateSphere(0, 0, 0, 2, 24, 24)
-    var sphere_faces = sphereElements(24, 24);
+    // var sphere = generateSphere(0, 0, 0, 2, 24, 24)
+    // var sphere_faces = sphereElements(24, 24);
+
+    var sphereGenerated = generateSphereUV(0, 0, 0, 2, 24, 24)
+    var sphere = sphereGenerated["vertices"];
+    var sphere_faces = sphereGenerated["faces"];
+    
 
     var cylinder = generateCylinder(0, 0, 0, 1.3, 4)
     var cylinder_faces = cylinderElements();
@@ -238,7 +243,7 @@ function main() {
     hand2Object.setup();
     // -------------------------
     /*========================= DRAWING ========================= */
-    GL.clearColor(1, 1, 0.0, 0);
+    GL.clearColor(0, 0, 0.0, 0);
 
 
     GL.enable(GL.DEPTH_TEST);
@@ -297,8 +302,8 @@ function main() {
 
 
 
-        // sphereObject.MODEL_MATRIX = MODEL_MATRIX;
-        // sphereObject.render(VIEW_MATRIX, PROJECTION_MATRIX);
+        sphereObject.MODEL_MATRIX = MODEL_MATRIX;
+        sphereObject.render(VIEW_MATRIX, PROJECTION_MATRIX);
 
         // cylinderObject.MODEL_MATRIX = MODEL_MATRIX;
         // cylinderObject.render(VIEW_MATRIX, PROJECTION_MATRIX);
@@ -309,8 +314,8 @@ function main() {
         // leg2Object.MODEL_MATRIX = MODEL_MATRIX;
         // leg2Object.render(VIEW_MATRIX, PROJECTION_MATRIX);
 
-        cubeObject.MODEL_MATRIX = MODEL_MATRIX;
-        cubeObject.render(VIEW_MATRIX, PROJECTION_MATRIX);
+        // cubeObject.MODEL_MATRIX = MODEL_MATRIX;
+        // cubeObject.render(VIEW_MATRIX, PROJECTION_MATRIX);
         // hand1Object.MODEL_MATRIX = MODEL_MATRIX;
         // hand1Object.render(VIEW_MATRIX, PROJECTION_MATRIX);
 

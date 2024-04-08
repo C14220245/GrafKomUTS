@@ -111,10 +111,12 @@ class MyObject {
 
     render(VIEW_MATRIX, PROJECTION_MATRIX) {
         GL.useProgram(this.SHADER_PROGRAM);
+        GL.activeTexture(GL.TEXTURE0);
+        GL.bindTexture(GL.TEXTURE_2D, this.texture);
         GL.bindBuffer(GL.ARRAY_BUFFER, this.TRIANGLE_VERTEX);
         GL.bindBuffer(GL.ELEMENT_ARRAY_BUFFER, this.TRIANGLE_FACES);
-        GL.vertexAttribPointer(this._position, 3, GL.FLOAT, false, 4 * (3 + 3), 0);
-        GL.vertexAttribPointer(this._color, 3, GL.FLOAT, false, 4 * (3 + 3), 3 * 4);
+        GL.vertexAttribPointer(this._position, 3, GL.FLOAT, false, 4 * (3 + 3 +2), 0);
+        GL.vertexAttribPointer(this._color, 3, GL.FLOAT, false, 4 * (3 + 3 +2), 3 * 4);
         GL.vertexAttribPointer(this._uv, 2, GL.FLOAT, false, 4 * (3+3+2), (3+3) * 4);
         // GL.vertexAttribPointer(this._uv, 2, GL.FLOAT, false, 4 * (3 + 3 + 2), (3 + 3) * 4);
 

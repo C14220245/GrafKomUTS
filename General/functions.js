@@ -147,6 +147,8 @@ function generateSphere(x, y, z, radius, sectorCount, stackCount) {
       } else {
         vertices.push(rOdd, gOdd, bOdd);
       }
+      // iniiiiiiii
+      vertices.push(0,1);
 
       // normalized vertex normal (nx, ny, nz)
       nx = x * lengthInv;
@@ -234,6 +236,8 @@ function generateCylinder(x, y, z, rad, height) {
     list.push(gColor);
     list.push(bColor);
 
+    list.push(0,1)
+
   };
 
   for (var i = 0; i < 360; i++) {
@@ -246,6 +250,8 @@ function generateCylinder(x, y, z, rad, height) {
     list.push(rColor);
     list.push(gColor);
     list.push(bColor);
+
+    list.push(0, 1)
 
   };
   console.log(list);
@@ -273,4 +279,39 @@ function cylinderElements() {
     list.push(i + 1);
   }
   return list;
+}
+
+
+function generateSphereUV(xrad, yrad, zrad, step, stack){ //with UV
+  var vertices = [];
+  var faces = [];
+  for(var i =0; i<=stack; i++){
+    for(var j = 0; j<=step; j++){
+      var u = i*1.0/stack * Math.PI;
+      var v = j*1.0/step * 2 * Math.PI;
+
+      var x = Math.cos(v)*Math.sin(u)*xrad;
+      var y = Math.cos(u)*yrad;
+      var z = Math.sin(v)*Math.sin(u)*zrad;
+
+      u = i*1.0/stack;
+      v = j*1.0/step;
+
+      vertices.push(x,y,z, 1,1,1 ,u,v);
+
+    }
+  }
+
+  for(var i = 0; i<=stack; i++){
+    for(var j = 0; j<=step; j++){
+      var a = i*step+j;
+      var b = a+1;
+      var c = a+step;
+      var d = a+step+1;
+
+      faces.push(a,b,d, a,d,c);
+    }
+  }
+
+  return {"vertices":vertices, "faces":faces};
 }

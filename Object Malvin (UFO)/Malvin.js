@@ -328,12 +328,12 @@ function main() {
     LIBS.translateZ(VIEW_MATRIX, -25);
 
 
-    var object = new MyObject(cube, cube_faces, shader_vertex_source, shader_fragment_source);
-    object.setup();
-    var object2 = new MyObject(cube, cube_faces, shader_vertex_source, shader_fragment_source);
-    object2.setup();
+    // var object = new MyObject(cube, cube_faces, shader_vertex_source, shader_fragment_source);
+    // object.setup();
+    // var object2 = new MyObject(cube, cube_faces, shader_vertex_source, shader_fragment_source);
+    // object2.setup();
 
-    object.child.push(object2);
+    // object.child.push(object2);
     /*========================= DRAWING ========================= */
     GL.clearColor(1, 0.75, 0.0, 0.3);
 
@@ -425,11 +425,11 @@ function main() {
 
 
 
-        object.MODEL_MATRIX = MODEL_MATRIX;
-        object.render(VIEW_MATRIX, PROJECTION_MATRIX);
+        // object.MODEL_MATRIX = MODEL_MATRIX;
+        // object.render(VIEW_MATRIX, PROJECTION_MATRIX);
 
 
-        object2.MODEL_MATRIX = MODEL_MATRIX2;
+        // object2.MODEL_MATRIX = MODEL_MATRIX2;
         // object2.render(VIEW_MATRIX, PROJECTION_MATRIX);
 
 

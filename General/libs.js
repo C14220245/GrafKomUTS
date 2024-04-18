@@ -173,6 +173,12 @@ var LIBS = {
   
     setPosition: function (m, x, y, z) {
         m[12] = x, m[13] = y, m[14] = z;
+    },
+
+    scale: function(m, x, y, z) {
+        m[0] *= x;
+        m[5] *= y;
+        m[10] *= z;
     }
   
   };

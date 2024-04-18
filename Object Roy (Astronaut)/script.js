@@ -40,7 +40,7 @@ function main() {
         if (!drag) { return false; }
         dX = e.pageX - X_prev;
         dY = e.pageY - Y_prev;
-        console.log(dX + " " + dY);
+        // console.log(dX + " " + dY);
         X_prev = e.pageX;
         Y_prev = e.pageY;
 
@@ -115,24 +115,63 @@ function main() {
 
     
 // -----------------------------------CONFIG VERTEX-----------------------------------
+    // var cube = [
+    //     // belakang
+    //     -1, -1, -1, 1, 1, 0,    0, 0,
+    //     1, -1, -1, 1, 1, 0,     1, 0,
+    //     1, 1, -1, 1, 1, 0,      1, 1,
+    //     -1, 1, -1, 1, 1, 0,      0, 1,
+
+    //     // depan
+    //     -1, -1, 1, 0, 0, 1,     0, 0,
+    //     1, -1, 1, 0, 0, 1, 1, 0,
+    //     1, 1, 1, 0, 0, 1, 1, 1,
+    //     -1, 1, 1, 0, 0, 1, 0, 1,
+
+    //     // Kiri
+    //     -1, -1, -1, 0, 1, 1, 0, 0,
+    //     -1, 1, -1, 0, 1, 1, 1, 0,
+    //     -1, 1, 1, 0, 1, 1, 1, 1,
+    //     -1, -1, 1, 0, 1, 1, 0, 1,
+
+    //     // kanan
+    //     1, -1, -1, 1, 0, 0, 0, 0,
+    //     1, 1, -1, 1, 0, 0, 1, 0,
+    //     1, 1, 1, 1, 0, 0, 1, 1,
+    //     1, -1, 1, 1, 0, 0, 0, 1,
+
+    //     // bawah
+    //     -1, -1, -1, 1, 0, 1, 0, 0,
+    //     -1, -1, 1, 1, 0, 1, 1, 0,
+    //     1, -1, 1, 1, 0, 1, 1, 1,
+    //     1, -1, -1, 1, 0, 1, 0, 1,
+
+    //     // atas
+    //     -1, 1, -1, 0, 1, 0, 0, 0,
+    //     -1, 1, 1, 0, 1, 0, 1, 0,
+    //     1, 1, 1, 0, 1, 0, 1, 1,
+    //     1, 1, -1, 0, 1, 0, 0, 1
+
+    // ]
+
     var cube = [
         // belakang
-        -1, -1, -1, 1, 1, 0,    0, 0,
-        1, -1, -1, 1, 1, 0,     1, 0,
-        1, 1, -1, 1, 1, 0,      1, 1,
-        -1, 1, -1, 1, 1, 0,      0, 1,
+        -1, -1, -1, 1, 1, 0, 0, 0,
+        1, -1, -1, 1, 1, 0, 0, 0,
+        1, 1, -1, 1, 1, 0, 0, 0,
+        -1, 1, -1, 1, 1, 0, 0, 0,
 
         // depan
-        -1, -1, 1, 0, 0, 1,     0, 0,
-        1, -1, 1, 0, 0, 1, 1, 0,
-        1, 1, 1, 0, 0, 1, 1, 1,
-        -1, 1, 1, 0, 0, 1, 0, 1,
+        -1, -1, 1, 0, 0, 1, 0, 0,
+        1, -1, 1, 0, 0, 1, 0, 0,
+        1, 1, 1, 0, 0, 1, 0, 0,
+        -1, 1, 1, 0, 0, 1, 0, 0,
 
         // Kiri
         -1, -1, -1, 0, 1, 1, 0, 0,
-        -1, 1, -1, 0, 1, 1, 1, 0,
-        -1, 1, 1, 0, 1, 1, 1, 1,
-        -1, -1, 1, 0, 1, 1, 0, 1,
+        -1, 1, -1, 0, 1, 1, 0, 0,
+        -1, 1, 1, 0, 1, 1, 0, 0,
+        -1, -1, 1, 0, 1, 1, 0, 0,
 
         // kanan
         1, -1, -1, 1, 0, 0, 0, 0,
@@ -142,18 +181,17 @@ function main() {
 
         // bawah
         -1, -1, -1, 1, 0, 1, 0, 0,
-        -1, -1, 1, 1, 0, 1, 1, 0,
-        1, -1, 1, 1, 0, 1, 1, 1,
-        1, -1, -1, 1, 0, 1, 0, 1,
+        -1, -1, 1, 1, 0, 1, 0, 0,
+        1, -1, 1, 1, 0, 1, 0, 0,
+        1, -1, -1, 1, 0, 1, 0, 0,
 
         // atas
         -1, 1, -1, 0, 1, 0, 0, 0,
-        -1, 1, 1, 0, 1, 0, 1, 0,
-        1, 1, 1, 0, 1, 0, 1, 1,
-        1, 1, -1, 0, 1, 0, 0, 1
+        -1, 1, 1, 0, 1, 0, 0, 0,
+        1, 1, 1, 0, 1, 0, 0, 0,
+        1, 1, -1, 0, 1, 0, 0, 0,
 
     ]
-
     var cube_faces = [
         0, 1, 2,
         0, 2, 3,
@@ -183,24 +221,25 @@ function main() {
     // var sphere = generateSphere(0, 0, 0, 2, 24, 24)
     // var sphere_faces = sphereElements(24, 24);
 
-    var sphereGenerated = generateSphereUV(0, 0, 0, 2, 24, 24)
-    var sphere = sphereGenerated["vertices"];
-    var sphere_faces = sphereGenerated["faces"];
+    // var sphereGenerated = generateSphereUV(0, 0, 0, 2, 24, 24)
+    // var sphere = sphereGenerated["vertices"];
+    // var sphere_faces = sphereGenerated["faces"];
     
 
-    var cylinder = generateCylinder(0, 0, 0, 1.3, 4)
+    var cylinder = generateCylinder(0, 0, -1, 1.3, 4)
     var cylinder_faces = cylinderElements();
 
+    console.log("body:", cylinder);
     var leg1 = generateCylinder(0, 0.5, -3, 0.45, 3)
     var leg1_faces = cylinderElements();
 
     var leg2 = generateCylinder(0, -0.5, -3, 0.45, 3)
     var leg2_faces = cylinderElements();
 
-    var hand1 = generateCylinder(0, 1, 5, 0.45, 3)
+    var hand1 = generateCylinder(0.5, 1.5, -1, 0.45, 3)
     var hand1_faces = cylinderElements();
 
-    var hand2 = generateCylinder(0, 4, 5, 0.45, 3)
+    var hand2 = generateCylinder(0.5, -1.5, -1, 0.45, 3)
     var hand2_faces = cylinderElements();
 
 
@@ -215,15 +254,15 @@ function main() {
     var MODEL_MATRIX_HAND1 = LIBS.get_I4();
     var MODEL_MATRIX_HAND2 = LIBS.get_I4();
 
-    LIBS.translateZ(VIEW_MATRIX, -25);
+    LIBS.translateZ(VIEW_MATRIX, -20);
 
 
-    var sphereObject = new MyObject(sphere, sphere_faces, shader_vertex_source, shader_fragment_source);
-    sphereObject.setup();
+    // var sphereObject = new MyObject(sphere, sphere_faces, shader_vertex_source, shader_fragment_source);
+    // sphereObject.setup();
 
 
-    var cylinderObject = new MyObject(cylinder, cylinder_faces, shader_vertex_source, shader_fragment_source);
-    cylinderObject.setup();
+    var astronautBodyObject = new MyObject(cylinder, cylinder_faces, shader_vertex_source, shader_fragment_source);
+    astronautBodyObject.setup();
 
     var leg1Object = new MyObject(leg1, leg1_faces, shader_vertex_source, shader_fragment_source);
     leg1Object.setup();
@@ -231,7 +270,7 @@ function main() {
     var leg2Object = new MyObject(leg2, leg2_faces, shader_vertex_source, shader_fragment_source);
     leg2Object.setup();
 
-    var cubeObject = new MyObject(cube, cube_faces, shader_vertex_source, shader_fragment_source);
+    var cubeObject = new MyObjectTexture(cube, cube_faces, shader_vertex_source, shader_fragment_source);
     cubeObject.setup();
     // ------------------------
     var hand1Object = new MyObject(hand1, hand1_faces, shader_vertex_source, shader_fragment_source);
@@ -241,7 +280,16 @@ function main() {
     
     var hand2Object = new MyObject(hand2, hand2_faces, shader_vertex_source, shader_fragment_source);
     hand2Object.setup();
+
+    
+    astronautBodyObject.child.push(leg1Object);
+    astronautBodyObject.child.push(leg2Object);
+    astronautBodyObject.child.push(cubeObject);
+    astronautBodyObject.child.push(hand1Object);
+    astronautBodyObject.child.push(hand2Object);
     // -------------------------
+
+    
     /*========================= DRAWING ========================= */
     GL.clearColor(0, 0, 0.0, 0);
 
@@ -283,10 +331,10 @@ function main() {
 
 
 
-        MODEL_MATRIX2 = LIBS.get_I4();
-        LIBS.translateX(MODEL_MATRIX2, -1)
-        LIBS.rotateY(MODEL_MATRIX2, -THETA);
-        LIBS.rotateX(MODEL_MATRIX2, -ALPHA);
+        // MODEL_MATRIX2 = LIBS.get_I4();
+        // LIBS.translateX(MODEL_MATRIX2, -1)
+        // LIBS.rotateY(MODEL_MATRIX2, -THETA);
+        // LIBS.rotateX(MODEL_MATRIX2, -ALPHA);
 
         var temp = LIBS.get_I4();
         LIBS.translateX(temp, -4);
@@ -302,26 +350,17 @@ function main() {
 
 
 
-        sphereObject.MODEL_MATRIX = MODEL_MATRIX;
-        sphereObject.render(VIEW_MATRIX, PROJECTION_MATRIX);
+        astronautBodyObject.MODEL_MATRIX = MODEL_MATRIX;
+        astronautBodyObject.render(VIEW_MATRIX, PROJECTION_MATRIX);
 
-        // cylinderObject.MODEL_MATRIX = MODEL_MATRIX;
-        // cylinderObject.render(VIEW_MATRIX, PROJECTION_MATRIX);
+        // MODEL_MATRIX2 = MODEL_MATRIX;
+        // cubeObject.MODEL_MATRIX = MODEL_MATRIX2;
+        // // LIBS.scale(cubeObject.MODEL_MATRIX, 3, 3, 3);
+        // // LIBS.translateX(cubeObject.MODEL_MATRIX, -0);
+        // // LIBS.translateZ(cubeObject.MODEL_MATRIX, -0.);
+        // // LIBS.translateY(cubeObject.MODEL_MATRIX,0);
 
-        // leg1Object.MODEL_MATRIX = MODEL_MATRIX;
-        // leg1Object.render(VIEW_MATRIX, PROJECTION_MATRIX);
-
-        // leg2Object.MODEL_MATRIX = MODEL_MATRIX;
-        // leg2Object.render(VIEW_MATRIX, PROJECTION_MATRIX);
-
-        // cubeObject.MODEL_MATRIX = MODEL_MATRIX;
         // cubeObject.render(VIEW_MATRIX, PROJECTION_MATRIX);
-        // hand1Object.MODEL_MATRIX = MODEL_MATRIX;
-        // hand1Object.render(VIEW_MATRIX, PROJECTION_MATRIX);
-
-        // hand2Object.MODEL_MATRIX = MODEL_MATRIX;
-        // hand2Object.render(VIEW_MATRIX, PROJECTION_MATRIX);
-
 
 
 

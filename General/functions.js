@@ -222,9 +222,9 @@ function sphereElements(stackCount, sectorCount) {
 
 function generateCylinder(x, y, z, rad, height) {
   var list = [];
-  var rColor = 1;
-  var gColor = 1;
-  var bColor = 1;
+  var rColor = 1.0;
+  var gColor = 1.0;
+  var bColor = 1.0;
   for (var i = 0; i < 360; i++) {
     // atas
     var a = rad * Math.cos((i / 180) * Math.PI) + x;
@@ -236,7 +236,7 @@ function generateCylinder(x, y, z, rad, height) {
     list.push(gColor);
     list.push(bColor);
 
-    list.push(0,1)
+    // list.push(0,1)
 
   };
 
@@ -251,7 +251,7 @@ function generateCylinder(x, y, z, rad, height) {
     list.push(gColor);
     list.push(bColor);
 
-    list.push(0, 1)
+    // list.push(0, 1)
 
   };
   console.log(list);

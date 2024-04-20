@@ -176,9 +176,9 @@ var LIBS = {
     },
 
     scale: function(m, x, y, z) {
-        m[0] *= x;
-        m[5] *= y;
-        m[10] *= z;
+        m[0] = x;
+        m[5] = y;
+        m[10] = z;
     }
   
   };

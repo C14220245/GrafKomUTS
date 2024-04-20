@@ -7,6 +7,8 @@ function main() {
     CANVAS.width = window.innerWidth;
     CANVAS.height = window.innerHeight;
 
+    var THETA = 0;
+    var ALPHA = 0;
 
     var drag = false;
     var dX = 0;
@@ -17,11 +19,18 @@ function main() {
     var Y_prev = 0;
 
 
-    var THETA = 0;
-    var ALPHA = 0;
+    var scaleX = 1;
+    var scaleY = 1;
+    var scaleZ = 1;
 
+    var rotateX = 0;
+    var rotateY = 0;
+    var rotateZ = 0;
+    var translateX = 0;
+    var translateY = 0;
+    var translateZ = 0;
 
-    var FRICTION = 0.9;
+    var FRICTION = 0.990;
 
 
     var mouseDown = function (e) {
@@ -54,6 +63,88 @@ function main() {
         e.preventDefault();
         console.log(e);
     }
+
+    var keys = {}; // Menyimpan status tombol keyboard
+
+    var handleKeyDown = function (e) {
+        keys[e.key] = true;
+
+        // Tambahkan logika khusus jika diperlukan
+    };
+
+    var handleKeyUp = function (e) {
+        keys[e.key] = false;
+
+        // Tambahkan logika khusus jika diperlukan
+    };
+
+    document.addEventListener("keydown", handleKeyDown, false);
+    document.addEventListener("keyup", handleKeyUp, false);
+
+    var handleKeys = function () {
+        //Pny Javier
+        if (keys["w"]) {
+            // Logika pergerakan ke atas
+            rotateX += 0.05; 
+            console.log("Kepencet");
+        }
+        if (keys["q"]) {
+            // Logika pergerakan ke kiri
+            rotateX -= 0.05; 
+        }
+        if (keys["r"]) {
+            // Logika pergerakan ke bawah
+            rotateY += 0.05; 
+        }
+        if (keys["e"]) {
+            // Logika pergerakan ke kanan
+            rotateY -= 0.05; 
+        }
+        if (keys["y"]) {
+            // Logika pergerakan ke kanan
+            rotateZ += 0.05; 
+        }
+        if (keys["t"]) {
+            // Logika pergerakan ke kanan
+            rotateZ -= 0.05; 
+        }
+        if (keys["i"]) {
+            // Logika pergerakan ke kanan
+            translateX += 0.05; 
+        }
+        if (keys["u"]) {
+            // Logika pergerakan ke kanan
+            translateX -= 0.05; 
+        }
+        if (keys["p"]) {
+            // Logika pergerakan ke kanan
+            translateY += 0.05; 
+        }
+        if (keys["o"]) {
+            // Logika pergerakan ke kanan
+            translateY -= 0.05; 
+        }
+        if (keys["]"]) {
+            // Logika pergerakan ke kanan
+            translateZ += 0.05; 
+        }
+        if (keys["["]) {
+            // Logika pergerakan ke kanan
+            translateZ -= 0.05; 
+        }
+        if (keys["4"]) {
+            // Logika pergerakan ke kanan
+            scaleX+=0.01;
+            scaleY+=0.01;
+            scaleZ+=0.01;
+        }
+        if (keys["5"]) {
+            // Logika pergerakan ke kanan
+            scaleX-=0.01;
+            scaleY-=0.01;
+            scaleZ-=0.01;
+        }
+    };
 
 
     CANVAS.addEventListener("mousedown", mouseDown, false);
@@ -135,58 +226,6 @@ function main() {
       vec3 color = mix(greyScaleColor, vColor, greyScality);
       gl_FragColor = vec4(color, 1.);
       }`;
-    /*========================= THE TRIANGLE ========================= */
-    POINTS:
-    // var triangle_vertex = [
-    //   -1, -1, // first corner (ind 0) : -> bottom left of the viewport
-    //  1,0,0,
-    //   1, -1, // (ind 1) bottom right of the viewport
-    //   0,1,0,
-    //   0, 1,  // (ind 2) top right of the viewport
-    //   0,0,1,
-    // ];
-
-
-    // -----------------------------------CONFIG VERTEX-----------------------------------
-    // var cube = [
-    //     // belakang
-    //     -1, -1, -1, 1, 1, 0,    0, 0,
-    //     1, -1, -1, 1, 1, 0,     1, 0,
-    //     1, 1, -1, 1, 1, 0,      1, 1,
-    //     -1, 1, -1, 1, 1, 0,      0, 1,
-
-    //     // depan
-    //     -1, -1, 1, 0, 0, 1,     0, 0,
-    //     1, -1, 1, 0, 0, 1, 1, 0,
-    //     1, 1, 1, 0, 0, 1, 1, 1,
-    //     -1, 1, 1, 0, 0, 1, 0, 1,
-
-    //     // Kiri
-    //     -1, -1, -1, 0, 1, 1, 0, 0,
-    //     -1, 1, -1, 0, 1, 1, 1, 0,
-    //     -1, 1, 1, 0, 1, 1, 1, 1,
-    //     -1, -1, 1, 0, 1, 1, 0, 1,
-
-    //     // kanan
-    //     1, -1, -1, 1, 0, 0, 0, 0,
-    //     1, 1, -1, 1, 0, 0, 1, 0,
-    //     1, 1, 1, 1, 0, 0, 1, 1,
-    //     1, -1, 1, 1, 0, 0, 0, 1,
-
-    //     // bawah
-    //     -1, -1, -1, 1, 0, 1, 0, 0,
-    //     -1, -1, 1, 1, 0, 1, 1, 0,
-    //     1, -1, 1, 1, 0, 1, 1, 1,
-    //     1, -1, -1, 1, 0, 1, 0, 1,
-
-    //     // atas
-    //     -1, 1, -1, 0, 1, 0, 0, 0,
-    //     -1, 1, 1, 0, 1, 0, 1, 0,
-    //     1, 1, 1, 0, 1, 0, 1, 1,
-    //     1, 1, -1, 0, 1, 0, 0, 1
-
-    // ]
-
     var cube = [
         // belakang
         -1, -1, -1, 1, 1, 0, 0, 0,
@@ -259,21 +298,21 @@ function main() {
     // var sphere_faces = sphereGenerated["faces"];
 
 
-    var cylinder = generateCylinder(0, 0, -1, 1.3, 4, 1, 1, 1)
-    var cylinder_faces = cylinderElements();
+    // var cylinder = generateCylinder(0, 0, -1, 1.3, 4, 1, 1, 1)
+    // var cylinder_faces = cylinderElements();
 
-    console.log("body:", cylinder);
-    var leg1 = generateCylinder(0, 0.5, -3, 0.45, 3, 0.058, 0.070, 0.129)
-    var leg1_faces = cylinderElements();
+    // console.log("body:", cylinder);
+    // var leg1 = generateCylinder(0, 0.5, -3, 0.45, 3, 0.058, 0.070, 0.129)
+    // var leg1_faces = cylinderElements();
 
-    var leg2 = generateCylinder(0, -0.5, -3, 0.45, 3, 0.058, 0.070, 0.129)
-    var leg2_faces = cylinderElements();
+    // var leg2 = generateCylinder(0, -0.5, -3, 0.45, 3, 0.058, 0.070, 0.129)
+    // var leg2_faces = cylinderElements();
 
-    var hand1 = generateCylinder(0.5, 1.5, -1, 0.45, 3, 0.058, 0.070, 0.129)
-    var hand1_faces = cylinderElements();
+    // var hand1 = generateCylinder(0.5, 1.5, -1, 0.45, 3, 0.058, 0.070, 0.129)
+    // var hand1_faces = cylinderElements();
 
-    var hand2 = generateCylinder(0.5, -1.5, -1, 0.45, 3, 0.058, 0.070, 0.129)
-    var hand2_faces = cylinderElements();
+    // var hand2 = generateCylinder(0.5, -1.5, -1, 0.45, 3, 0.058, 0.070, 0.129)
+    // var hand2_faces = cylinderElements();
 
 
     // -----------------------------------------------------------------------------------
@@ -286,49 +325,47 @@ function main() {
     var MODEL_MATRIX2 = LIBS.get_I4();
 
 
-    LIBS.translateZ(VIEW_MATRIX, -20);
+    LIBS.translateZ(VIEW_MATRIX, -35);
 
 
 
-    // var sphereObject = new MyObject(sphere, sphere_faces, shader_vertex_source, shader_fragment_source);
-    // sphereObject.setup();
 
     // -----------------------------------------------ROY--------------------------------------------------------------------------------------------------
 
 
-    var astronautBodyObject = new MyObject(cylinder, cylinder_faces, shader_vertex_source, shader_fragment_source);
-    astronautBodyObject.setup();
+    // var astronautBodyObject = new MyObject(cylinder, cylinder_faces, shader_vertex_source, shader_fragment_source);
+    // astronautBodyObject.setup();
 
-    var leg1Object = new MyObject(leg1, leg1_faces, shader_vertex_source, shader_fragment_source);
-    leg1Object.setup();
+    // var leg1Object = new MyObject(leg1, leg1_faces, shader_vertex_source, shader_fragment_source);
+    // leg1Object.setup();
 
-    var leg2Object = new MyObject(leg2, leg2_faces, shader_vertex_source, shader_fragment_source);
-    leg2Object.setup();
+    // var leg2Object = new MyObject(leg2, leg2_faces, shader_vertex_source, shader_fragment_source);
+    // leg2Object.setup();
 
-    var cubeObject = new MyObjectTexture(cube, cube_faces, shader_vertex_source_texture, shader_fragment_source_texture);
-    cubeObject.setup();
-    // ------------------------
-    var hand1Object = new MyObject(hand1, hand1_faces, shader_vertex_source, shader_fragment_source);
-    // var matrix = hand1Object.MODEL_MATRIX;
-    LIBS.rotateX(hand1Object.MODEL_MATRIX, 90);
-    hand1Object.setup();
+    // var cubeObject = new MyObjectTexture(cube, cube_faces, shader_vertex_source_texture, shader_fragment_source_texture);
+    // cubeObject.setup();
+    // // ------------------------
+    // var hand1Object = new MyObject(hand1, hand1_faces, shader_vertex_source, shader_fragment_source);
+    // // var matrix = hand1Object.MODEL_MATRIX;
+    // LIBS.rotateX(hand1Object.MODEL_MATRIX, 90);
+    // hand1Object.setup();
 
-    var hand2Object = new MyObject(hand2, hand2_faces, shader_vertex_source, shader_fragment_source);
-    hand2Object.setup();
-    //                                             x     y    z  
-    var leftShoe = new MyObject(JcreateSphere(0.15, -0.5, -6, 0.6, 0.5, 0.3, 100, 100, 1, 1, 1).positions, JcreateSphere(2, 2, 2, 2, 1, 3, 100, 100, 1, 0, 0).indices, shader_vertex_source, shader_fragment_source);
-    leftShoe.setup();
-    var rightShoe = new MyObject(JcreateSphere(0.15, 0.5, -6, 0.6, 0.5, 0.3, 100, 100, 1, 1, 1).positions, JcreateSphere(2, 2, 2, 2, 1, 3, 100, 100, 1, 0, 0).indices, shader_vertex_source, shader_fragment_source);
-    rightShoe.setup();
+    // var hand2Object = new MyObject(hand2, hand2_faces, shader_vertex_source, shader_fragment_source);
+    // hand2Object.setup();
+    // //                                             x     y    z  
+    // var leftShoe = new MyObject(JcreateSphere(0.15, -0.5, -6, 0.6, 0.5, 0.3, 100, 100, 1, 1, 1).positions, JcreateSphere(2, 2, 2, 2, 1, 3, 100, 100, 1, 0, 0).indices, shader_vertex_source, shader_fragment_source);
+    // leftShoe.setup();
+    // var rightShoe = new MyObject(JcreateSphere(0.15, 0.5, -6, 0.6, 0.5, 0.3, 100, 100, 1, 1, 1).positions, JcreateSphere(2, 2, 2, 2, 1, 3, 100, 100, 1, 0, 0).indices, shader_vertex_source, shader_fragment_source);
+    // rightShoe.setup();
 
 
-    astronautBodyObject.child.push(leg1Object);
-    astronautBodyObject.child.push(leg2Object);
-    astronautBodyObject.child.push(cubeObject);
-    astronautBodyObject.child.push(hand1Object);
-    astronautBodyObject.child.push(hand2Object);
-    astronautBodyObject.child.push(leftShoe);
-    astronautBodyObject.child.push(rightShoe);
+    // astronautBodyObject.child.push(leg1Object);
+    // astronautBodyObject.child.push(leg2Object);
+    // astronautBodyObject.child.push(cubeObject);
+    // astronautBodyObject.child.push(hand1Object);
+    // astronautBodyObject.child.push(hand2Object);
+    // astronautBodyObject.child.push(leftShoe);
+    // astronautBodyObject.child.push(rightShoe);
     // -----------------------------------------------------------------------------------------------------------------------------------------------------------------
 
     // --------------------------------------------------JAVIER---------------------------------------------------------------------------------------------------------
@@ -455,13 +492,6 @@ function main() {
             ALPHA += dY * 2 * Math.PI / CANVAS.height;
         }
 
-
-        var radius = 2;
-        var pos_x = radius * Math.cos(ALPHA) * Math.sin(THETA);
-        var pos_y = radius * Math.sin(ALPHA);
-        var pos_z = radius * Math.cos(ALPHA) * Math.cos(THETA);
-
-
         // nge set posisi awal astronaut
         MODEL_MATRIX = LIBS.get_I4();
         LIBS.translateX(MODEL_MATRIX, 1);
@@ -494,8 +524,8 @@ function main() {
 
 
 
-        astronautBodyObject.MODEL_MATRIX = MODEL_MATRIX;
-        astronautBodyObject.render(VIEW_MATRIX, PROJECTION_MATRIX);
+        // astronautBodyObject.MODEL_MATRIX = MODEL_MATRIX;
+        // astronautBodyObject.render(VIEW_MATRIX, PROJECTION_MATRIX);
 
         // MODEL_MATRIX2 = MODEL_MATRIX;
         // cubeObject.MODEL_MATRIX = MODEL_MATRIX2;
@@ -507,47 +537,86 @@ function main() {
         // cubeObject.render(VIEW_MATRIX, PROJECTION_MATRIX);
 
         // --------------------------------------------JAVIER---------------------------------------------------------------------------------------------------
-        body_Model = LIBS.get_I4();
-        LIBS.rotateY(body_Model, -THETA);
-        LIBS.rotateX(body_Model, -ALPHA);
+        var radius = 10;
+        var pos_x = radius * Math.cos(translateY) * Math.sin(translateX);
+        var pos_y = radius * Math.sin(translateY);
+        var pos_z = radius * Math.cos(translateY) * Math.cos(translateX);
 
-        object.MODEL_MATRIX = body_Model;
+        head_model = LIBS.get_I4();
+        LIBS.rotateX(head_model, rotateX);
+        LIBS.rotateY(head_model, rotateY);
+        LIBS.rotateZ(head_model, rotateZ);
+        LIBS.translateX(head_model, translateX);
+        LIBS.translateY(head_model, translateY);
+        LIBS.translateZ(head_model, translateZ);
+        // LIBS.setPosition(head_model, 0, 0, 0);
+        // LIBS.scalling(head_Model, scaleX, scaleY, scaleZ);
+
+        body_Model = LIBS.get_I4();
+        LIBS.rotateX(body_Model, rotateX);
+        LIBS.rotateY(body_Model, rotateY);
+        LIBS.rotateZ(body_Model, rotateZ);
+        LIBS.translateX(body_Model, translateX);
+        LIBS.translateY(body_Model, translateY);
+        LIBS.translateZ(body_Model, translateZ);
+        // LIBS.setPosition(body_Model, 0, 0, 0);
+        LIBS.scale(body_Model, scaleX, scaleY, scaleZ);
+
+        left_hand_model = LIBS.get_I4();
+        LIBS.rotateX(left_hand_model, rotateX);
+        LIBS.rotateY(left_hand_model, rotateY);
+        LIBS.rotateZ(left_hand_model, rotateZ);
+        LIBS.translateX(left_hand_model, translateX);
+        LIBS.translateY(left_hand_model, translateY);
+        LIBS.translateZ(left_hand_model, translateZ);
+        // LIBS.setPosition(left_hand_model,0,0,+pos_z);
+        
+        right_hand_model = LIBS.get_I4();
+        LIBS.rotateX(right_hand_model, rotateX);
+        LIBS.rotateY(right_hand_model, rotateY);
+        LIBS.rotateZ(right_hand_model, rotateZ);
+        LIBS.translateX(right_hand_model, translateX);
+        LIBS.translateY(right_hand_model, translateY);
+        LIBS.translateZ(right_hand_model, translateZ);
+        // LIBS.setPosition(right_hand_model,0,0,+pos_z);
+
+        object.MODEL_MATRIX = head_model;
+        eyes1.MODEL_MATRIX = head_model;
+        eyes2.MODEL_MATRIX = head_model;
+        eyes3.MODEL_MATRIX = head_model;
+        black1.MODEL_MATRIX = head_model;
+        black2.MODEL_MATRIX = head_model;
+        black3.MODEL_MATRIX = head_model;
+        anthena.MODEL_MATRIX = head_model;
+        anthenaBall.MODEL_MATRIX = head_model;
+        mouth.MODEL_MATRIX = head_model;
+        leftEar.MODEL_MATRIX = head_model;
+        rightEar.MODEL_MATRIX = head_model;
+
         body.MODEL_MATRIX = body_Model;
-        eyes1.MODEL_MATRIX = body_Model;
-        eyes2.MODEL_MATRIX = body_Model;
-        eyes3.MODEL_MATRIX = body_Model;
-        black1.MODEL_MATRIX = body_Model;
-        black2.MODEL_MATRIX = body_Model;
-        black3.MODEL_MATRIX = body_Model;
-        anthena.MODEL_MATRIX = body_Model;
-        anthenaBall.MODEL_MATRIX = body_Model;
-        mouth.MODEL_MATRIX = body_Model;
         belt.MODEL_MATRIX = body_Model;
-        leftEar.MODEL_MATRIX = body_Model;
-        rightEar.MODEL_MATRIX = body_Model;
         leftLeg.MODEL_MATRIX = body_Model;
         rightLeg.MODEL_MATRIX = body_Model;
         leftShoe.MODEL_MATRIX = body_Model;
         rightShoe.MODEL_MATRIX = body_Model;
-        leftArm.MODEL_MATRIX = body_Model;
-        rightArm.MODEL_MATRIX = body_Model;
-        leftHand.MODEL_MATRIX = body_Model;
-        rightHand.MODEL_MATRIX = body_Model;
-        leftFinger1.MODEL_MATRIX = body_Model;
-        leftFinger2.MODEL_MATRIX = body_Model;
-        leftFinger3.MODEL_MATRIX = body_Model;
-        rightFinger1.MODEL_MATRIX = body_Model;
-        rightFinger2.MODEL_MATRIX = body_Model;
-        rightFinger3.MODEL_MATRIX = body_Model;
 
-
-        LIBS.translateX(body.MODEL_MATRIX, 5);
-        LIBS.translateY(body.MODEL_MATRIX, 2);
-
-        LIBS.scale(body.MODEL_MATRIX, 0.3, 0.3, 0.3);
+        leftArm.MODEL_MATRIX = left_hand_model;
+        leftHand.MODEL_MATRIX = left_hand_model;
+        leftFinger1.MODEL_MATRIX = left_hand_model;
+        leftFinger2.MODEL_MATRIX = left_hand_model;
+        leftFinger3.MODEL_MATRIX = left_hand_model;
+        
+        rightArm.MODEL_MATRIX = right_hand_model;
+        rightHand.MODEL_MATRIX = right_hand_model;
+        rightFinger1.MODEL_MATRIX = right_hand_model;
+        rightFinger2.MODEL_MATRIX = right_hand_model;
+        rightFinger3.MODEL_MATRIX = right_hand_model;
         object.render(VIEW_MATRIX, PROJECTION_MATRIX);
-
-
+        
+        object.render(VIEW_MATRIX, PROJECTION_MATRIX);
+        
+        
+        handleKeys();
 
 
         window.requestAnimationFrame(animate);

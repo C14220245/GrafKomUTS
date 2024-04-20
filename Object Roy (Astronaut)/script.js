@@ -70,8 +70,8 @@ function main() {
         alert("WebGL context cannot be initialized");
         return false;
     }
-    //shaders
-    var shader_vertex_source = `
+    // shaders
+    var shader_vertex_source_texture = `
       attribute vec3 position;
       attribute vec3 color;
       attribute vec2 uv;
@@ -91,7 +91,7 @@ function main() {
 
       gl_PointSize=20.0;
       }`;
-    var shader_fragment_source = `
+    var shader_fragment_source_texture = `
       precision mediump float;
       varying vec3 vColor;
       uniform sampler2D sampler;
@@ -101,6 +101,39 @@ function main() {
       gl_FragColor = vec4(vColor, 1.);
       gl_FragColor = texture2D(sampler, vUv);
      
+      }`;
+
+    var shader_vertex_source = `
+      attribute vec3 position;
+      attribute vec3 color;
+
+
+      uniform mat4 PMatrix;
+      uniform mat4 VMatrix;
+      uniform mat4 MMatrix;
+     
+      varying vec3 vColor;
+      void main(void) {
+      gl_Position = PMatrix*VMatrix*MMatrix*vec4(position, 1.);
+      vColor = color;
+
+
+      gl_PointSize=20.0;
+      }`;
+    var shader_fragment_source = `
+      precision mediump float;
+      varying vec3 vColor;
+      // uniform vec3 color;
+
+
+      uniform float greyScality;
+
+
+      void main(void) {
+      float greyScaleValue = (vColor.r + vColor.g + vColor.b)/3.;
+      vec3 greyScaleColor = vec3(greyScaleValue, greyScaleValue, greyScaleValue);
+      vec3 color = mix(greyScaleColor, vColor, greyScality);
+      gl_FragColor = vec4(color, 1.);
       }`;
     /*========================= THE TRIANGLE ========================= */
     POINTS:
@@ -226,20 +259,20 @@ function main() {
     // var sphere_faces = sphereGenerated["faces"];
     
 
-    var cylinder = generateCylinder(0, 0, -1, 1.3, 4)
+    var cylinder = generateCylinder(0, 0, -1, 1.3, 4, 1,1,1)
     var cylinder_faces = cylinderElements();
 
     console.log("body:", cylinder);
-    var leg1 = generateCylinder(0, 0.5, -3, 0.45, 3)
+    var leg1 = generateCylinder(0, 0.5, -3, 0.45, 3, 0.058, 0.070, 0.129)
     var leg1_faces = cylinderElements();
 
-    var leg2 = generateCylinder(0, -0.5, -3, 0.45, 3)
+    var leg2 = generateCylinder(0, -0.5, -3, 0.45, 3, 0.058, 0.070, 0.129)
     var leg2_faces = cylinderElements();
 
-    var hand1 = generateCylinder(0.5, 1.5, -1, 0.45, 3)
+    var hand1 = generateCylinder(0.5, 1.5, -1, 0.45, 3, 0.058, 0.070, 0.129)
     var hand1_faces = cylinderElements();
 
-    var hand2 = generateCylinder(0.5, -1.5, -1, 0.45, 3)
+    var hand2 = generateCylinder(0.5, -1.5, -1, 0.45, 3, 0.058, 0.070, 0.129)
     var hand2_faces = cylinderElements();
 
 
@@ -251,10 +284,10 @@ function main() {
     var VIEW_MATRIX = LIBS.get_I4();
     var MODEL_MATRIX = LIBS.get_I4();
     var MODEL_MATRIX2 = LIBS.get_I4();
-    var MODEL_MATRIX_HAND1 = LIBS.get_I4();
-    var MODEL_MATRIX_HAND2 = LIBS.get_I4();
+
 
     LIBS.translateZ(VIEW_MATRIX, -20);
+
 
 
     // var sphereObject = new MyObject(sphere, sphere_faces, shader_vertex_source, shader_fragment_source);
@@ -270,7 +303,7 @@ function main() {
     var leg2Object = new MyObject(leg2, leg2_faces, shader_vertex_source, shader_fragment_source);
     leg2Object.setup();
 
-    var cubeObject = new MyObjectTexture(cube, cube_faces, shader_vertex_source, shader_fragment_source);
+    var cubeObject = new MyObjectTexture(cube, cube_faces, shader_vertex_source_texture, shader_fragment_source_texture);
     cubeObject.setup();
     // ------------------------
     var hand1Object = new MyObject(hand1, hand1_faces, shader_vertex_source, shader_fragment_source);
@@ -280,6 +313,11 @@ function main() {
     
     var hand2Object = new MyObject(hand2, hand2_faces, shader_vertex_source, shader_fragment_source);
     hand2Object.setup();
+//                                             x     y    z  
+    var leftShoe = new MyObject(JcreateSphere(0.15, -0.5, -6, 0.6, 0.5, 0.3, 100, 100, 1,1,1).positions, JcreateSphere(2, 2, 2, 2, 1, 3, 100, 100, 1, 0, 0).indices, shader_vertex_source, shader_fragment_source);
+    leftShoe.setup();
+    var rightShoe = new MyObject(JcreateSphere(0.15, 0.5, -6, 0.6, 0.5, 0.3, 100, 100, 1,1,1).positions, JcreateSphere(2, 2, 2, 2, 1, 3, 100, 100, 1, 0, 0).indices, shader_vertex_source, shader_fragment_source);
+    rightShoe.setup();
 
     
     astronautBodyObject.child.push(leg1Object);
@@ -287,6 +325,8 @@ function main() {
     astronautBodyObject.child.push(cubeObject);
     astronautBodyObject.child.push(hand1Object);
     astronautBodyObject.child.push(hand2Object);
+    astronautBodyObject.child.push(leftShoe);
+    astronautBodyObject.child.push(rightShoe);
     // -------------------------
 
     
@@ -321,13 +361,16 @@ function main() {
         var pos_z = radius * Math.cos(ALPHA) * Math.cos(THETA);
 
 
+        // nge set posisi awal astronaut
         MODEL_MATRIX = LIBS.get_I4();
         LIBS.translateX(MODEL_MATRIX, 1);
-        LIBS.rotateX(MODEL_MATRIX, 90);
-        LIBS.rotateY(MODEL_MATRIX, 120);
-        LIBS.rotateZ(MODEL_MATRIX, 90);
+        LIBS.rotateX(MODEL_MATRIX, -250);
+        LIBS.rotateY(MODEL_MATRIX, 300);
+        LIBS.rotateZ(MODEL_MATRIX, 550);
         LIBS.rotateY(MODEL_MATRIX, THETA);
         LIBS.rotateX(MODEL_MATRIX, ALPHA);
+        LIBS.translateY(MODEL_MATRIX, 2);        
+        LIBS.translateX(MODEL_MATRIX, -1);
 
 
 

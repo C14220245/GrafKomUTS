@@ -87,7 +87,7 @@ class MyObjectTexture {
 
         this.TRIANGLE_VERTEX = GL.createBuffer();
         this.TRIANGLE_FACES = GL.createBuffer();
-        this.texture = LIBS.load_texture("resources/textures.jpg")
+        this.texture = LIBS.load_texture("resources/rectangular.jpg")
     }
 
 

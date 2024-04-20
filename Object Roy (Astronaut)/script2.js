@@ -19,16 +19,16 @@ function main() {
     var Y_prev = 0;
 
 
-    var scaleX = 1;
-    var scaleY = 1;
-    var scaleZ = 1;
+    var JscaleX = 1;
+    var JscaleY = 1;
+    var JscaleZ = 1;
 
-    var rotateX = 0;
-    var rotateY = 0;
-    var rotateZ = 0;
-    var translateX = 0;
-    var translateY = 0;
-    var translateZ = 0;
+    var JrotateX = 0;
+    var JrotateY = 0;
+    var JrotateZ = 0;
+    var JtranslateX = 0;
+    var JtranslateY = 0;
+    var JtranslateZ = 0;
 
     var FRICTION = 0.990;
 
@@ -85,64 +85,64 @@ function main() {
         //Pny Javier
         if (keys["w"]) {
             // Logika pergerakan ke atas
-            rotateX += 0.05; 
+            JrotateX += 0.05; 
             console.log("Kepencet");
         }
         if (keys["q"]) {
             // Logika pergerakan ke kiri
-            rotateX -= 0.05; 
+            JrotateX -= 0.05; 
         }
         if (keys["r"]) {
             // Logika pergerakan ke bawah
-            rotateY += 0.05; 
+            JrotateY += 0.05; 
         }
         if (keys["e"]) {
             // Logika pergerakan ke kanan
-            rotateY -= 0.05; 
+            JrotateY -= 0.05; 
         }
         if (keys["y"]) {
             // Logika pergerakan ke kanan
-            rotateZ += 0.05; 
+            JrotateZ += 0.05; 
         }
         if (keys["t"]) {
             // Logika pergerakan ke kanan
-            rotateZ -= 0.05; 
+            JrotateZ -= 0.05; 
         }
         if (keys["i"]) {
             // Logika pergerakan ke kanan
-            translateX += 0.05; 
+            JtranslateX += 0.05; 
         }
         if (keys["u"]) {
             // Logika pergerakan ke kanan
-            translateX -= 0.05; 
+            JtranslateX -= 0.05; 
         }
         if (keys["p"]) {
             // Logika pergerakan ke kanan
-            translateY += 0.05; 
+            JtranslateY += 0.05; 
         }
         if (keys["o"]) {
             // Logika pergerakan ke kanan
-            translateY -= 0.05; 
+            JtranslateY -= 0.05; 
         }
         if (keys["]"]) {
             // Logika pergerakan ke kanan
-            translateZ += 0.05; 
+            JtranslateZ += 0.05; 
         }
         if (keys["["]) {
             // Logika pergerakan ke kanan
-            translateZ -= 0.05; 
+            JtranslateZ -= 0.05; 
         }
         if (keys["4"]) {
             // Logika pergerakan ke kanan
-            scaleX+=0.01;
-            scaleY+=0.01;
-            scaleZ+=0.01;
+            JscaleX+=0.01;
+            JscaleY+=0.01;
+            JscaleZ+=0.01;
         }
         if (keys["5"]) {
             // Logika pergerakan ke kanan
-            scaleX-=0.01;
-            scaleY-=0.01;
-            scaleZ-=0.01;
+            JscaleX-=0.01;
+            JscaleY-=0.01;
+            JscaleZ-=0.01;
         }
     };
 
@@ -325,7 +325,7 @@ function main() {
     var MODEL_MATRIX2 = LIBS.get_I4();
 
 
-    LIBS.translateZ(VIEW_MATRIX, -35);
+    LIBS.JtranslateZ(VIEW_MATRIX, -35);
 
 
 
@@ -347,7 +347,7 @@ function main() {
     // // ------------------------
     // var hand1Object = new MyObject(hand1, hand1_faces, shader_vertex_source, shader_fragment_source);
     // // var matrix = hand1Object.MODEL_MATRIX;
-    // LIBS.rotateX(hand1Object.MODEL_MATRIX, 90);
+    // LIBS.JrotateX(hand1Object.MODEL_MATRIX, 90);
     // hand1Object.setup();
 
     // var hand2Object = new MyObject(hand2, hand2_faces, shader_vertex_source, shader_fragment_source);
@@ -494,32 +494,32 @@ function main() {
 
         // nge set posisi awal astronaut
         MODEL_MATRIX = LIBS.get_I4();
-        LIBS.translateX(MODEL_MATRIX, 1);
-        LIBS.rotateX(MODEL_MATRIX, -250);
-        LIBS.rotateY(MODEL_MATRIX, 300);
-        LIBS.rotateZ(MODEL_MATRIX, 550);
-        LIBS.rotateY(MODEL_MATRIX, THETA);
-        LIBS.rotateX(MODEL_MATRIX, ALPHA);
-        LIBS.translateY(MODEL_MATRIX, 2);
-        LIBS.translateX(MODEL_MATRIX, -1);
+        LIBS.JtranslateX(MODEL_MATRIX, 1);
+        LIBS.JrotateX(MODEL_MATRIX, -250);
+        LIBS.JrotateY(MODEL_MATRIX, 300);
+        LIBS.JrotateZ(MODEL_MATRIX, 550);
+        LIBS.JrotateY(MODEL_MATRIX, THETA);
+        LIBS.JrotateX(MODEL_MATRIX, ALPHA);
+        LIBS.JtranslateY(MODEL_MATRIX, 2);
+        LIBS.JtranslateX(MODEL_MATRIX, -1);
 
 
 
         // MODEL_MATRIX2 = LIBS.get_I4();
-        // LIBS.translateX(MODEL_MATRIX2, -1)
-        // LIBS.rotateY(MODEL_MATRIX2, -THETA);
-        // LIBS.rotateX(MODEL_MATRIX2, -ALPHA);
+        // LIBS.JtranslateX(MODEL_MATRIX2, -1)
+        // LIBS.JrotateY(MODEL_MATRIX2, -THETA);
+        // LIBS.JrotateX(MODEL_MATRIX2, -ALPHA);
 
         var temp = LIBS.get_I4();
-        LIBS.translateX(temp, -4);
+        LIBS.JtranslateX(temp, -4);
         MODEL_MATRIX2 = LIBS.multiply(MODEL_MATRIX2, temp);
         temp = LIBS.get_I4();
-        LIBS.rotateY(temp, THETA);
+        LIBS.JrotateY(temp, THETA);
         MODEL_MATRIX2 = LIBS.multiply(MODEL_MATRIX2, temp);
-        LIBS.rotateY(temp, THETA);
+        LIBS.JrotateY(temp, THETA);
         MODEL_MATRIX2 = LIBS.multiply(MODEL_MATRIX2, temp);
         temp = LIBS.get_I4();
-        LIBS.translateX(temp, 10);
+        LIBS.JtranslateX(temp, 10);
         MODEL_MATRIX2 = LIBS.multiply(MODEL_MATRIX2, temp);
 
 
@@ -530,54 +530,54 @@ function main() {
         // MODEL_MATRIX2 = MODEL_MATRIX;
         // cubeObject.MODEL_MATRIX = MODEL_MATRIX2;
         // // LIBS.scale(cubeObject.MODEL_MATRIX, 3, 3, 3);
-        // // LIBS.translateX(cubeObject.MODEL_MATRIX, -0);
-        // // LIBS.translateZ(cubeObject.MODEL_MATRIX, -0.);
-        // // LIBS.translateY(cubeObject.MODEL_MATRIX,0);
+        // // LIBS.JtranslateX(cubeObject.MODEL_MATRIX, -0);
+        // // LIBS.JtranslateZ(cubeObject.MODEL_MATRIX, -0.);
+        // // LIBS.JtranslateY(cubeObject.MODEL_MATRIX,0);
 
         // cubeObject.render(VIEW_MATRIX, PROJECTION_MATRIX);
 
         // --------------------------------------------JAVIER---------------------------------------------------------------------------------------------------
         var radius = 10;
-        var pos_x = radius * Math.cos(translateY) * Math.sin(translateX);
-        var pos_y = radius * Math.sin(translateY);
-        var pos_z = radius * Math.cos(translateY) * Math.cos(translateX);
+        var pos_x = radius * Math.cos(JtranslateY) * Math.sin(JtranslateX);
+        var pos_y = radius * Math.sin(JtranslateY);
+        var pos_z = radius * Math.cos(JtranslateY) * Math.cos(JtranslateX);
 
         head_model = LIBS.get_I4();
-        LIBS.rotateX(head_model, rotateX);
-        LIBS.rotateY(head_model, rotateY);
-        LIBS.rotateZ(head_model, rotateZ);
-        LIBS.translateX(head_model, translateX);
-        LIBS.translateY(head_model, translateY);
-        LIBS.translateZ(head_model, translateZ);
+        LIBS.JrotateX(head_model, JrotateX);
+        LIBS.JrotateY(head_model, JrotateY);
+        LIBS.JrotateZ(head_model, JrotateZ);
+        LIBS.JtranslateX(head_model, JtranslateX);
+        LIBS.JtranslateY(head_model, JtranslateY);
+        LIBS.JtranslateZ(head_model, JtranslateZ);
         // LIBS.setPosition(head_model, 0, 0, 0);
-        // LIBS.scalling(head_Model, scaleX, scaleY, scaleZ);
+        // LIBS.scalling(head_Model, JscaleX, JscaleY, JscaleZ);
 
         body_Model = LIBS.get_I4();
-        LIBS.rotateX(body_Model, rotateX);
-        LIBS.rotateY(body_Model, rotateY);
-        LIBS.rotateZ(body_Model, rotateZ);
-        LIBS.translateX(body_Model, translateX);
-        LIBS.translateY(body_Model, translateY);
-        LIBS.translateZ(body_Model, translateZ);
+        LIBS.JrotateX(body_Model, JrotateX);
+        LIBS.JrotateY(body_Model, JrotateY);
+        LIBS.JrotateZ(body_Model, JrotateZ);
+        LIBS.JtranslateX(body_Model, JtranslateX);
+        LIBS.JtranslateY(body_Model, JtranslateY);
+        LIBS.JtranslateZ(body_Model, JtranslateZ);
         // LIBS.setPosition(body_Model, 0, 0, 0);
-        LIBS.scale(body_Model, scaleX, scaleY, scaleZ);
+        LIBS.scale(body_Model, JscaleX, JscaleY, JscaleZ);
 
         left_hand_model = LIBS.get_I4();
-        LIBS.rotateX(left_hand_model, rotateX);
-        LIBS.rotateY(left_hand_model, rotateY);
-        LIBS.rotateZ(left_hand_model, rotateZ);
-        LIBS.translateX(left_hand_model, translateX);
-        LIBS.translateY(left_hand_model, translateY);
-        LIBS.translateZ(left_hand_model, translateZ);
+        LIBS.JrotateX(left_hand_model, JrotateX);
+        LIBS.JrotateY(left_hand_model, JrotateY);
+        LIBS.JrotateZ(left_hand_model, JrotateZ);
+        LIBS.JtranslateX(left_hand_model, JtranslateX);
+        LIBS.JtranslateY(left_hand_model, JtranslateY);
+        LIBS.JtranslateZ(left_hand_model, JtranslateZ);
         // LIBS.setPosition(left_hand_model,0,0,+pos_z);
         
         right_hand_model = LIBS.get_I4();
-        LIBS.rotateX(right_hand_model, rotateX);
-        LIBS.rotateY(right_hand_model, rotateY);
-        LIBS.rotateZ(right_hand_model, rotateZ);
-        LIBS.translateX(right_hand_model, translateX);
-        LIBS.translateY(right_hand_model, translateY);
-        LIBS.translateZ(right_hand_model, translateZ);
+        LIBS.JrotateX(right_hand_model, JrotateX);
+        LIBS.JrotateY(right_hand_model, JrotateY);
+        LIBS.JrotateZ(right_hand_model, JrotateZ);
+        LIBS.JtranslateX(right_hand_model, JtranslateX);
+        LIBS.JtranslateY(right_hand_model, JtranslateY);
+        LIBS.JtranslateZ(right_hand_model, JtranslateZ);
         // LIBS.setPosition(right_hand_model,0,0,+pos_z);
 
         object.MODEL_MATRIX = head_model;

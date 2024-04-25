@@ -223,7 +223,7 @@ function main() {
     object.child.push(rightFinger3);
 
     /*========================= DRAWING ========================= */
-    GL.clearColor(0, 0, 0, 1);
+    GL.clearColor(0, 0, 0, 0);
 
 
     GL.enable(GL.DEPTH_TEST);

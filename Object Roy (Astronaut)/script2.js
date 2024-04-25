@@ -544,7 +544,7 @@ function main() {
         LIBS.translateX(body.MODEL_MATRIX, 5);
         LIBS.translateY(body.MODEL_MATRIX, 2);
 
-        LIBS.scale(body.MODEL_MATRIX, 0.3, 0.3, 0.3);
+        // LIBS.scale(body.MODEL_MATRIX, 0.3, 0.3, 0.3);
         object.render(VIEW_MATRIX, PROJECTION_MATRIX);
 
 

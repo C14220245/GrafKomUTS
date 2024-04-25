@@ -1,74 +1,82 @@
-function generateBSpline(controlPoint, m, degree){
-    var curves = [];
-    var knotVector = []
-  
-    var n = controlPoint.length/5;
-  
-   
-    // Calculate the knot values based on the degree and number of control points
-    for (var i = 0; i < n + degree+1; i++) {
-      if (i < degree + 1) {
-        knotVector.push(0);
-      } else if (i >= n) {
-        knotVector.push(n - degree);
-      } else {
-        knotVector.push(i - degree);
-      }
+function generateBSpline(controlPoint, m, degree) {
+  var curves = [];
+  var knotVector = [];
+
+  var n = controlPoint.length / 6;
+
+
+  // Calculate the knot values based on the degree and number of control points
+  for (var i = 0; i < n + degree + 1; i++) {
+    if (i < degree + 1) {
+      knotVector.push(0);
+    } else if (i >= n) {
+      knotVector.push(n - degree);
+    } else {
+      knotVector.push(i - degree);
     }
-  
-  
-  
-    var basisFunc = function(i,j,t){
-        if (j == 0){
-          if(knotVector[i] <= t && t<(knotVector[(i+1)])){
-            return 1;
-          }else{
-            return 0;
-          }
-        }
-  
-        var den1 = knotVector[i + j] - knotVector[i];
-        var den2 = knotVector[i + j + 1] - knotVector[i + 1];
-       
-        var term1 = 0;
-        var term2 = 0;
-     
-   
-        if (den1 != 0 && !isNaN(den1)) {
-          term1 = ((t - knotVector[i]) / den1) * basisFunc(i,j-1,t);
-        }
-     
-        if (den2 != 0 && !isNaN(den2)) {
-          term2 = ((knotVector[i + j + 1] - t) / den2) * basisFunc(i+1,j-1,t);
-        }
-     
-        return term1 + term2;
-    }
-  
-   
-    for(var t=0;t<m;t++){
-      var x=0;
-      var y=0;
-     
-      var u = (t/m * (knotVector[controlPoint.length/5] - knotVector[degree]) ) + knotVector[degree] ;
-  
-      //C(t)
-      for(var key =0;key<n;key++){
-  
-        var C = basisFunc(key,degree,u);
-        x+=(controlPoint[key*5] * C);
-        y+=(controlPoint[key*5+1] * C);
-      }
-      curves.push(x);
-      curves.push(y);
-      curves.push(1);
-      curves.push(1);
-      curves.push(1);
-     
-    }
-    return curves;
   }
 
+
+
+  var basisFunc = function (i, j, t) {
+    if (j == 0) {
+      if (knotVector[i] <= t && t < (knotVector[(i + 1)])) {
+        return 1;
+      } else {
+        return 0;
+      }
+    }
+
+    var den1 = knotVector[i + j] - knotVector[i];
+    var den2 = knotVector[i + j + 1] - knotVector[i + 1];
+
+    var term1 = 0;
+    var term2 = 0;
+
+
+    if (den1 != 0 && !isNaN(den1)) {
+      term1 = ((t - knotVector[i]) / den1) * basisFunc(i, j - 1, t);
+    }
+
+    if (den2 != 0 && !isNaN(den2)) {
+      term2 = ((knotVector[i + j + 1] - t) / den2) * basisFunc(i + 1, j - 1, t);
+    }
+
+    return term1 + term2;
+  }
+
+
+  for (var t = 0; t < m; t++) {
+    var x = 0;
+    var y = 0;
+    var z = 0;
+    var r = 0;
+    var g = 0;
+    var b = 0;
+
+    var u = (t / m * (knotVector[controlPoint.length / 6] - knotVector[degree])) + knotVector[degree];
+
+    //C(t)
+    for (var key = 0; key < n; key++) {
+
+      var C = basisFunc(key, degree, u);
+      x += (controlPoint[key * 6] * C);
+      y += (controlPoint[key * 6 + 1] * C);
+      z += (controlPoint[key * 6 + 2] * C);
+      r += (controlPoint[key * 6 + 3] * C);
+      g += (controlPoint[key * 6 + 4] * C);
+      b += (controlPoint[key * 6 + 5] * C);
+    }
+    curves.push(x);
+    curves.push(y);
+    curves.push(z);
+    curves.push(r);
+    curves.push(g);
+    curves.push(b);
+
+  }
+  return curves;
+}
 function generateCone(x, y, z, rad) {
   var list = []
   var r = 1;
@@ -254,7 +262,7 @@ function generateCylinder(x, y, z, rad, height, r =1 , g = 1, b = 1) {
     // list.push(0, 1)
 
   };
-  console.log(list);
+  // console.log(list);
   return list;
 }
 
@@ -314,4 +322,149 @@ function generateSphereUV(xrad, yrad, zrad, step, stack){ //with UV
   }
 
   return {"vertices":vertices, "faces":faces};
+}
+
+
+function bspline3D(listOfPoint, radius) {
+  var totalPoints = 100
+
+  var vertices = [];
+  var indices = [];
+  var points = generateBSpline(listOfPoint, totalPoints, (listOfPoint.length/6)-1)
+
+
+  for (let i = 0; i < totalPoints * 2; i++) {
+    for (let j = 0; j < 360; j++) {
+      var angleInRadians = (j * Math.PI) / 180;
+      var newX = points[i * 6] + Math.cos(angleInRadians) * radius; // Rotate around X-axis
+      var newY = points[i * 6 + 1]; // Y-coordinate remains the same
+      var newZ = points[i * 6 + 2] + Math.sin(angleInRadians) * radius; // Translate along Z-axis
+      var r = points[i * 6 + 3]
+      var g = points[i * 6 + 4]
+      var b = points[i * 6 + 5]
+      vertices.push(newX);
+      vertices.push(newY);
+      vertices.push(newZ);
+      vertices.push(r);
+      vertices.push(g);
+      vertices.push(b);
+    }
+  }
+  for (let i = 0; i < totalPoints * 2; i++) {
+    for (let j = 0; j < 360; j++) {
+      indices.push(j + (i * 360));
+      indices.push(j + 360 + (i * 360));
+      indices.push(j + 361 + (i * 360));
+
+      indices.push(j + (i * 360));
+      indices.push(j + 1 + (i * 360));
+      indices.push(j + 361 + (i * 360));
+    }
+  }
+
+  return { vertices, indices };
+}
+function RgenerateCylinderVertices(x, y, z, radiusX, radiusZ, height, r, g, b) {
+  var vertices = [];
+  vertices.push(x);
+  vertices.push(y);
+  vertices.push(z);
+  vertices.push(r);
+  vertices.push(g);
+  vertices.push(b);
+  for (let i = 0; i <= 360; i++) {
+    var angleInRadians = (i * Math.PI) / 180;
+    var newX = x + Math.cos(angleInRadians) * radiusX; // Rotate around X-axis
+    var newY = y + Math.sin(angleInRadians) * radiusZ; // Y-coordinate remains the same
+    var newZ = z ; // Translate along Z-axis
+    vertices.push(newX);
+    vertices.push(newY);
+    vertices.push(newZ);
+    vertices.push(r);
+    vertices.push(g);
+    vertices.push(b);
+  }
+  vertices.push(x);
+  vertices.push(y);
+  vertices.push(z+height);
+  vertices.push(r);
+  vertices.push(g);
+  vertices.push(b);
+  for (let i = 0; i <= 360; i++) {
+    var angleInRadians = (i * Math.PI) / 180;
+    var newX = x + Math.cos(angleInRadians) * radiusX; // Rotate around X-axis
+    var newY = y + Math.sin(angleInRadians) * radiusZ; // Y-coordinate remains the same
+    var newZ = z + height; // Translate along Z-axis
+    vertices.push(newX);
+    vertices.push(newY);
+    vertices.push(newZ);
+    vertices.push(r);
+    vertices.push(g);
+    vertices.push(b);
+  }
+  return vertices;
+}
+function RgenerateCylinderIndices() {
+  var faces = [];
+
+  for (let i = 0; i <= 360; i++) {
+    faces.push(0);
+    faces.push(i + 1);
+    faces.push(i + 2);
+  }
+  for (let i = 362; i < 722; i++) {
+    faces.push(362);
+    faces.push(i + 1);
+    faces.push(i + 2);
+  }
+  for (let i = 1; i <= 361; i++) {
+    faces.push(i);
+    faces.push(360 + i);
+    faces.push(361 + i);
+
+    faces.push(361 + i);
+    faces.push(i);
+    faces.push(i + 1);
+  }
+  return faces;
+}
+function JgenerateSaturRingVertices(x, y, z, lowRad, highRad, r, g, b){
+  var vertices = [];
+  for (let i = 0; i <= 360; i++) {
+    var angleInRadians = (i * Math.PI) / 180;
+    var newX = x + Math.cos(angleInRadians) * lowRad; // Rotate around X-axis
+    var newY = y + Math.sin(angleInRadians) * lowRad; // Y-coordinate remains the same
+    var newZ = z; // Translate along Z-axis
+    vertices.push(newX);
+    vertices.push(newY);
+    vertices.push(newZ);
+    vertices.push(r);
+    vertices.push(g);
+    vertices.push(b);
+  }
+  for (let i = 0; i <= 360; i++) {
+    var angleInRadians = (i * Math.PI) / 180;
+    var newX = x + Math.cos(angleInRadians) * highRad; // Rotate around X-axis
+    var newY = y + Math.sin(angleInRadians) * highRad; // Y-coordinate remains the same
+    var newZ = z ; // Translate along Z-axis
+    vertices.push(newX);
+    vertices.push(newY);
+    vertices.push(newZ);
+    vertices.push(r);
+    vertices.push(g);
+    vertices.push(b);
+  }
+  return vertices;
+}
+function JgenerateSaturnRingIndices(){
+  var faces = [];
+  for (let i = 0; i <= 360; i++) {
+    faces.push(i);
+    faces.push(i + 1);
+    faces.push(i + 360);
+    faces.push(i + 1);
+    faces.push(i + 360);
+    faces.push(i + 361);
+  }
+  return faces;
 }

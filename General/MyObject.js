@@ -1,4 +1,4 @@
-var GL;
+// var GL;
 
 
 

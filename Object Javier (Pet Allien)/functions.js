@@ -158,6 +158,131 @@ function JdrawCircle(x, y, z, radius, r, g, b) {
   
     return { positions, indices };
   }
+
+function JcreateSaturn(x, y, z, xRadius, yRadius, zRadius, latitudeBands, longitudeBands, r, g, b) {
+  const positions = [];
+  const indices = [];
+  var realR = r
+  var realG = g
+  var realB = b
+
+
+  for (let lat = 0; lat <= latitudeBands; lat++) {
+    const theta = lat * Math.PI / latitudeBands;
+    const sinTheta = Math.sin(theta);
+    const cosTheta = Math.cos(theta);
+
+    if (random < 0.333) {
+      r = 0 + 0.8 * realR;
+      g = 0 + 0.8 * realG;
+      b = 0 + 0.8 * realB;
+    }
+    else if (random > 0.666) {
+      r = 0 + 0.9 * realR;
+      g = 0 + 0.9 * realG;
+      b = 0 + 0.9 * realB;
+    }
+    else {
+      r = realR;
+      g = realG;
+      b = realB;
+    }
+    for (let long = 0; long <= longitudeBands; long++) {
+      const phi = long * 2 * Math.PI / longitudeBands;
+      const sinPhi = Math.sin(phi);
+      const cosPhi = Math.cos(phi);
+
+      const xPosition = x + xRadius * cosPhi * sinTheta;
+      const yPosition = y + yRadius * sinPhi * sinTheta;
+      const zPosition = z + zRadius * cosTheta;
+
+      var random = Math.random();
+     
+
+      positions.push(xPosition, yPosition, zPosition, r, g, b);
+
+      
+    }
+
+  }
+
+  for (let lat = 0; lat < latitudeBands; lat++) {
+    for (let long = 0; long < longitudeBands; long++) {
+      const first = (lat * (longitudeBands + 1)) + long;
+      const second = first + longitudeBands + 1;
+
+      indices.push(first, second, first + 1);
+      indices.push(second, second + 1, first + 1);
+    }
+  }
+
+  return { positions, indices };
+}
+
+function JcreateMoon(x, y, z, xRadius, yRadius, zRadius, latitudeBands, longitudeBands, r, g, b) {
+  const positions = [];
+  const indices = [];
+  var realR = r
+  var realG = g
+  var realB = b
+
+
+  for (let lat = 0; lat <= latitudeBands; lat++) {
+    const theta = lat * Math.PI / latitudeBands;
+    const sinTheta = Math.sin(theta);
+    const cosTheta = Math.cos(theta);
+
+    
+    for (let long = 0; long <= longitudeBands; long++) {
+      const phi = long * 2 * Math.PI / longitudeBands;
+      const sinPhi = Math.sin(phi);
+      const cosPhi = Math.cos(phi);
+
+      const xPosition = x + xRadius * cosPhi * sinTheta;
+      const yPosition = y + yRadius * sinPhi * sinTheta;
+      const zPosition = z + zRadius * cosTheta;
+
+      var random = Math.random();
+
+      if (random < 0.1) {
+        r = 0 + 0.8 * realR;
+        g = 0 + 0.8 * realG;
+        b = 0 + 0.8 * realB;
+      }
+      else if (random > 0.9) {
+        r = 0 + 0.9 * realR;
+        g = 0 + 0.9 * realG;
+        b = 0 + 0.9 * realB;
+      }
+      else {
+        r = realR;
+        g = realG;
+        b = realB;
+      }
+
+
+      positions.push(xPosition, yPosition, zPosition, r, g, b);
+
+
+    }
+
+  }
+
+  for (let lat = 0; lat < latitudeBands; lat++) {
+    for (let long = 0; long < longitudeBands; long++) {
+      const first = (lat * (longitudeBands + 1)) + long;
+      const second = first + longitudeBands + 1;
+
+      indices.push(first, second, first + 1);
+      indices.push(second, second + 1, first + 1);
+    }
+  }
+
+  return { positions, indices };
+}
+
+
+
   function JgenerateEarVertices(startX, startY, startZ, radius, height, red, green, blue, LoR){
   
     var redStatic = 0;
@@ -293,3 +418,73 @@ function JdrawCircle(x, y, z, radius, r, g, b) {
     }
     return faces;
   }
+
+function generateBlockVertices(startX, startY, startZ, p, l, t, r, g, b,) {
+
+  var vertices = [];
+
+  vertices.push(startX, startY, startZ, r, g, b);//0 - kiri bwh
+  vertices.push(startX + p, startY, startZ, r, g, b);//1 - kanan bwh
+  vertices.push(startX + p, startY + t, startZ, r, g, b);//2 - kanan atas
+  vertices.push(startX, startY + t, startZ, r, g, b);//3 - kiri atas
+
+  vertices.push(startX, startY, startZ - l, r, g, b);//4 -kiri bwh
+  vertices.push(startX + p, startY, startZ - l, r, g, b);//5 - kanan bwh
+  vertices.push(startX + p, startY + t, startZ - l, r, g, b);//6 - kanan atas
+  vertices.push(startX, startY + t, startZ - l, r, g, b);//7 - kiri atas
+
+  return vertices;
+}
+function generateBlockIndices() {
+  var indices = [];
+
+  indices.push(0);
+  indices.push(1);
+  indices.push(2);
+
+  indices.push(2);
+  indices.push(0);
+  indices.push(3);
+
+  indices.push(1);
+  indices.push(2);
+  indices.push(5);
+
+  indices.push(2);
+  indices.push(5);
+  indices.push(6);
+
+  indices.push(4);
+  indices.push(5);
+  indices.push(6);
+
+  indices.push(4);
+  indices.push(6);
+  indices.push(7);
+
+  indices.push(3);
+  indices.push(0);
+  indices.push(4);
+
+  indices.push(3);
+  indices.push(4);
+  indices.push(7);
+
+  indices.push(3);
+  indices.push(2);
+  indices.push(7);
+
+  indices.push(2);
+  indices.push(6);
+  indices.push(7);
+
+  indices.push(0);
+  indices.push(1);
+  indices.push(4);
+
+  indices.push(1);
+  indices.push(4);
+  indices.push(5);
+
+  return indices;
+}

@@ -156,7 +156,7 @@ function main() {
 
 
     try {
-        GL = CANVAS.getContext("webgl", { antialias: true });
+        GL = CANVAS.getContext("webgl", {antialias: true, alpha: true });
     } catch (e) {
         alert("WebGL context cannot be initialized");
         return false;
@@ -247,9 +247,9 @@ function main() {
 
         // kanan
         1, -1, -1, 1, 0, 0, 0, 0,
-        1, 1, -1, 1, 0, 0, 1, 0,
-        1, 1, 1, 1, 0, 0, 1, 1,
-        1, -1, 1, 1, 0, 0, 0, 1,
+        1, 1, -1, 1, 0, 0, 1, 0, //bawah kanan
+        1, 1, 1, 1, 0, 0, 1, 1, // bawah atas
+        1, -1, 1, 1, 0, 0, 0, 1, // atas kiri
 
         // bawah
         -1, -1, -1, 1, 0, 1, 0, 0,
@@ -264,6 +264,8 @@ function main() {
         1, 1, -1, 0, 1, 0, 0, 0,
 
     ]
+
+    
     var cube_faces = [
         0, 1, 2,
         0, 2, 3,
@@ -298,22 +300,66 @@ function main() {
     var sphere_faces = sphereGenerated["faces"];
 
 
-    var cylinder = generateCylinder(0, 0, -1, 1.3, 4, 1, 1, 1)
+    var cylinder = generateCylinder(0, 0, -1, 1.3, 4, 0.85, 0.85, 0.85)
     var cylinder_faces = cylinderElements();
 
     console.log("body:", cylinder);
-    var leg1 = generateCylinder(0, 0.5, -3, 0.45, 3, 0.058, 0.070, 0.129)
+    var leg1 = generateCylinder(0, 0.5, -3, 0.45, 3, 0.647, 0.663, 0.71)
     var leg1_faces = cylinderElements();
 
-    var leg2 = generateCylinder(0, -0.5, -3, 0.45, 3, 0.058, 0.070, 0.129)
+    var leg2 = generateCylinder(0, -0.5, -3, 0.45, 3, 0.647, 0.663, 0.71)
     var leg2_faces = cylinderElements();
 
-    var hand1 = generateCylinder(0.5, 1.5, -1, 0.45, 3, 0.058, 0.070, 0.129)
-    var hand1_faces = cylinderElements();
+    // var hand1 = generateCylinder(0.5, 1.5, -1, 0.45, 3, 0.647, 0.663, 0.71)
+    // var hand1_faces = cylinderElements();
 
-    var hand2 = generateCylinder(0.5, -1.5, -1, 0.45, 3, 0.058, 0.070, 0.129)
+    var hand2 = generateCylinder(0.5, -1.5, -1, 0.45, 3, 0.647, 0.663, 0.71)
     var hand2_faces = cylinderElements();
 
+    // var hand1ControlPoints = [
+    // //depan  kanan  atas
+    //     0,    1,    -1.5,      0.647, 0.663, 0.71,
+    //     0,    2,    -1.5,      0.647, 0.663, 0.71,
+    //     1,    2.3,    -2,      0.647, 0.663, 0.71,
+    //     1.5,    2.5,    -2.5,      0.647, 0.663, 0.71,
+    // ] ;
+
+    // var hand1ControlPoints = [
+    //     //depan  kanan  atas
+    //     0,         0,    0,                 0.647, 0.663, 0.71,
+    //     0,         0,    0,                 0.647, 0.663, 0.71,
+    //     0,         0,    0,                 0.647, 0.663, 0.71,
+    //     0,         0,    0,                 0.647, 0.663, 0.71,
+    // ];
+
+
+    var hand1ControlPoints = [
+        //depan  kanan  atas
+        0,         0,     -2,                0.647, 0.663, 0.71,
+        0,         1.2,     -1.5,                0.647, 0.663, 0.71,
+        0,         2.4,     -1,                0.647, 0.663, 0.71,
+        0,         3,     0.5,                0.647, 0.663, 0.71,
+    ];
+
+
+    var hand1 = bspline3D(hand1ControlPoints, 0.45).vertices;
+    var hand1_faces = bspline3D(hand1ControlPoints, 0.45).indices;
+
+    var hand2ControlPoints = [
+        //depan  kanan  atas
+        0, 0, -2, 0.647, 0.663, 0.71,
+        0, -1.2, -1.5, 0.647, 0.663, 0.71,
+        0, -2.4, -1, 0.647, 0.663, 0.71,
+        0, -3, 0.5, 0.647, 0.663, 0.71,
+    ];
+
+    var hand2 = bspline3D(hand2ControlPoints, 0.45).vertices;
+    var hand2_faces = bspline3D(hand2ControlPoints, 0.45).indices;
+
+
+
+    console.log("hand1:", hand1);
+    console.log("hand1_faces:", hand1_faces);
 
     // -----------------------------------------------------------------------------------
 
@@ -325,9 +371,9 @@ function main() {
     var MODEL_MATRIX2 = LIBS.get_I4();
 
 
-    LIBS.translateZ(VIEW_MATRIX, -35);
+    LIBS.translateZ(VIEW_MATRIX, -50);
 
-
+    
 
 
     // -----------------------------------------------ROY--------------------------------------------------------------------------------------------------
@@ -344,13 +390,18 @@ function main() {
 
     var cubeObject = new MyObjectTexture(cube, cube_faces, shader_vertex_source_texture, shader_fragment_source_texture);
     cubeObject.setup();
+
+    var flagObject = new MyObjectTexture(cube, cube_faces, shader_vertex_source_texture, shader_fragment_source_texture);
+    cubeObject.setup();
+
+    
     // ------------------------
-    var hand1Object = new MyObject(hand1, hand1_faces, shader_vertex_source, shader_fragment_source);
+    var hand1Object = new MyObjectJavier(hand1, hand1_faces, shader_vertex_source, shader_fragment_source);
     // var matrix = hand1Object.MODEL_MATRIX;
     LIBS.rotateX(hand1Object.MODEL_MATRIX, 90);
     hand1Object.setup();
 
-    var hand2Object = new MyObject(hand2, hand2_faces, shader_vertex_source, shader_fragment_source);
+    var hand2Object = new MyObjectJavier(hand2, hand2_faces, shader_vertex_source, shader_fragment_source);
     hand2Object.setup();
     //                                             x     y    z  
     var leftShoe = new MyObject(JcreateSphere(0.15, -0.5, -6, 0.6, 0.5, 0.3, 100, 100, 1, 1, 1).positions, JcreateSphere(2, 2, 2, 2, 1, 3, 100, 100, 1, 0, 0).indices, shader_vertex_source, shader_fragment_source);
@@ -358,7 +409,29 @@ function main() {
     var rightShoe = new MyObject(JcreateSphere(0.15, 0.5, -6, 0.6, 0.5, 0.3, 100, 100, 1, 1, 1).positions, JcreateSphere(2, 2, 2, 2, 1, 3, 100, 100, 1, 0, 0).indices, shader_vertex_source, shader_fragment_source);
     rightShoe.setup();
 
+    var tanganKiri = new MyObject(JcreateSphere(0, 3, 0.5, 0.6, 0.4, 0.5, 100, 100, 1, 1, 1).positions, JcreateSphere(2, 2, 2, 2, 1, 3, 100, 100, 1, 0, 0).indices, shader_vertex_source, shader_fragment_source);
+    tanganKiri.setup();
 
+    var tanganKanan = new MyObject(JcreateSphere(0, -3, 0.5, 0.6, 0.4, 0.5, 100, 100, 1, 1, 1).positions, JcreateSphere(2, 2, 2, 2, 1, 3, 100, 100, 1, 0, 0).indices, shader_vertex_source, shader_fragment_source);
+    tanganKanan.setup();
+
+    // var cylinder = generateCylinder(0, 0, -1, 1.3, 4, 1, 1, 1)
+    var belt = new MyObject(RgenerateCylinderVertices(0, 0, -4, 1.5, 1.5, 0.5, 0.059, 0.071, 0.129), RgenerateCylinderIndices(), shader_vertex_source, shader_fragment_source);
+    belt.setup();
+
+    var flagRed = new MyObject(generateBlockVertices(1.06,0.3,-1.3,    0.2,0.1,0.5,     1,0,0), generateBlockIndices(), shader_vertex_source, shader_fragment_source);
+    flagRed.setup();
+
+    var flagWhite = new MyObject(generateBlockVertices(1.06, 0.3, -1.4, 0.2, 0.1, 0.5, 1, 1, 1), generateBlockIndices(), shader_vertex_source, shader_fragment_source);
+    flagWhite.setup();
+
+
+
+
+
+
+
+   
     astronautBodyObject.child.push(leg1Object);
     astronautBodyObject.child.push(leg2Object);
     astronautBodyObject.child.push(cubeObject);
@@ -366,6 +439,15 @@ function main() {
     astronautBodyObject.child.push(hand2Object);
     astronautBodyObject.child.push(leftShoe);
     astronautBodyObject.child.push(rightShoe);
+    astronautBodyObject.child.push(tanganKiri);
+    astronautBodyObject.child.push(tanganKanan);
+    astronautBodyObject.child.push(belt);
+
+    astronautBodyObject.child.push(flagRed);
+    astronautBodyObject.child.push(flagWhite);
+    
+    // astronautBodyObject.child.push(rightHand);
+
     // -----------------------------------------------------------------------------------------------------------------------------------------------------------------
 
     // --------------------------------------------------JAVIER---------------------------------------------------------------------------------------------------------
@@ -388,7 +470,12 @@ function main() {
     var black3 = new MyObjectJavier(JcreateSphere(0, 0.9, 2.1, 0.2, 0.2, 0.2, 100, 100, 0, 0, 0).positions, JcreateSphere(0, 3, 5, 1, 1, 1, 100, 100, 1, 1, 1).indices, shader_vertex_source, shader_fragment_source);
     black3.setup();
 
-    var anthena = new MyObjectJavier(JgenerateCylinderVertices(0, 4, 0, 0.1, 0.1, -2, 0.5176470588235295, 0.6, 0.1843137254901961), JgenerateCylinderIndices(), shader_vertex_source, shader_fragment_source);
+    cpAnthena = [
+        0, 2, 0, 0.5176470588235295, 0.6, 0.1843137254901961,
+        0.75, 3, 0, 0.5176470588235295, 0.6, 0.1843137254901961,
+        0, 4, 0, 0.5176470588235295, 0.6, 0.1843137254901961
+    ];
+    var anthena = new MyObjectJavier(bspline3D(cpAnthena, 0.2).vertices, bspline3D(cpAnthena, 2).indices, shader_vertex_source, shader_fragment_source);
     anthena.setup();
     var anthenaBall = new MyObjectJavier(JcreateSphere(0, 4, 0, 0.35, 0.35, 0.35, 100, 100, 0.5176470588235295, 0.6, 0.1843137254901961).positions, JcreateSphere(0, 3, 5, 1, 1, 1, 100, 100, 1, 1, 1).indices, shader_vertex_source, shader_fragment_source);
     anthenaBall.setup();
@@ -423,20 +510,41 @@ function main() {
     leftHand.setup();
     var rightHand = new MyObjectJavier(JcreateSphere(5.7, -2.5, 0, 0.85, 0.7, 0.5, 100, 100, 0.5176470588235295, 0.6, 0.1843137254901961).positions, JcreateSphere(2, 2, 2, 2, 1, 3, 100, 100, 1, 0, 0).indices, shader_vertex_source, shader_fragment_source);
     rightHand.setup();
+    
+    var rightRedFlag = new MyObjectJavier(generateBlockVertices(0, 6, 0, 3.8, 1, 2, 1, 0, 0), generateBlockIndices(), shader_vertex_source, shader_fragment_source);
+    rightRedFlag.setup();
+    var leftRedFlag = new MyObjectJavier(generateBlockVertices(0, 6, 0, -3.8, 1, 2, 1, 0, 0), generateBlockIndices(), shader_vertex_source, shader_fragment_source);
+    leftRedFlag.setup();
 
-    var leftFinger1 = new MyObjectJavier(JcreateSphere(-5.55, -1.7, 0, 0.3, 0.7, 0.2, 100, 100, 0.5176470588235295, 0.6, 0.1843137254901961).positions, JcreateSphere(2, 2, 2, 2, 1, 3, 100, 100, 1, 0, 0).indices, shader_vertex_source, shader_fragment_source);
-    leftFinger1.setup();
-    var leftFinger2 = new MyObjectJavier(JcreateSphere(-5.8, -2.2, 0, 1.5, 0.25, 0.2, 100, 100, 0.5176470588235295, 0.6, 0.1843137254901961).positions, JcreateSphere(2, 2, 2, 2, 1, 3, 100, 100, 1, 0, 0).indices, shader_vertex_source, shader_fragment_source);
-    leftFinger2.setup();
-    var leftFinger3 = new MyObjectJavier(JcreateSphere(-5.8, -2.7, 0, 1.5, 0.25, 0.2, 100, 100, 0.5176470588235295, 0.6, 0.1843137254901961).positions, JcreateSphere(2, 2, 2, 2, 1, 3, 100, 100, 1, 0, 0).indices, shader_vertex_source, shader_fragment_source);
-    leftFinger3.setup();
+    cpRightPole = [
+        5.8, -2.5, 0, 1, 1, 1,
+        8, 6, 0, 1, 1, 1,
+        3.5, 6, 0, 1, 1, 1
+    ];
+    var rightPole = new MyObjectJavier(bspline3D(cpRightPole, 0.2).vertices, bspline3D(cpRightPole, 2).indices, shader_vertex_source, shader_fragment_source);
+    rightPole.setup();
 
-    var rightFinger1 = new MyObjectJavier(JcreateSphere(5.8, -1.7, 0, 0.3, 0.7, 0.2, 100, 100, 0.5176470588235295, 0.6, 0.1843137254901961).positions, JcreateSphere(2, 2, 2, 2, 1, 3, 100, 100, 1, 0, 0).indices, shader_vertex_source, shader_fragment_source);
-    rightFinger1.setup();
-    var rightFinger2 = new MyObjectJavier(JcreateSphere(6, -2.2, 0, 1.5, 0.25, 0.2, 100, 100, 0.5176470588235295, 0.6, 0.1843137254901961).positions, JcreateSphere(2, 2, 2, 2, 1, 3, 100, 100, 1, 0, 0).indices, shader_vertex_source, shader_fragment_source);
-    rightFinger2.setup();
-    var rightFinger3 = new MyObjectJavier(JcreateSphere(6, -2.7, 0, 1.5, 0.25, 0.2, 100, 100, 0.5176470588235295, 0.6, 0.1843137254901961).positions, JcreateSphere(2, 2, 2, 2, 1, 3, 100, 100, 1, 0, 0).indices, shader_vertex_source, shader_fragment_source);
-    rightFinger3.setup();
+    cpleftPole = [
+        -5.8, -2.5, 0, 1, 1, 1,
+        -8, 6, 0, 1, 1, 1,
+        -3.5, 6, 0, 1, 1, 1
+    ];
+    var leftPole = new MyObjectJavier(bspline3D(cpleftPole, 0.2).vertices, bspline3D(cpleftPole, 2).indices, shader_vertex_source, shader_fragment_source);
+    leftPole.setup();
+
+    // var leftFinger1 = new MyObjectJavier(JcreateSphere(-5.55, -1.7, 0, 0.3, 0.7, 0.2, 100, 100, 0.5176470588235295, 0.6, 0.1843137254901961).positions, JcreateSphere(2, 2, 2, 2, 1, 3, 100, 100, 1, 0, 0).indices, shader_vertex_source, shader_fragment_source);
+    // leftFinger1.setup();
+    // var leftFinger2 = new MyObjectJavier(JcreateSphere(-5.8, -2.2, 0, 1.5, 0.25, 0.2, 100, 100, 0.5176470588235295, 0.6, 0.1843137254901961).positions, JcreateSphere(2, 2, 2, 2, 1, 3, 100, 100, 1, 0, 0).indices, shader_vertex_source, shader_fragment_source);
+    // leftFinger2.setup();
+    // var leftFinger3 = new MyObjectJavier(JcreateSphere(-5.8, -2.7, 0, 1.5, 0.25, 0.2, 100, 100, 0.5176470588235295, 0.6, 0.1843137254901961).positions, JcreateSphere(2, 2, 2, 2, 1, 3, 100, 100, 1, 0, 0).indices, shader_vertex_source, shader_fragment_source);
+    // leftFinger3.setup();
+
+    // var rightFinger1 = new MyObjectJavier(JcreateSphere(5.8, -1.7, 0, 0.3, 0.7, 0.2, 100, 100, 0.5176470588235295, 0.6, 0.1843137254901961).positions, JcreateSphere(2, 2, 2, 2, 1, 3, 100, 100, 1, 0, 0).indices, shader_vertex_source, shader_fragment_source);
+    // rightFinger1.setup();
+    // var rightFinger2 = new MyObjectJavier(JcreateSphere(6, -2.2, 0, 1.5, 0.25, 0.2, 100, 100, 0.5176470588235295, 0.6, 0.1843137254901961).positions, JcreateSphere(2, 2, 2, 2, 1, 3, 100, 100, 1, 0, 0).indices, shader_vertex_source, shader_fragment_source);
+    // rightFinger2.setup();
+    // var rightFinger3 = new MyObjectJavier(JcreateSphere(6, -2.7, 0, 1.5, 0.25, 0.2, 100, 100, 0.5176470588235295, 0.6, 0.1843137254901961).positions, JcreateSphere(2, 2, 2, 2, 1, 3, 100, 100, 1, 0, 0).indices, shader_vertex_source, shader_fragment_source);
+    // rightFinger3.setup();
 
 
     object.child.push(body);
@@ -460,23 +568,53 @@ function main() {
     object.child.push(rightArm);
     object.child.push(leftHand);
     object.child.push(rightHand);
-    object.child.push(leftFinger1);
-    object.child.push(leftFinger2);
-    object.child.push(leftFinger3);
-    object.child.push(rightFinger1);
-    object.child.push(rightFinger2);
-    object.child.push(rightFinger3);
+    object.child.push(rightPole);
+    object.child.push(leftPole);
+    object.child.push(rightRedFlag);
+    object.child.push(leftRedFlag);
+    // object.child.push(leftFinger1);
+    // object.child.push(leftFinger2);
+    // object.child.push(leftFinger3);
+    // object.child.push(rightFinger1);
+    // object.child.push(rightFinger2);
+    // object.child.push(rightFinger3);
     // -----------------------------------------------------------------------------------------------------------------------------------------------------------------
-   
+    //---------------------------------------------------------------------ENVIRONMENT ATTRIBUTE------------------------------------------------------------
+    var moon = new MyObjectJavier(JcreateMoon(0, 0, 0, 10, 10, 9.5, 100, 100, 0.7, 0.7, 0.7).positions, JcreateSphere(0, 0, 0, 2, 2, 2, 100, 100, 1, 1, 1).indices, shader_vertex_source, shader_fragment_source);
+    moon.setup();
+
+    // var earth = new MyObjectJavier(JcreateEarth(0, 0, 0, 10, 10, 9.5, 100, 100, 0.7, 0.7, 0.7).positions, JcreateSphere(0, 0, 0, 2, 2, 2, 100, 100, 1, 1, 1).indices, shader_vertex_source, shader_fragment_source);
+    // moon.setup();
+
+    var saturn = new MyObjectJavier(JcreateSaturn(0, 0, 0, 2, 2, 2, 100, 100, 0.878, 0.749, 0.38).positions, JcreateSphere(0, 0, 0, 2, 2, 2, 100, 100, 1, 1, 1).indices, shader_vertex_source, shader_fragment_source);
+    saturn.setup();
+    var saturnRing = new MyObjectJavier(JgenerateSaturRingVertices(0, 0, 0, 3, 4, 0.729, 0.624, 0.392), JgenerateSaturnRingIndices(), shader_vertex_source, shader_fragment_source);
+    saturnRing.setup();
+
+
+    //-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+    object.child.push(moon);
+    object.child.push(saturn);
+    object.child.push(saturnRing);
+    // object.child.push(earth);
     /*========================= DRAWING ========================= */
-    GL.clearColor(0, 0, 0.0, 0);
+    GL.clearColor(0, 0, 0, 0);
 
 
     GL.enable(GL.DEPTH_TEST);
     GL.depthFunc(GL.LEQUAL);
 
+    // var saturnX = 0;
+    var saturnY = 0;
+
     var time_prev = 0;
     var animate = function (time) {
+    var ratioAnimation = 0.005;
+
+    // saturnX += ratioAnimation;
+    saturnY += ratioAnimation;
+    // saturnZ += ratioAnimation;
+
         GL.viewport(0, 0, CANVAS.width, CANVAS.height);
         GL.clear(GL.COLOR_BUFFER_BIT | GL.D_BUFFER_BIT);
         var dt = time - time_prev;
@@ -525,13 +663,15 @@ function main() {
 
 
         astronautBodyObject.MODEL_MATRIX = MODEL_MATRIX;
+        // LIBS.translateZ(astronautBodyObject.MODEL_MATRIX, 3);
+
         astronautBodyObject.render(VIEW_MATRIX, PROJECTION_MATRIX);
 
 
 
 
-        MODEL_MATRIX2 = MODEL_MATRIX;
-        cubeObject.MODEL_MATRIX = MODEL_MATRIX2;
+        // MODEL_MATRIX2 = MODEL_MATRIX;
+        // cubeObject.MODEL_MATRIX = MODEL_MATRIX2;
         // LIBS.scale(cubeObject.MODEL_MATRIX, 3, 3, 3);
         // LIBS.JtranslateX(cubeObject.MODEL_MATRIX, -0);
         // LIBS.JtranslateZ(cubeObject.MODEL_MATRIX, -0.);
@@ -548,8 +688,8 @@ function main() {
         var startPointXJav = -10
 
         head_model = LIBS.get_I4();
-        // LIBS.rotateX(head_model, JrotateX);
-        // LIBS.rotateY(head_model, JrotateY);
+        LIBS.rotateX(head_model, JrotateX);
+        LIBS.rotateY(head_model, JrotateY);
         // LIBS.rotateZ(head_model, JrotateZ);
         LIBS.translateX(head_model, startPointXJav + JtranslateX);
         // LIBS.translateY(head_model, JtranslateY);
@@ -558,8 +698,8 @@ function main() {
         // LIBS.scalling(head_Model, JscaleX, JscaleY, JscaleZ);
 
         body_Model = LIBS.get_I4();
-        // LIBS.rotateX(body_Model, JrotateX);
-        // LIBS.rotateY(body_Model, JrotateY);
+        LIBS.rotateX(body_Model, JrotateX);
+        LIBS.rotateY(body_Model, JrotateY);
         // LIBS.rotateZ(body_Model, JrotateZ);
         LIBS.translateX(body_Model, startPointXJav + JtranslateX);
         // LIBS.translateY(body_Model, JtranslateY);
@@ -568,8 +708,8 @@ function main() {
         // LIBS.scale(body_Model, JscaleX, JscaleY, JscaleZ);
 
         left_hand_model = LIBS.get_I4();
-        // LIBS.rotateX(left_hand_model, JrotateX);
-        // LIBS.rotateY(left_hand_model, JrotateY);
+        LIBS.rotateX(left_hand_model, JrotateX);
+        LIBS.rotateY(left_hand_model, JrotateY);
         LIBS.rotateZ(left_hand_model, JrotateZ);
         LIBS.translateX(left_hand_model, startPointXJav + JtranslateX);
         // LIBS.translateY(left_hand_model, JtranslateY);
@@ -577,8 +717,8 @@ function main() {
         // LIBS.setPosition(left_hand_model,0,0,+pos_z);
         
         right_hand_model = LIBS.get_I4();
-        // LIBS.rotateX(right_hand_model, JrotateX);
-        // LIBS.rotateY(right_hand_model, JrotateY);
+        LIBS.rotateX(right_hand_model, JrotateX);
+        LIBS.rotateY(right_hand_model, JrotateY);
         LIBS.rotateZ(right_hand_model, -JrotateZ);
         LIBS.translateX(right_hand_model, startPointXJav + JtranslateX);
         // LIBS.translateY(right_hand_model, JtranslateY);
@@ -608,18 +748,43 @@ function main() {
         rightArm.MODEL_MATRIX = body_Model;
         leftHand.MODEL_MATRIX = body_Model;
         rightHand.MODEL_MATRIX = body_Model;
-        leftFinger1.MODEL_MATRIX = body_Model;
-        leftFinger2.MODEL_MATRIX = body_Model;
-        leftFinger3.MODEL_MATRIX = body_Model;
-        rightFinger1.MODEL_MATRIX = body_Model;
-        rightFinger2.MODEL_MATRIX = body_Model;
-        rightFinger3.MODEL_MATRIX = body_Model;
+        rightPole.MODEL_MATRIX = body_Model;
+        leftPole.MODEL_MATRIX = body_Model;
+        rightRedFlag.MODEL_MATRIX = body_Model;
+        leftRedFlag.MODEL_MATRIX = body_Model;
+        // leftFinger1.MODEL_MATRIX = body_Model;
+        // leftFinger2.MODEL_MATRIX = body_Model;
+        // leftFinger3.MODEL_MATRIX = body_Model;
+        // rightFinger1.MODEL_MATRIX = body_Model;
+        // rightFinger2.MODEL_MATRIX = body_Model;
+        // rightFinger3.MODEL_MATRIX = body_Model;
 
         object.render(VIEW_MATRIX, PROJECTION_MATRIX);
         
         
-        handleKeys();
+        
+        //-----------------------------ENVIRONENT------------------------------------
+        MOON_MODEL_MATRIX = LIBS.get_I4();
+        LIBS.rotateX(MOON_MODEL_MATRIX, 5);
+        LIBS.rotateY(MOON_MODEL_MATRIX, saturnY);
+        LIBS.translateX(MOON_MODEL_MATRIX, 40);
+        LIBS.translateY(MOON_MODEL_MATRIX, 25);
+        LIBS.translateZ(MOON_MODEL_MATRIX, -55);
 
+        moon.MODEL_MATRIX = MOON_MODEL_MATRIX;
+
+        SATURN_MODEL_MATRIX = LIBS.get_I4();
+        LIBS.rotateX(SATURN_MODEL_MATRIX, 5);
+        LIBS.rotateY(SATURN_MODEL_MATRIX, saturnY);
+        LIBS.translateX(SATURN_MODEL_MATRIX, -26);
+        LIBS.translateY(SATURN_MODEL_MATRIX, 15);
+
+        saturn.MODEL_MATRIX = SATURN_MODEL_MATRIX;
+        saturnRing.MODEL_MATRIX = SATURN_MODEL_MATRIX;
+        
+        moon.render(VIEW_MATRIX, PROJECTION_MATRIX);
+        
+        handleKeys();
 
         window.requestAnimationFrame(animate);
     };

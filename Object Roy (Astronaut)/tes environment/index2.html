@@ -111,7 +111,12 @@ for webgl-utils, m3, m4, and webgl-lessons-ui.
 <script src="https://webglfundamentals.org/webgl/resources/primitives.js"></script>
 
 
-
+<script src="../../General/libs.js"></script>
+<script src="../../General/MyObject copy.js"></script>
+<!-- <script src="../../General/MyObjectTexture.js"></script> -->
+<script src="../../General/functions.js"></script>
+<script src="../../Object Javier (Pet Allien)/functions.js"></script>
+<script src="../../General/MyObjectJavier.js"></script>
 
 
 
@@ -149,27 +154,27 @@ for webgl-utils, m3, m4, and webgl-lessons-ui.
         const faceInfos = [
             {
                 target: gl.TEXTURE_CUBE_MAP_POSITIVE_X,
-                url: 'http://127.0.0.1:5500/GrafKomUTS/Object%20Roy%20(Astronaut)/tes%20environment/space-nebula-background-tile.jpg',
+                url: 'http://127.0.0.1:5500/Object%20Roy%20(Astronaut)/tes%20environment/space-nebula-background-tile.jpg',
             },
             {
                 target: gl.TEXTURE_CUBE_MAP_NEGATIVE_X,
-                url: 'http://127.0.0.1:5500/GrafKomUTS/Object%20Roy%20(Astronaut)/tes%20environment/space-nebula-background-tile.jpg',
+                url: 'http://127.0.0.1:5500/Object%20Roy%20(Astronaut)/tes%20environment/space-nebula-background-tile.jpg',
             },
             {
                 target: gl.TEXTURE_CUBE_MAP_POSITIVE_Y,
-                url: 'http://127.0.0.1:5500/GrafKomUTS/Object%20Roy%20(Astronaut)/tes%20environment/space-nebula-background-tile.jpg',
+                url: 'http://127.0.0.1:5500/Object%20Roy%20(Astronaut)/tes%20environment/space-nebula-background-tile.jpg',
             },
             {
                 target: gl.TEXTURE_CUBE_MAP_NEGATIVE_Y,
-                url: 'http://127.0.0.1:5500/GrafKomUTS/Object%20Roy%20(Astronaut)/tes%20environment/space-nebula-background-tile.jpg',
+                url: 'http://127.0.0.1:5500/Object%20Roy%20(Astronaut)/tes%20environment/space-nebula-background-tile.jpg',
             },
             {
                 target: gl.TEXTURE_CUBE_MAP_POSITIVE_Z,
-                url: 'http://127.0.0.1:5500/GrafKomUTS/Object%20Roy%20(Astronaut)/tes%20environment/space-nebula-background-tile.jpg',
+                url: 'http://127.0.0.1:5500/Object%20Roy%20(Astronaut)/tes%20environment/space-nebula-background-tile.jpg',
             },
             {
                 target: gl.TEXTURE_CUBE_MAP_NEGATIVE_Z,
-                url: 'http://127.0.0.1:5500/GrafKomUTS/Object%20Roy%20(Astronaut)/tes%20environment/space-nebula-background-tile.jpg',
+                url: 'http://127.0.0.1:5500/Object%20Roy%20(Astronaut)/tes%20environment/space-nebula-background-tile.jpg',
             },
         ];
         faceInfos.forEach((faceInfo) => {
@@ -268,7 +273,7 @@ for webgl-utils, m3, m4, and webgl-lessons-ui.
 
             // draw the cube
         
-            gl.depthFunc(gl.LESS);  // use the default depth test
+            /*gl.depthFunc(gl.LESS);  // use the default depth test
             gl.useProgram(envmapProgramInfo.program);
             webglUtils.setBuffersAndAttributes(gl, envmapProgramInfo, cubeBufferInfo);
             webglUtils.setUniforms(envmapProgramInfo, {
@@ -278,7 +283,9 @@ for webgl-utils, m3, m4, and webgl-lessons-ui.
                 u_texture: texture,
                 u_worldCameraPosition: cameraPosition,
             });
-            webglUtils.drawBufferInfo(gl, cubeBufferInfo);
+            webglUtils.drawBufferInfo(gl, cubeBufferInfo); */
+
+
 
             // draw the skybox
 
@@ -292,6 +299,74 @@ for webgl-utils, m3, m4, and webgl-lessons-ui.
                 u_skybox: texture,
             });
             webglUtils.drawBufferInfo(gl, quadBufferInfo);
+    //--------------------------------------------------------------------------------------------------------------------
+            var GL = gl;
+
+            var shader_vertex_source = `
+            attribute vec3 position;
+            attribute vec3 color;
+
+
+            uniform mat4 PMatrix;
+            uniform mat4 VMatrix;
+            uniform mat4 MMatrix;
+            
+            varying vec3 vColor;
+            void main(void) {
+            gl_Position = PMatrix*VMatrix*MMatrix*vec4(position, 1.);
+            vColor = color;
+
+
+            gl_PointSize=20.0;
+            }`;
+                    var shader_fragment_source = `
+            precision mediump float;
+            varying vec3 vColor;
+            // uniform vec3 color;
+
+
+            uniform float greyScality;
+
+
+            void main(void) {
+            float greyScaleValue = (vColor.r + vColor.g + vColor.b)/3.;
+            vec3 greyScaleColor = vec3(greyScaleValue, greyScaleValue, greyScaleValue);
+            vec3 color = mix(greyScaleColor, vColor, greyScality);
+            gl_FragColor = vec4(color, 1.);
+            }`;
+            var MODEL_MATRIX = LIBS.get_I4();
+            LIBS.translateX(MODEL_MATRIX, 1);
+            LIBS.rotateX(MODEL_MATRIX, -250);
+            LIBS.rotateY(MODEL_MATRIX, 300);
+            LIBS.rotateZ(MODEL_MATRIX, 550);
+            //LIBS.rotateY(MODEL_MATRIX, THETA);
+            //LIBS.rotateX(MODEL_MATRIX, ALPHA);
+            LIBS.translateY(MODEL_MATRIX, 2);
+            LIBS.translateX(MODEL_MATRIX, -1);
+
+            var cylinder = generateCylinder(0, 0, -1, 1.3, 4, 0.85, 0.85, 0.85)
+            var cylinder_faces = cylinderElements();
+
+
+            var astronautBodyObject = new MyObject(cylinder, cylinder_faces, shader_vertex_source, shader_fragment_source);
+            astronautBodyObject.setup();
+
+
+
+
+
+
+    //-----------------------------------------------------------------------------------------------------------------------------------
+
+
+
+
+
+
+
+
+
+
 
             requestAnimationFrame(drawScene);
         }

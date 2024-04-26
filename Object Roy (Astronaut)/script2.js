@@ -303,7 +303,7 @@ function main() {
     var cylinder = generateCylinder(0, 0, -1, 1.3, 4, 0.85, 0.85, 0.85)
     var cylinder_faces = cylinderElements();
 
-    console.log("body:", cylinder);
+    // console.log("body:", cylinder);
     var leg1 = generateCylinder(0, 0.5, -3, 0.45, 3, 0.647, 0.663, 0.71)
     var leg1_faces = cylinderElements();
 
@@ -358,8 +358,8 @@ function main() {
 
 
 
-    console.log("hand1:", hand1);
-    console.log("hand1_faces:", hand1_faces);
+    // console.log("hand1:", hand1);
+    // console.log("hand1_faces:", hand1_faces);
 
     // -----------------------------------------------------------------------------------
 
@@ -371,7 +371,10 @@ function main() {
     var MODEL_MATRIX2 = LIBS.get_I4();
 
 
-    LIBS.translateZ(VIEW_MATRIX, -50);
+    // ZOOM
+    LIBS.translateZ(VIEW_MATRIX, -15);
+    LIBS.translateY(VIEW_MATRIX, 1);
+
 
     
 
@@ -591,11 +594,14 @@ function main() {
     var saturnRing = new MyObjectJavier(JgenerateSaturRingVertices(0, 0, 0, 3, 4, 0.729, 0.624, 0.392), JgenerateSaturnRingIndices(), shader_vertex_source, shader_fragment_source);
     saturnRing.setup();
 
-
+    var blackHole = new MyObjectJavier(JcreateBlackHole(0, 0, 0, 12, 12, 12, 100, 100, 0, 0, 0).positions, JcreateBlackHole(0.5, 0.5, 0.5, 10, 10, 10, 100, 100, 1, 1, 1).indices, shader_vertex_source, shader_fragment_source);
+    blackHole.setup();
     //-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
     object.child.push(moon);
     object.child.push(saturn);
     object.child.push(saturnRing);
+    object.child.push(blackHole);
+
     // object.child.push(earth);
     /*========================= DRAWING ========================= */
     GL.clearColor(0, 0, 0, 0);
@@ -606,13 +612,34 @@ function main() {
 
     // var saturnX = 0;
     var saturnY = 0;
+    var rotasiBlackHoleSpeed = 0;
 
+    // ------------------ANIMASI ASTRONOT-------------------
+    var astronotY = 0; //ini ngestore koordinat horizontalnya
+    var astronautMasuk = 0;
+    var astronautMuter = 0;
+    var astronautScaleX = 1;
+    var astronautScaleY = 1;
+    var astronautScaleZ = 1;
+    // ------------------================-------------------
+
+    var headAlienGeserX = 0;
+    
     var time_prev = 0;
     var animate = function (time) {
-    var ratioAnimation = 0.005;
-
-    // saturnX += ratioAnimation;
-    saturnY += ratioAnimation;
+        var ratioAnimation = 0.005;
+        
+        // saturnX += ratioAnimation;
+        saturnY += ratioAnimation;
+        rotasiBlackHoleSpeed += 0.5;
+        astronautMasuk += 0.2;
+        if(JtranslateX <= 5){
+            JtranslateX += 0.01;
+        }else{
+            JtranslateX = 5;
+            headAlienGeserX += 0.05
+        }    
+        astronautMuter += 0.01;
     // saturnZ += ratioAnimation;
 
         GL.viewport(0, 0, CANVAS.width, CANVAS.height);
@@ -630,16 +657,45 @@ function main() {
             ALPHA += dY * 2 * Math.PI / CANVAS.height;
         }
 
+
+
+
         // nge set posisi awal astronaut
-        MODEL_MATRIX = LIBS.get_I4();
-        LIBS.translateX(MODEL_MATRIX, 1);
-        LIBS.rotateX(MODEL_MATRIX, -250);
-        LIBS.rotateY(MODEL_MATRIX, 300);
-        LIBS.rotateZ(MODEL_MATRIX, 550);
-        LIBS.rotateY(MODEL_MATRIX, THETA);
-        LIBS.rotateX(MODEL_MATRIX, ALPHA);
-        LIBS.translateY(MODEL_MATRIX, 2);
-        LIBS.translateX(MODEL_MATRIX, -1);
+        ASTRONOUT_MODEL = LIBS.get_I4();
+        // LIBS.translateX(ASTRONOUT_MODEL, -20);
+        
+        // console.log(-40+astronautMasuk);
+        // console.log(astronautMasuk);
+        
+        // console.log(astronautMasuk)
+        // console.log("scale Y: ", astronautScaleY);
+
+        // LIBS.translateX(ASTRONOUT_MODEL, -50 + astronautMasuk);
+        // if(astronautMasuk >= 70){
+        //     astronautScaleY = 1 - ((astronautMasuk - 69) / 10) ;
+        //     astronautScaleX = 1 - ((astronautMasuk - 69) / 10) ;
+        //     astronautScaleZ = 1 - ((astronautMasuk - 69) / 10) ;
+        // }
+        // if (astronautMasuk >= 78) {
+        //     astronautMasuk = 0;
+        // }
+
+        // if(astronautMasuk >= 0.1 && astronautMasuk<= 0.5){
+        //     astronautScaleX = 1;
+        //     astronautScaleY = 1;
+        //     astronautScaleZ = 1;
+        // }
+        
+        LIBS.scale(ASTRONOUT_MODEL, astronautScaleX, astronautScaleY, astronautScaleZ);
+        
+        // LIBS.rotateX(ASTRONOUT_MODEL, -20 + astronautMuter);
+        LIBS.translateY(ASTRONOUT_MODEL, 1);
+        LIBS.rotateX(ASTRONOUT_MODEL, -250);
+        LIBS.rotateY(ASTRONOUT_MODEL, 5);
+        LIBS.rotateZ(ASTRONOUT_MODEL, 550);
+        LIBS.rotateY(ASTRONOUT_MODEL, THETA);
+        LIBS.rotateX(ASTRONOUT_MODEL, ALPHA);
+
 
 
 
@@ -662,7 +718,7 @@ function main() {
 
 
 
-        astronautBodyObject.MODEL_MATRIX = MODEL_MATRIX;
+        astronautBodyObject.MODEL_MATRIX = ASTRONOUT_MODEL;
         // LIBS.translateZ(astronautBodyObject.MODEL_MATRIX, 3);
 
         astronautBodyObject.render(VIEW_MATRIX, PROJECTION_MATRIX);
@@ -677,7 +733,7 @@ function main() {
         // LIBS.JtranslateZ(cubeObject.MODEL_MATRIX, -0.);
         // LIBS.JtranslateY(cubeObject.MODEL_MATRIX,0);
 
-        // cubeObject.render(VIEW_MATRIX, PROJECTION_MATRIX);
+        cubeObject.render(VIEW_MATRIX, PROJECTION_MATRIX);
 
         // // --------------------------------------------JAVIER---------------------------------------------------------------------------------------------------
         var radius = 1;
@@ -689,17 +745,17 @@ function main() {
 
         head_model = LIBS.get_I4();
         LIBS.rotateX(head_model, JrotateX);
-        LIBS.rotateY(head_model, JrotateY);
+        LIBS.rotateY(head_model, JrotateY + headAlienGeserX);
         // LIBS.rotateZ(head_model, JrotateZ);
         LIBS.translateX(head_model, startPointXJav + JtranslateX);
-        // LIBS.translateY(head_model, JtranslateY);
+        LIBS.translateY(head_model, JtranslateY);
         // LIBS.translateZ(head_model, JtranslateZ);
         // LIBS.setPosition(head_model, 0, 0, 0);
         // LIBS.scalling(head_Model, JscaleX, JscaleY, JscaleZ);
 
         body_Model = LIBS.get_I4();
         LIBS.rotateX(body_Model, JrotateX);
-        LIBS.rotateY(body_Model, JrotateY);
+        LIBS.rotateY(body_Model, 0 + JrotateY);
         // LIBS.rotateZ(body_Model, JrotateZ);
         LIBS.translateX(body_Model, startPointXJav + JtranslateX);
         // LIBS.translateY(body_Model, JtranslateY);
@@ -759,17 +815,17 @@ function main() {
         // rightFinger2.MODEL_MATRIX = body_Model;
         // rightFinger3.MODEL_MATRIX = body_Model;
 
-        object.render(VIEW_MATRIX, PROJECTION_MATRIX);
+        // object.render(VIEW_MATRIX, PROJECTION_MATRIX);
         
         
         
-        //-----------------------------ENVIRONENT------------------------------------
+        //-----------------------------ENVIRONMENT------------------------------------
         MOON_MODEL_MATRIX = LIBS.get_I4();
         LIBS.rotateX(MOON_MODEL_MATRIX, 5);
         LIBS.rotateY(MOON_MODEL_MATRIX, saturnY);
         LIBS.translateX(MOON_MODEL_MATRIX, 40);
         LIBS.translateY(MOON_MODEL_MATRIX, 25);
-        LIBS.translateZ(MOON_MODEL_MATRIX, -55);
+        LIBS.translateZ(MOON_MODEL_MATRIX, -45);
 
         moon.MODEL_MATRIX = MOON_MODEL_MATRIX;
 
@@ -782,8 +838,24 @@ function main() {
         saturn.MODEL_MATRIX = SATURN_MODEL_MATRIX;
         saturnRing.MODEL_MATRIX = SATURN_MODEL_MATRIX;
         
-        moon.render(VIEW_MATRIX, PROJECTION_MATRIX);
+        // moon.render(VIEW_MATRIX, PROJECTION_MATRIX);
+
+    
+
+        BLACKHOLE_MODEL_MATRIX = LIBS.get_I4();
+        LIBS.rotateX(BLACKHOLE_MODEL_MATRIX, 0.3);
+        LIBS.rotateZ(BLACKHOLE_MODEL_MATRIX, rotasiBlackHoleSpeed);
+        LIBS.translateX(BLACKHOLE_MODEL_MATRIX, 55);
+        LIBS.translateY(BLACKHOLE_MODEL_MATRIX, 1);
+        LIBS.translateZ(BLACKHOLE_MODEL_MATRIX, -60);
+
+        blackHole.MODEL_MATRIX = BLACKHOLE_MODEL_MATRIX;
+        // blackHole.render(VIEW_MATRIX, PROJECTION_MATRIX);
         
+
+
+
+// ------------------------------------------------------------------------------------------------------------------
         handleKeys();
 
         window.requestAnimationFrame(animate);

@@ -282,6 +282,70 @@ function JcreateMoon(x, y, z, xRadius, yRadius, zRadius, latitudeBands, longitud
 }
 
 
+function JcreateBlackHole(x, y, z, xRadius, yRadius, zRadius, latitudeBands, longitudeBands, r, g, b) {
+  const positions = [];
+  const indices = [];
+  var realR = r
+  var realG = g
+  var realB = b
+
+
+  for (let lat = 0; lat <= latitudeBands; lat++) {
+    const theta = lat * Math.PI / latitudeBands;
+    const sinTheta = Math.sin(theta);
+    const cosTheta = Math.cos(theta);
+
+    var random = Math.random();
+
+    if (random < 0.05) {
+      r = 1 - 0.7 * realR;
+      g = 1 - 0.7 * realG;
+      b = 1 - 0.7 * realB;
+    }
+    else if (random > 0.95) {
+      r = 1 - 0.8 * realR;
+      g = 1 - 0.8 * realG;
+      b = 1 - 0.8 * realB;
+    }
+    else {
+      r = realR;
+      g = realG;
+      b = realB;
+    }
+
+    for (let long = 0; long <= longitudeBands; long++) {
+      const phi = long * 2 * Math.PI / longitudeBands;
+      const sinPhi = Math.sin(phi);
+      const cosPhi = Math.cos(phi);
+
+      const xPosition = x + xRadius * cosPhi * sinTheta;
+      const yPosition = y + yRadius * sinPhi * sinTheta;
+      const zPosition = z + zRadius * cosTheta;
+
+     
+
+      positions.push(xPosition, yPosition, zPosition, r, g, b);
+
+
+    }
+
+  }
+
+  for (let lat = 0; lat < latitudeBands; lat++) {
+    for (let long = 0; long < longitudeBands; long++) {
+      const first = (lat * (longitudeBands + 1)) + long;
+      const second = first + longitudeBands + 1;
+
+      indices.push(first, second, first + 1);
+      indices.push(second, second + 1, first + 1);
+    }
+  }
+
+  return { positions, indices };
+}
+
+
+
 
   function JgenerateEarVertices(startX, startY, startZ, radius, height, red, green, blue, LoR){
   

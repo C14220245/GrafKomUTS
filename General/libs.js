@@ -18,6 +18,30 @@ var LIBS = {
         return texture;
     },
 
+    rotateObjectAroundArbitraryAxis: function (object, axis, angle) {
+        // Create a rotation matrix for the arbitrary axis
+        var rotationMatrix = LIBS.getRotationMatrix(axis, angle);
+
+        // Apply rotation to the object's model matrix
+        object.SHUU_MATRIX = LIBS.multiply(object.SHUU_MATRIX, rotationMatrix);
+    },
+
+
+    getRotationMatrix: function (axis, angle) {
+        var cos = Math.cos(angle);
+        var sin = Math.sin(angle);
+        var x = axis[0], y = axis[1], z = axis[2];
+        var len = Math.sqrt(x * x + y * y + z * z);
+        x /= len; y /= len; z /= len;
+
+        return [
+            cos + x * x * (1 - cos), x * y * (1 - cos) - z * sin, x * z * (1 - cos) + y * sin, 0,
+            y * x * (1 - cos) + z * sin, cos + y * y * (1 - cos), y * z * (1 - cos) - x * sin, 0,
+            z * x * (1 - cos) - y * sin, z * y * (1 - cos) + x * sin, cos + z * z * (1 - cos), 0,
+            0, 0, 0, 1
+        ];
+    },
+
     degToRad: function (angle) {
   
         return (angle * Math.PI / 180);

@@ -335,7 +335,7 @@ function main() {
 
     // object.child.push(object2);
     /*========================= DRAWING ========================= */
-    GL.clearColor(1, 0.75, 0.0, 0.3);
+    // GL.clearColor(1, 0.75, 0.0, 0.3);
 
 
     GL.enable(GL.DEPTH_TEST);
@@ -425,12 +425,12 @@ function main() {
 
 
 
-        // object.MODEL_MATRIX = MODEL_MATRIX;
-        // object.render(VIEW_MATRIX, PROJECTION_MATRIX);
+        object.MODEL_MATRIX = MODEL_MATRIX;
+        object.render(VIEW_MATRIX, PROJECTION_MATRIX);
 
 
-        // object2.MODEL_MATRIX = MODEL_MATRIX2;
-        // object2.render(VIEW_MATRIX, PROJECTION_MATRIX);
+        object2.MODEL_MATRIX = MODEL_MATRIX2;
+        object2.render(VIEW_MATRIX, PROJECTION_MATRIX);
 
 
         window.requestAnimationFrame(animate);

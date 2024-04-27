@@ -116,11 +116,17 @@ class MyObject {
         GL.drawElements(GL.TRIANGLES, this.faces.length, GL.UNSIGNED_SHORT, 0);
 
         this.child.forEach(obj => {
-            obj.MODEL_MATRIX = this.MODEL_MATRIX;
             obj.render(VIEW_MATRIX, PROJECTION_MATRIX);
         });
+        
 
         GL.flush();
+    }
+
+    applyMatrixToChild() {
+        this.child.forEach(obj => {
+            obj.MODEL_MATRIX = this.MODEL_MATRIX;
+        });
     }
 }
 

@@ -415,7 +415,7 @@ function main() {
 
     // ZOOM
     LIBS.translateZ(VIEW_MATRIX, -60);
-    LIBS.translateY(VIEW_MATRIX, 1);
+    LIBS.translateX(VIEW_MATRIX, 20);
 
 
 
@@ -816,7 +816,7 @@ function main() {
         asteroidTranslasiZ += asteroidDirection;
 
 
-        console.log(asteroidTranslasiX);
+        // console.log(asteroidTranslasiX);
 
         LIBS.translateX(ASTEROIDS_MODEL, asteroidTranslasiX);
         LIBS.translateY(ASTEROIDS_MODEL, asteroidTranslasiX);
@@ -872,6 +872,7 @@ function main() {
 
 
 
+// --------------------------------------------ASTRONOT MOVEMENT---------------------------------------------------------------------------------------------------
         // nge set posisi awal astronaut
         ASTRONOUT_MODEL = LIBS.get_I4();
         LIBS.translateX(ASTRONOUT_MODEL, -20);
@@ -882,7 +883,14 @@ function main() {
         //console.log(astronautMasuk)
         //console.log("scale Y: ", astronautScaleY);
 
-        LIBS.translateX(ASTRONOUT_MODEL, -50 + astronautMasuk);
+
+       
+
+
+
+
+
+        // LIBS.translateX(ASTRONOUT_MODEL, -50 + astronautMasuk);
         if (astronautMasuk >= 70) {
             astronautScaleY = 1 - ((astronautMasuk - 69) / 10);
             astronautScaleX = 1 - ((astronautMasuk - 69) / 10);
@@ -898,7 +906,12 @@ function main() {
             astronautScaleZ = 1;
         }
 
-        LIBS.scale(ASTRONOUT_MODEL, astronautScaleX, astronautScaleY, astronautScaleZ);
+        // LIBS.scale(ASTRONOUT_MODEL, astronautScaleX, astronautScaleY, astronautScaleZ);
+
+
+
+
+
 
         // LIBS.rotateX(ASTRONOUT_MODEL, -20 + astronautMuter);
         LIBS.translateY(ASTRONOUT_MODEL, 1);
@@ -934,7 +947,25 @@ function main() {
 
 
         astronautBodyObject.MODEL_MATRIX = ASTRONOUT_MODEL;
+        astronautBodyObject.applyMatrixToChild();
+
+        HAND1_MODEL_MATRIX = LIBS.get_I4();
+    
+
+        LIBS.translateX(HAND1_MODEL_MATRIX, -20);
+        LIBS.translateY(HAND1_MODEL_MATRIX, 1);
+        LIBS.rotateX(HAND1_MODEL_MATRIX, -250);
+        LIBS.rotateY(HAND1_MODEL_MATRIX, 5);
+        LIBS.rotateZ(HAND1_MODEL_MATRIX, 550);
+
+        LIBS.rotateX(HAND1_MODEL_MATRIX, astronautMuter);
+        hand1Object.MODEL_MATRIX = HAND1_MODEL_MATRIX;
         // LIBS.translateZ(astronautBodyObject.MODEL_MATRIX, 3);
+
+
+
+
+        
 
         astronautBodyObject.render(VIEW_MATRIX, PROJECTION_MATRIX);
 
@@ -1064,6 +1095,22 @@ function main() {
         LIBS.rotateZ(mata3, JrotateZ);
         LIBS.translateX(mata3, startPointXJav + JtranslateX);
 
+        LIBS.rotateY(head_model, -THETA);
+        LIBS.rotateX(head_model, -ALPHA);
+        LIBS.rotateY(body_Model, -THETA);
+        LIBS.rotateX(body_Model, -ALPHA);
+        LIBS.rotateY(left_leg_model, -THETA);
+        LIBS.rotateX(left_leg_model, -ALPHA);
+        LIBS.rotateY(head_model, -THETA);
+        LIBS.rotateX(head_model, -ALPHA);
+        LIBS.rotateY(right_leg_model, -THETA);
+        LIBS.rotateX(right_leg_model, -ALPHA);
+        LIBS.rotateY(right_shoe_model, -THETA);
+        LIBS.rotateX(right_shoe_model, -ALPHA);
+        LIBS.rotateY(left_shoe_model, -THETA);
+        LIBS.rotateX(left_shoe_model, -ALPHA);
+        
+
         object.MODEL_MATRIX = head_model;
         eyes1.MODEL_MATRIX = head_model;
         eyes2.MODEL_MATRIX = head_model;
@@ -1104,7 +1151,7 @@ function main() {
         LIBS.rotateY(left_shoe_model, -5);
         LIBS.rotateY(right_shoe_model, -5);
         randomLegMovement = true;
-        console.log(legchoice);
+        // console.log(legchoice);
 
         if (timesecond < 5) {
             if (legchoice == false) {
@@ -1204,7 +1251,7 @@ function main() {
         else if (timesecond >= 8) {
             LIBSSHUU.translateX(temp, 6+(timesecond-8.3)*4);
         }
-        console.log(timesecond);
+        // console.log(timesecond);
         LIBSSHUU.translateY(temp, 7);
         SHUU_MATRIX2 = LIBSSHUU.multiply(SHUU_MATRIX2, temp);
         temp = LIBSSHUU.get_I4();

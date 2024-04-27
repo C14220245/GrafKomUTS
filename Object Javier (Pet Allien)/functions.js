@@ -553,13 +553,3 @@ function generateBlockIndices() {
 
   return indices;
 }
-
-
-function generateRandomSizedAsteroid(){
-  randomRadius = 0.9 + Math.random() * 0.1;
-  return randomRadius;
-}
-
-for(let i = 0; i <100; i++){
-  console.log(generateRandomSizedAsteroid());
-}

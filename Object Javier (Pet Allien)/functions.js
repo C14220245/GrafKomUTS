@@ -552,3 +552,138 @@ function generateBlockIndices() {
 
   return indices;
 }
+
+function createEliptCone(radius, segments, capSegments, xoff, yoff, zoff, r, g, b) {
+  const vertices = [];
+  const indices = [];
+
+  for (let i = 0; i <= segments; i++) {
+      //v
+      const lat = Math.PI * i / segments;
+      const sinLat = Math.sin(lat);
+      const cosLat = Math.cos(lat);
+
+      for (let j = 0; j <= segments; j++) {
+          //u
+          const lng = 2 * Math.PI * j / segments;
+          const sinLng = Math.sin(lng);
+          const cosLng = Math.cos(lng);
+          const tanLng = Math.tan(lng);
+          const secLng = 1/Math.cos(lng);
+
+
+          const x = lat * cosLng;
+          const y = lat*sinLng;
+          const z = lat;
+
+          vertices.push(radius * x+xoff, radius * y+yoff, radius * z+zoff, r, g, b);
+
+          if (i < segments && j < segments) {
+              let first = i * (segments + 1) + j;
+              let second = first + segments + 1;
+
+              indices.push(first, second, first + 1);
+              indices.push(second, second + 1, first + 1);
+          }
+      }
+  }
+
+  const start = vertices.length / 3;
+  for (let i = 0; i <= capSegments; i++) {
+      const lat = Math.PI * i / segments;
+      const sinLat = Math.sin(lat);
+      const cosLat = Math.cos(lat);
+
+      for (let j = 0; j <= segments; j++) {
+          const lng = 2 * Math.PI * j / segments;
+          const sinLng = Math.sin(lng);
+          const cosLng = Math.cos(lng);
+          const tanLng = Math.tan(lng);
+          const secLng = 1/Math.cos(lng);
+
+
+          const x = lat * cosLng;
+          const y = lat*sinLng;
+          const z = lat;
+
+          vertices.push(radius * x+xoff, radius * y+yoff, radius * z+zoff, r, g, b);
+
+          if (i < capSegments && j < segments) {
+              let first = start + i * (segments + 1) + j;
+              let second = first + segments + 1;
+
+              indices.push(first, second, first + 1);
+              indices.push(second, second + 1, first + 1);
+          }
+      }
+  }
+
+  return { vertices, indices };
+}
+
+
+function createEliptPara(radius, segments, capSegments, xoff, yoff, zoff) {
+  const vertices = [];
+  const indices = [];
+
+  for (let i = 0; i <= segments; i++) {
+      //v
+      const lat = Math.PI * i / segments;
+      const sinLat = Math.sin(lat);
+      const cosLat = Math.cos(lat);
+
+      for (let j = 0; j <= segments; j++) {
+          //u
+          const lng = 2 * Math.PI * j / segments;
+          const sinLng = Math.sin(lng);
+          const cosLng = Math.cos(lng);
+          const tanLng = Math.tan(lng);
+          const secLng = 1 / Math.cos(lng);
+
+
+          const x = lat * cosLng;
+          const y = lat * sinLng;
+          const z = lat * lat;
+
+          vertices.push(radius * x + xoff, radius * y + yoff, radius * z + zoff, 0.3, 0.1, 0.1);
+
+          if (i < segments && j < segments) {
+              let first = i * (segments + 1) + j;
+              let second = first + segments + 1;
+
+              indices.push(first, second, first + 1);
+              indices.push(second, second + 1, first + 1);
+          }
+      }
+  }
+
+  const start = vertices.length / 3;
+  for (let i = 0; i <= capSegments; i++) {
+      const lat = Math.PI * i / segments;
+      const sinLat = Math.sin(lat);
+      const cosLat = Math.cos(lat);
+
+      for (let j = 0; j <= segments; j++) {
+          const lng = 2 * Math.PI * j / segments;
+          const sinLng = Math.sin(lng);
+          const cosLng = Math.cos(lng);
+          const tanLng = Math.tan(lng);
+          const secLng = 1 / Math.cos(lng);
+
+          const x = lat * cosLng;
+          const y = lat * sinLng;
+          const z = lat * lat;
+          vertices.push(radius * x + xoff, radius * y + yoff, radius * z + zoff, 0.3, 0.1, 0.1);
+
+          if (i < capSegments && j < segments) {
+              let first = start + i * (segments + 1) + j;
+              let second = first + segments + 1;
+
+              indices.push(first, second, first + 1);
+              indices.push(second, second + 1, first + 1);
+          }
+      }
+  }
+
+  return { vertices, indices };
+}

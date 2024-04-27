@@ -896,7 +896,12 @@ function main() {
         var pos_y = radius * Math.sin(JtranslateY);
         var pos_z = radius * Math.cos(JtranslateY) * Math.cos(JtranslateX);
 
-        var startPointXJav = -10
+        var tempJav = LIBS.get_I4();
+        JAV_MASTER_MATRIX = LIBS.get_I4();
+        JAV_MASTER_MATRIX2 = LIBS.get_I4();
+        LIBS.rotateY(JAV_MASTER_MATRIX2, -THETA);
+        LIBS.rotateX(JAV_MASTER_MATRIX2, -ALPHA);
+        LIBS.rotateX(tempJav, 5);        var startPointXJav = -10
 
         head_model = LIBS.get_I4();
         LIBS.rotateX(head_model, JrotateX);

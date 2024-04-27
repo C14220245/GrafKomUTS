@@ -372,7 +372,7 @@ function main() {
 
 
     // ZOOM
-    LIBS.translateZ(VIEW_MATRIX, -15);
+    LIBS.translateZ(VIEW_MATRIX, -60);
     LIBS.translateY(VIEW_MATRIX, 1);
 
 
@@ -662,29 +662,29 @@ function main() {
 
         // nge set posisi awal astronaut
         ASTRONOUT_MODEL = LIBS.get_I4();
-        // LIBS.translateX(ASTRONOUT_MODEL, -20);
+        LIBS.translateX(ASTRONOUT_MODEL, -20);
         
-        // console.log(-40+astronautMasuk);
-        // console.log(astronautMasuk);
+        console.log(-40+astronautMasuk);
+        console.log(astronautMasuk);
         
-        // console.log(astronautMasuk)
-        // console.log("scale Y: ", astronautScaleY);
+        console.log(astronautMasuk)
+        console.log("scale Y: ", astronautScaleY);
 
-        // LIBS.translateX(ASTRONOUT_MODEL, -50 + astronautMasuk);
-        // if(astronautMasuk >= 70){
-        //     astronautScaleY = 1 - ((astronautMasuk - 69) / 10) ;
-        //     astronautScaleX = 1 - ((astronautMasuk - 69) / 10) ;
-        //     astronautScaleZ = 1 - ((astronautMasuk - 69) / 10) ;
-        // }
-        // if (astronautMasuk >= 78) {
-        //     astronautMasuk = 0;
-        // }
+        LIBS.translateX(ASTRONOUT_MODEL, -50 + astronautMasuk);
+        if(astronautMasuk >= 70){
+            astronautScaleY = 1 - ((astronautMasuk - 69) / 10) ;
+            astronautScaleX = 1 - ((astronautMasuk - 69) / 10) ;
+            astronautScaleZ = 1 - ((astronautMasuk - 69) / 10) ;
+        }
+        if (astronautMasuk >= 78) {
+            astronautMasuk = 0;
+        }
 
-        // if(astronautMasuk >= 0.1 && astronautMasuk<= 0.5){
-        //     astronautScaleX = 1;
-        //     astronautScaleY = 1;
-        //     astronautScaleZ = 1;
-        // }
+        if(astronautMasuk >= 0.1 && astronautMasuk<= 0.5){
+            astronautScaleX = 1;
+            astronautScaleY = 1;
+            astronautScaleZ = 1;
+        }
         
         LIBS.scale(ASTRONOUT_MODEL, astronautScaleX, astronautScaleY, astronautScaleZ);
         
@@ -815,7 +815,7 @@ function main() {
         // rightFinger2.MODEL_MATRIX = body_Model;
         // rightFinger3.MODEL_MATRIX = body_Model;
 
-        // object.render(VIEW_MATRIX, PROJECTION_MATRIX);
+        object.render(VIEW_MATRIX, PROJECTION_MATRIX);
         
         
         
@@ -845,9 +845,9 @@ function main() {
         BLACKHOLE_MODEL_MATRIX = LIBS.get_I4();
         LIBS.rotateX(BLACKHOLE_MODEL_MATRIX, 0.3);
         LIBS.rotateZ(BLACKHOLE_MODEL_MATRIX, rotasiBlackHoleSpeed);
-        LIBS.translateX(BLACKHOLE_MODEL_MATRIX, 55);
+        LIBS.translateX(BLACKHOLE_MODEL_MATRIX, 15);
         LIBS.translateY(BLACKHOLE_MODEL_MATRIX, 1);
-        LIBS.translateZ(BLACKHOLE_MODEL_MATRIX, -60);
+        LIBS.translateZ(BLACKHOLE_MODEL_MATRIX, -40);
 
         blackHole.MODEL_MATRIX = BLACKHOLE_MODEL_MATRIX;
         // blackHole.render(VIEW_MATRIX, PROJECTION_MATRIX);

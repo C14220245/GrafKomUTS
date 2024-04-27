@@ -124,6 +124,7 @@ function JdrawCircle(x, y, z, radius, r, g, b) {
   
     return { vertices, indices };
   }
+
   function JcreateSphere(x, y, z, xRadius, yRadius, zRadius, latitudeBands, longitudeBands,r,g,b) {
     const positions = [];
     const indices = [];
@@ -551,4 +552,14 @@ function generateBlockIndices() {
   indices.push(5);
 
   return indices;
+}
+
+
+function generateRandomSizedAsteroid(){
+  randomRadius = 0.9 + Math.random() * 0.1;
+  return randomRadius;
+}
+
+for(let i = 0; i <100; i++){
+  console.log(generateRandomSizedAsteroid());
 }

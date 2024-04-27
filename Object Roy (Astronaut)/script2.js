@@ -624,7 +624,7 @@ function main() {
     // object.child.push(rightFinger2);
     // object.child.push(rightFinger3);
     //---------------------------------------------------------------------MALVIN--------------------------------------------------------------------------------------------
-    var UFO = new ShuuObject(McreateSphere(0, 0, 0, 8, 1.6, 8, 64, 64, 0.35, 0.3, 0.3).positions, McreateSphere(0, 0, 0, 8, 1.6, 8, 64, 64, 0.35, 0.3, 0.3).indices, shuu_vertex_source, shuu_fragment_source);
+    var UFO = new ShuuObject(McreateSphere(0, 0, 0, 8, 1.6, 8, 64, 64, 0.816, 0.149, 0.153).positions, McreateSphere(0, 0, 0, 8, 1.6, 8, 64, 64, 0.35, 0.3, 0.3).indices, shuu_vertex_source, shuu_fragment_source);
     UFO.setup();
     // Apply any transformations to the UFO object here...
     var UFOMatrix = LIBSSHUU.get_I4();
@@ -674,34 +674,34 @@ function main() {
     legD2.SHUU_MATRIX = LIBSSHUU.get_I4();
     //warningbox
     var offset = 10;
-    var warning = new ShuuObject(generateBlockVertices(-7 - offset, 2, -12, 13.5, 0.4, 11, 0.5, 0.5, 1), shuuBlockIndices(), shuu_vertex_source, shuu_fragment_source);
+    var warning = new ShuuObject(generateBlockVertices(-7 - offset, 2, -12, 13.5, 0.4, 11, 0, 0, 0), shuuBlockIndices(), shuu_vertex_source, shuu_fragment_source);
     warning.setup();
     warning.SHUU_MATRIX = LIBSSHUU.get_I4();
 
     var cpWt = [
-        0.3 - offset, 12, -11.6, 1, 0, 0,
-        -5 - offset, 3, -11.6, 1, 0, 0,
-        -5 - offset, 3, -11.6, 1, 0, 0,
-        -5 - offset, 3, -11.6, 1, 0, 0,
-        -5 - offset, 3, -11.6, 1, 0, 0,
-        0 - offset, 3, -11.6, 1, 0, 0,
-        5 - offset, 3, -11.6, 1, 0, 0,
-        5 - offset, 3, -11.6, 1, 0, 0,
-        5 - offset, 3, -11.6, 1, 0, 0,
-        5 - offset, 3, -11.6, 1, 0, 0,
-        -0.3 - offset, 12, -11.6, 1, 0, 0,
-        -0.3 - offset, 12, -11.6, 1, 0, 0,
+        0.3 - offset, 12, -11.6, 0.984, 0.725, 0.012,
+        -5 - offset, 3, -11.6, 0.984, 0.725, 0.012,
+        -5 - offset, 3, -11.6, 0.984, 0.725, 0.012,
+        -5 - offset, 3, -11.6, 0.984, 0.725, 0.012,
+        -5 - offset, 3, -11.6, 0.984, 0.725, 0.012,
+        0 - offset, 3, -11.6, 0.984, 0.725, 0.012,
+        5 - offset, 3, -11.6, 0.984, 0.725, 0.012,
+        5 - offset, 3, -11.6, 0.984, 0.725, 0.012,
+        5 - offset, 3, -11.6, 0.984, 0.725, 0.012,
+        5 - offset, 3, -11.6, 0.984, 0.725, 0.012,
+        -0.3 - offset, 12, -11.6, 0.984, 0.725, 0.012,
+        -0.3 - offset, 12, -11.6, 0.984, 0.725, 0.012,
 
     ]
     var warntriangle = new ShuuObject(bspline3D(cpWt, 0.4).vertices, bspline3D(cpWt, 0.4).indices, shuu_vertex_source, shuu_fragment_source);
     warntriangle.setup();
     warntriangle.SHUU_MATRIX = LIBSSHUU.get_I4();
 
-    var tandaseru = new ShuuObject(generateBlockVertices(-0.2 - offset, 6.5, -11.4, 0.8, 0.3, 2, 1, 0, 0), shuuBlockIndices(), shuu_vertex_source, shuu_fragment_source);
+    var tandaseru = new ShuuObject(generateBlockVertices(-0.2 - offset, 6.5, -11.4, 0.8, 0.3, 2, 0.984, 0.725, 0.012), shuuBlockIndices(), shuu_vertex_source, shuu_fragment_source);
     tandaseru.setup();
     tandaseru.SHUU_MATRIX = LIBSSHUU.get_I4();
 
-    var titikseru = new ShuuObject(generateBlockVertices(-0.2 - offset, 5, -11.4, 0.8, 0.3, 0.6, 1, 0, 0), shuuBlockIndices(), shuu_vertex_source, shuu_fragment_source);
+    var titikseru = new ShuuObject(generateBlockVertices(-0.2 - offset, 5, -11.4, 0.8, 0.3, 0.6, 0.984, 0.725, 0.012), shuuBlockIndices(), shuu_vertex_source, shuu_fragment_source);
     titikseru.setup();
     titikseru.SHUU_MATRIX = LIBSSHUU.get_I4();
 
@@ -709,11 +709,11 @@ function main() {
     engine.setup();
     engine.SHUU_MATRIX = LIBSSHUU.get_I4();
 
-    var fire = new ShuuObject(createEliptCone(1,16,16, -7, 2, 0, 0.3, 0.4, 1).vertices, createEliptCone(1,16,16, -7, 2, 0, 0.3, 0.4, 1).indices, shuu_vertex_source, shuu_fragment_source);
+    var fire = new ShuuObject(createEliptCone(1, 16, 16, -7, 2, 0, 0.678, 0.678, 0.678).vertices, createEliptCone(1,16,16, -7, 2, 0, 0.3, 0.4, 1).indices, shuu_vertex_source, shuu_fragment_source);
     fire.setup();
     fire.SHUU_MATRIX = LIBSSHUU.get_I4();
 
-    var firetail = new ShuuObject(createEliptCone(0.7,16,16, -7, 2, 0, 1, 0,7, 0,2).vertices, createEliptCone(0.7,16,16, -7, 2, 0, 1, 0,7, 0,2).indices, shuu_vertex_source, shuu_fragment_source);
+    var firetail = new ShuuObject(createEliptCone(0.7, 16, 16, -7, 2, 0, 1, 0.694, 0.012).vertices, createEliptCone(0.7,16,16, -7, 2, 0, 1, 0,7, 0,2).indices, shuu_vertex_source, shuu_fragment_source);
     firetail.setup();
     firetail.SHUU_MATRIX = LIBSSHUU.get_I4();
 
@@ -748,11 +748,39 @@ function main() {
 
     var blackHole = new MyObjectJavier(JcreateBlackHole(0, 0, 0, 12, 12, 12, 100, 100, 0, 0, 0).positions, JcreateBlackHole(0.5, 0.5, 0.5, 10, 10, 10, 100, 100, 1, 1, 1).indices, shader_vertex_source, shader_fragment_source);
     blackHole.setup();
+
+
+    var asteroids = [];
+
+    var asteroidParent = new MyObjectJavier(JcreateAsteroid(0, 15, 0, 4, 3, 3, 100, 100, 0.5, 0.5, 0.5).positions, JcreateAsteroid(0, 25, 0, 1, 1, 1, 100, 100, 1, 1, 1).indices, shader_vertex_source, shader_fragment_source);
+
+   for(let i = 0; i < 100; i++){
+    var x = -85 + Math.random() * 160; // random x between -15 and 15
+    var y = -35 + Math.random() * 70; // random y between 10 and 17
+    var z = -45 + Math.random() * 20; // random z between -15 and 15
+
+    var sizeRatio = Math.random(); // random size between 1 and 4
+
+    var sizeX = 1.3 * sizeRatio;
+    var sizeY = 1.5 * sizeRatio;
+    var sizeZ = 1.5 * sizeRatio;
+
+    var asteroid1 = new MyObjectJavier(JcreateAsteroid(x, y, z, sizeX, sizeY, sizeZ, 100, 100, 0.5, 0.5, 0.5).positions, JcreateAsteroid(0, 25, 0, 1, 1, 1, 100, 100, 1, 1, 1).indices, shader_vertex_source, shader_fragment_source);
+    asteroidParent.child.push(asteroid1);
+    asteroids.push(asteroid1);
+    }
+    for(let i = 0; i < 100; i++){
+        asteroids[i].setup();
+    }
+    
+
+    
     //-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
     object.child.push(moon);
     object.child.push(saturn);
     object.child.push(saturnRing);
     object.child.push(blackHole);
+    object.child.push(asteroid1);
 
     // object.child.push(earth);
     /*========================= DRAWING ========================= */
@@ -769,6 +797,9 @@ function main() {
     // ------------------ANIMASI ASTRONOT-------------------
     var astronotY = 0; //ini ngestore koordinat horizontalnya
     var astronautMasuk = 0;
+    var asteroidTranslasiX = 0.6;
+    var asteroidTranslasiZ = 0;   
+    var asteroidDirection = 0.01;
     var astronautMuter = 0;
     var astronautScaleX = 1;
     var astronautScaleY = 1;
@@ -780,6 +811,37 @@ function main() {
     var time_prev = 0;
     var timereference = 0;
     var animate = function (time) {
+
+// --------------------------------------------------ENVIRONMENT-------------------------------------------------------------------
+
+
+        ASTEROIDS_MODEL = LIBS.get_I4();
+
+        asteroidTranslasiX += asteroidDirection;
+        asteroidTranslasiZ += asteroidDirection;
+        
+
+        console.log(asteroidTranslasiX);
+
+        LIBS.translateX(ASTEROIDS_MODEL, asteroidTranslasiX);
+        LIBS.translateY(ASTEROIDS_MODEL, asteroidTranslasiX);
+        LIBS.translateZ(ASTEROIDS_MODEL, asteroidTranslasiX);
+        if (asteroidTranslasiX >= 5) {
+            asteroidDirection *= -1;
+        }
+        if (asteroidTranslasiX >= 0.1 && asteroidTranslasiX <= 0.5) {
+            asteroidDirection *= -1;
+        }
+
+        // if (asteroidTranslasiX >= 0.1 && asteroidTranslasiX <= 0.5) {
+        //     astronautScaleX = 1;
+        //     astronautScaleY = 1;
+        //     astronautScaleZ = 1;
+        // }
+
+
+// -------------------------------------------------------------------------------------------------------------------------------
+
         var ratioAnimation = 0.005;
         timereference = timereference + 1;
         timesecond = timereference / 60;
@@ -787,7 +849,7 @@ function main() {
         // saturnX += ratioAnimation;
         saturnY += ratioAnimation;
         rotasiBlackHoleSpeed += 0.5;
-        astronautMasuk += 0.2;
+        astronautMasuk += 0.5;
         if (JtranslateX <= 5) {
             JtranslateX += 0.01;
         } else {
@@ -868,8 +930,11 @@ function main() {
         LIBS.rotateY(temp, THETA);
         MODEL_MATRIX2 = LIBS.multiply(MODEL_MATRIX2, temp);
         temp = LIBS.get_I4();
-        LIBS.translateX(temp, 10);
+        LIBS.translateX(temp, 50);
+        // LIBS.translateX(temp, 70);
         MODEL_MATRIX2 = LIBS.multiply(MODEL_MATRIX2, temp);
+
+        
 
 
 
@@ -896,6 +961,7 @@ function main() {
         var pos_y = radius * Math.sin(JtranslateY);
         var pos_z = radius * Math.cos(JtranslateY) * Math.cos(JtranslateX);
 
+      
         var tempJav = LIBS.get_I4();
         JAV_MASTER_MATRIX = LIBS.get_I4();
         JAV_MASTER_MATRIX2 = LIBS.get_I4();
@@ -941,6 +1007,10 @@ function main() {
         // LIBS.translateZ(right_hand_model, JtranslateZ);
         // LIBS.setPosition(right_hand_model,0,0,+pos_z);
 
+        LIBS.translateX(head_model, 40);
+        LIBS.translateX(body_Model, 40);
+
+
         object.MODEL_MATRIX = head_model;
         eyes1.MODEL_MATRIX = head_model;
         eyes2.MODEL_MATRIX = head_model;
@@ -977,7 +1047,7 @@ function main() {
 
         object.render(VIEW_MATRIX, PROJECTION_MATRIX);
 
-        //-----------------------------MALVIN------------------------------------
+        //---------------------------------------------------------------MALVIN---------------------------------------------------------------
         SHUU_MATRIX = LIBSSHUU.get_I4();
 
 
@@ -1249,6 +1319,7 @@ function main() {
 
 
 
+
         //-----------------------------ENVIRONMENT------------------------------------
         MOON_MODEL_MATRIX = LIBS.get_I4();
         LIBS.rotateX(MOON_MODEL_MATRIX, 5);
@@ -1283,6 +1354,13 @@ function main() {
         // blackHole.render(VIEW_MATRIX, PROJECTION_MATRIX);
 
 
+        // LIBS.rotateY(ASTEROIDS_MODEL, -50 + asteroidTranslasiX);
+        // LIBS.rotateX(ASTEROIDS_MODEL, -50 + astronautMasuk);
+        
+        for(let i = 0; i < 100; i++){
+            asteroids[i].MODEL_MATRIX = ASTEROIDS_MODEL;
+            asteroids[i].render(VIEW_MATRIX, PROJECTION_MATRIX);
+        }
 
 
         // ------------------------------------------------------------------------------------------------------------------

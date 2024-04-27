@@ -651,7 +651,7 @@ function createDome(radius, segments, capSegments) {
           const y = cosLat;
           const z = sinLng * sinLat;
 
-          vertices.push(radius * x, radius * y, radius * z, 0.5, 0.5, 0.5);
+        vertices.push(radius * x, radius * y, radius * z, 0.396, 0.761, 0.831);
 
           if (i < segments && j < segments) {
               let first = i * (segments + 1) + j;
@@ -750,7 +750,7 @@ function createEliptPara(radius, segments, capSegments, xoff, yoff, zoff) {
           const y = lat * sinLng;
           const z = lat * lat;
 
-          vertices.push(radius * x + xoff, radius * y + yoff, radius * z + zoff, 0.3, 0.1, 0.1);
+        vertices.push(radius * x + xoff, radius * y + yoff, radius * z + zoff, 0.482, 0.482, 0.482);
 
           if (i < segments && j < segments) {
               let first = i * (segments + 1) + j;

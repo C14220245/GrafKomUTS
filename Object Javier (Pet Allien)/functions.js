@@ -554,13 +554,19 @@ function generateBlockIndices() {
   return indices;
 }
 
+
+
 function generateRandomSizedAsteroid(desiredSize) {
-  randomRadius = desiredSize + Math.random() * 0.1;
+  randomRadius = desiredSize + Math.random() * 0.9;
   return randomRadius;
 }
 function JcreateAsteroid(x, y, z, xRadius, yRadius, zRadius, latitudeBands, longitudeBands, r, g, b) {
   const positions = [];
   const indices = [];
+
+  realR = r;
+  realG = g;
+  realB = b;
 
   for (let lat = 0; lat <= latitudeBands; lat++) {
     const theta = lat * Math.PI / latitudeBands;
@@ -569,12 +575,30 @@ function JcreateAsteroid(x, y, z, xRadius, yRadius, zRadius, latitudeBands, long
 
     for (let long = 0; long <= longitudeBands; long++) {
       const phi = long * 2 * Math.PI / longitudeBands;
-      const sinPhi = Math.sin(phi);
-      const cosPhi = Math.cos(phi);
+      const sinPhi = Math.sin(phi) * generateRandomSizedAsteroid(0.8);
+      const cosPhi = Math.cos(phi) * generateRandomSizedAsteroid(0.8);
 
-      const xPosition = x + xRadius * cosPhi * sinTheta * generateRandomSizedAsteroid(0.85);
-      const yPosition = y + yRadius * sinPhi * sinTheta * generateRandomSizedAsteroid(0.85);
-      const zPosition = z + zRadius * cosTheta * generateRandomSizedAsteroid(0.85);
+      const xPosition = x + xRadius * cosPhi * sinTheta;
+      const yPosition = y + yRadius * sinPhi * sinTheta;
+      const zPosition = z + zRadius * cosTheta;
+
+      var random = Math.random();
+
+      if (random < 0.1) {
+        r = 0 + 0.8 * realR;
+        g = 0 + 0.8 * realG;
+        b = 0 + 0.8 * realB;
+      }
+      else if (random > 0.9) {
+        r = 0 + 0.9 * realR;
+        g = 0 + 0.9 * realG;
+        b = 0 + 0.9 * realB;
+      }
+      else {
+        r = realR;
+        g = realG;
+        b = realB;
+      }
 
       positions.push(xPosition, yPosition, zPosition, r, g, b);
     }

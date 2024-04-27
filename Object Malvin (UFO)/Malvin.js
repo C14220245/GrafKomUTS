@@ -542,9 +542,9 @@ class MyObject {
     _uv = null;
 
 
-    _MMatrix = LIBS.get_I4();
-    _PMatrix = LIBS.get_I4();
-    _VMatrix = LIBS.get_I4();
+    _MMatrix = LIBSSHUU.get_I4();
+    _PMatrix = LIBSSHUU.get_I4();
+    _VMatrix = LIBSSHUU.get_I4();
     _greyScality = 0;
 
 
@@ -552,7 +552,7 @@ class MyObject {
     TRIANGLE_FACES = null;
 
 
-    SHUU_MATRIX = LIBS.get_I4();
+    SHUU_MATRIX = LIBSSHUU.get_I4();
     texture = null;
 
     child = [];
@@ -638,7 +638,7 @@ class MyObject {
         GL.vertexAttribPointer(this._position, 3, GL.FLOAT, false, 4 * (3 + 3), 0);
         GL.vertexAttribPointer(this._color, 3, GL.FLOAT, false, 4 * (3 + 3), 3 * 4);
         GL.vertexAttribPointer(this._uv, 2, GL.FLOAT, false, 4 * (3 + 3), (3 + 3) * 4);
-        LIBS.translateX(this.SHUU_MATRIX, -5);
+        LIBSSHUU.translateX(this.SHUU_MATRIX, -5);
 
         // Create a rotation matrix
         let angle = 20; // Set the angle of rotation
@@ -795,69 +795,69 @@ function main() {
 
 
     //matrix
-    var PROJECTION_MATRIX = LIBS.get_projection(40, CANVAS.width / CANVAS.height, 1, 100);
-    var VIEW_MATRIX = LIBS.get_I4();
-    var SHUU_MATRIX = LIBS.get_I4();
-    var SHUU_MATRIX2 = LIBS.get_I4();
+    var PROJECTION_MATRIX = LIBSSHUU.get_projection(40, CANVAS.width / CANVAS.height, 1, 100);
+    var VIEW_MATRIX = LIBSSHUU.get_I4();
+    var SHUU_MATRIX = LIBSSHUU.get_I4();
+    var SHUU_MATRIX2 = LIBSSHUU.get_I4();
 
 
-    LIBS.translateZ(VIEW_MATRIX, -25);
+    LIBSSHUU.translateZ(VIEW_MATRIX, -25);
 
 
     //UFO body (parent)
-    var UFO = new MyObject(JcreateSphere(0,0,0,4,0.8,4,64,64,0.35,0.3,0.3).positions, JcreateSphere(0,0,0,4,0.8,4,64,64,0.35,0.3,0.3).indices, shader_vertex_source, shader_fragment_source);
+    var UFO = new MyObject(JcreateSphere(0, 0, 0, 4, 0.8, 4, 64, 64, 0.35, 0.3, 0.3).positions, JcreateSphere(0, 0, 0, 4, 0.8, 4, 64, 64, 0.35, 0.3, 0.3).indices, shader_vertex_source, shader_fragment_source);
     UFO.setup();
     // Apply any transformations to the UFO object here...
-    var UFOMatrix = LIBS.get_I4();
-    LIBS.translateY(UFOMatrix, 1);  // Adjust the Y value as needed
+    var UFOMatrix = LIBSSHUU.get_I4();
+    LIBSSHUU.translateY(UFOMatrix, 1);  // Adjust the Y value as needed
     UFO.SHUU_MATRIX = UFOMatrix;
 
 
     //kacaUFO
     var kacaUFO = new MyObject(createDome(2, 60, 20).vertices, createDome(2, 60, 20).indices, shader_vertex_source, shader_fragment_source);
     kacaUFO.setup();
-    var kacaUFOMatrix = LIBS.get_I4();
-    LIBS.translateY(kacaUFOMatrix, 1);  // Adjust the Y value as needed
-    LIBS.translateZ(kacaUFOMatrix, 5);  // Adjust the Z value as needed
+    var kacaUFOMatrix = LIBSSHUU.get_I4();
+    LIBSSHUU.translateY(kacaUFOMatrix, 1);  // Adjust the Y value as needed
+    LIBSSHUU.translateZ(kacaUFOMatrix, 5);  // Adjust the Z value as needed
 
     //legs
     //legA1
     var legA1 = new MyObject(createCylinder(0.1, 1, 64, 1.5, -1, 1.5).vertices, createCylinder(0.1, 1, 64, 1.5, -1, 1.5).indices, shader_vertex_source, shader_fragment_source);
     legA1.setup();
-    legA1.SHUU_MATRIX = LIBS.get_I4();
+    legA1.SHUU_MATRIX = LIBSSHUU.get_I4();
     //legA2
     var legA2 = new MyObject(createCylinder(0.1, 1, 64, 1.5, -2, 1.5).vertices, createCylinder(0.1, 1.5, 64, 1.5, -1, 1.5).indices, shader_vertex_source, shader_fragment_source);
     legA2.setup();
-    legA2.SHUU_MATRIX = LIBS.get_I4();
+    legA2.SHUU_MATRIX = LIBSSHUU.get_I4();
     //legB1
     var legB1 = new MyObject(createCylinder(0.1, 1, 64, -1.5, -1, -1.5).vertices, createCylinder(0.1, 1, 64, -1.5, -1, -1.5).indices, shader_vertex_source, shader_fragment_source);
     legB1.setup();
-    legB1.SHUU_MATRIX = LIBS.get_I4();
+    legB1.SHUU_MATRIX = LIBSSHUU.get_I4();
     //legB2
     var legB2 = new MyObject(createCylinder(0.1, 1, 64, -1.5, -2, -1.5).vertices, createCylinder(0.1, 1, 64, -1.5, -2, -1.5).indices, shader_vertex_source, shader_fragment_source);
     legB2.setup();
-    legB2.SHUU_MATRIX = LIBS.get_I4();
+    legB2.SHUU_MATRIX = LIBSSHUU.get_I4();
     //legC1
     var legC1 = new MyObject(createCylinder(0.1, 1, 64, -1.5, -1, 1.5).vertices, createCylinder(0.1, 1, 64, -1.5, -1, 1.5).indices, shader_vertex_source, shader_fragment_source);
     legC1.setup();
-    legC1.SHUU_MATRIX = LIBS.get_I4();
+    legC1.SHUU_MATRIX = LIBSSHUU.get_I4();
     //legC2
     var legC2 = new MyObject(createCylinder(0.1, 1, 64, -1.5, -2, 1.5).vertices, createCylinder(0.1, 1, 64, -1.5, -2, 1.5).indices, shader_vertex_source, shader_fragment_source);
     legC2.setup();
-    legC2.SHUU_MATRIX = LIBS.get_I4();
+    legC2.SHUU_MATRIX = LIBSSHUU.get_I4();
     //legD1
     var legD1 = new MyObject(createCylinder(0.1, 1, 64, 1.5, -1, -1.5).vertices, createCylinder(0.1, 1, 64, 1.5, -1, -1.5).indices, shader_vertex_source, shader_fragment_source);
     legD1.setup();
-    legD1.SHUU_MATRIX = LIBS.get_I4();
+    legD1.SHUU_MATRIX = LIBSSHUU.get_I4();
     //legD2
     var legD2 = new MyObject(createCylinder(0.1, 1, 64, 1.5, -2, -1.5).vertices, createCylinder(0.1, 1, 64, 1.5, -2, -1.5).indices, shader_vertex_source, shader_fragment_source);
     legD2.setup();
-    legD2.SHUU_MATRIX = LIBS.get_I4();
+    legD2.SHUU_MATRIX = LIBSSHUU.get_I4();
     //warningbox
     var offset = 5;
-    var warning = new MyObject(generateBlockVertices(-3.5 - offset, 2.25, -6, 7, 0.2, 4.5, 0.5, 0.5, 1), generateBlockIndices(), shader_vertex_source, shader_fragment_source);
+    var warning = new MyObject(generateBlockVertices(-2.05 - offset, 2.75, -6, 4, 0.2, 3.5, 0.5, 0.5, 1), generateBlockIndices(), shader_vertex_source, shader_fragment_source);
     warning.setup();
-    warning.SHUU_MATRIX = LIBS.get_I4();
+    warning.SHUU_MATRIX = LIBSSHUU.get_I4();
 
     var cpWt = [
         0.15 - offset, 6, -5.8, 1, 0, 0,
@@ -876,15 +876,15 @@ function main() {
     ]
     var warntriangle = new MyObject(bspline3D(cpWt, 0.2).vertices, bspline3D(cpWt, 0.3).indices, shader_vertex_source, shader_fragment_source);
     warntriangle.setup();
-    warntriangle.SHUU_MATRIX = LIBS.get_I4();
+    warntriangle.SHUU_MATRIX = LIBSSHUU.get_I4();
 
     var tandaseru = new MyObject(generateBlockVertices(-0.1 - offset, 4, -5.7, 0.2, 0.3, 1, 1, 0, 0), generateBlockIndices(), shader_vertex_source, shader_fragment_source);
     tandaseru.setup();
-    tandaseru.SHUU_MATRIX = LIBS.get_I4();
+    tandaseru.SHUU_MATRIX = LIBSSHUU.get_I4();
 
     var titikseru = new MyObject(generateBlockVertices(-0.1 - offset, 3.3, -5.7, 0.2, 0.3, 0.3, 1, 0, 0), generateBlockIndices(), shader_vertex_source, shader_fragment_source);
     titikseru.setup();
-    titikseru.SHUU_MATRIX = LIBS.get_I4();
+    titikseru.SHUU_MATRIX = LIBSSHUU.get_I4();
 
     UFO.child.push(kacaUFO);
     UFO.child.push(legA1);
@@ -900,11 +900,7 @@ function main() {
     warning.child.push(tandaseru);
     warning.child.push(titikseru);
     /*========================= DRAWING ========================= */
-<<<<<<< HEAD
-    // GL.clearColor(1, 0.75, 0.0, 0.3);
-=======
     GL.clearColor(0.5, 0.75, 0.0, 0.3);
->>>>>>> cfe4ae289ea5b27382b4080884d875aa568219e6
 
 
     GL.enable(GL.DEPTH_TEST);
@@ -919,7 +915,7 @@ function main() {
         time_prev = time;
 
         //move objects
-        //LIBS.translateX(kacaUFO.SHUU_MATRIX, 20);
+        //LIBSSHUU.translateX(kacaUFO.SHUU_MATRIX, 20);
 
         //move done
         timereference = timereference + 1;
@@ -940,42 +936,34 @@ function main() {
 
 
 
-        SHUU_MATRIX = LIBS.get_I4();
+        SHUU_MATRIX = LIBSSHUU.get_I4();
 
 
 
-        SHUU_MATRIX2 = LIBS.get_I4();
+        SHUU_MATRIX2 = LIBSSHUU.get_I4();
 
         //debug view
-        // LIBS.rotateZ(SHUU_MATRIX2, -0.5);
-        // LIBS.rotateX(SHUU_MATRIX2, 0.2);
-        // LIBS.rotateY(SHUU_MATRIX2, -0.5);
+        // LIBSSHUU.rotateZ(SHUU_MATRIX2, -0.5);
+        // LIBSSHUU.rotateX(SHUU_MATRIX2, 0.2);
+        // LIBSSHUU.rotateY(SHUU_MATRIX2, -0.5);
 
-        LIBS.rotateY(SHUU_MATRIX2, -THETA);
-        LIBS.rotateX(SHUU_MATRIX2, -ALPHA);
+        LIBSSHUU.rotateY(SHUU_MATRIX2, -THETA);
+        LIBSSHUU.rotateX(SHUU_MATRIX2, -ALPHA);
 
         //PENTING! UTK ROTASI DAN GESER SELURUH OBJEK
-        var temp = LIBS.get_I4();
-        //LIBS.rotateY(temp, 1);
-        if(timesecond<3){
-        LIBS.translateX(temp, timesecond*2);
+        var temp = LIBSSHUU.get_I4();
+        //LIBSSHUU.rotateY(temp, 1);
+        if (timesecond < 3) {
+            LIBSSHUU.translateX(temp, timesecond * 2);
         }
-        else{
-            LIBS.translateX(temp, 6);
+        else {
+            LIBSSHUU.translateX(temp, 6);
         }
-        SHUU_MATRIX2 = LIBS.multiply(SHUU_MATRIX2, temp);
-        temp = LIBS.get_I4();
+        SHUU_MATRIX2 = LIBSSHUU.multiply(SHUU_MATRIX2, temp);
+        temp = LIBSSHUU.get_I4();
 
 
 
-<<<<<<< HEAD
-        object.MODEL_MATRIX = MODEL_MATRIX;
-        object.render(VIEW_MATRIX, PROJECTION_MATRIX);
-
-
-        object2.MODEL_MATRIX = MODEL_MATRIX2;
-        object2.render(VIEW_MATRIX, PROJECTION_MATRIX);
-=======
 
         UFO.render(VIEW_MATRIX, PROJECTION_MATRIX);
 
@@ -983,86 +971,86 @@ function main() {
         //object3.SHUU_MATRIX = SHUU_MATRIX2;
         UFO.SHUU_MATRIX = SHUU_MATRIX2;
         legA1.SHUU_MATRIX = SHUU_MATRIX2;
-        kacaUFO.INDIVIDUAL_MATRIX = LIBS.get_I4();
-        LIBS.translateY(kacaUFO.INDIVIDUAL_MATRIX, 0);
+        kacaUFO.INDIVIDUAL_MATRIX = LIBSSHUU.get_I4();
+        LIBSSHUU.translateY(kacaUFO.INDIVIDUAL_MATRIX, 0);
         //move kacaUFO
-        kacaUFO.SHUU_MATRIX = LIBS.get_I4();
-        kacaUFO.SHUU_MATRIX = LIBS.multiply(kacaUFO.SHUU_MATRIX, SHUU_MATRIX2);
-        kacaUFO.SHUU_MATRIX = LIBS.multiply(kacaUFO.SHUU_MATRIX, kacaUFO.INDIVIDUAL_MATRIX);
+        kacaUFO.SHUU_MATRIX = LIBSSHUU.get_I4();
+        kacaUFO.SHUU_MATRIX = LIBSSHUU.multiply(kacaUFO.SHUU_MATRIX, SHUU_MATRIX2);
+        kacaUFO.SHUU_MATRIX = LIBSSHUU.multiply(kacaUFO.SHUU_MATRIX, kacaUFO.INDIVIDUAL_MATRIX);
         //move done
 
 
         //Concat legA1
-        legA1.INDIVIDUAL_MATRIX = LIBS.get_I4();
-        legA1.SHUU_MATRIX = LIBS.get_I4();
+        legA1.INDIVIDUAL_MATRIX = LIBSSHUU.get_I4();
+        legA1.SHUU_MATRIX = LIBSSHUU.get_I4();
         //concat legA1 done
         //legA1A2
-        legA2.INDIVIDUAL_MATRIX = LIBS.get_I4();
-        legA2.SHUU_MATRIX = LIBS.get_I4();
+        legA2.INDIVIDUAL_MATRIX = LIBSSHUU.get_I4();
+        legA2.SHUU_MATRIX = LIBSSHUU.get_I4();
         //legA1A2 done
         //Concat legB1
-        legB1.INDIVIDUAL_MATRIX = LIBS.get_I4();
-        legB1.SHUU_MATRIX = LIBS.get_I4();
-        legB1.SHUU_MATRIX = LIBS.multiply(legB1.SHUU_MATRIX, SHUU_MATRIX2);
-        legB1.SHUU_MATRIX = LIBS.multiply(legB1.SHUU_MATRIX, legB1.INDIVIDUAL_MATRIX);
+        legB1.INDIVIDUAL_MATRIX = LIBSSHUU.get_I4();
+        legB1.SHUU_MATRIX = LIBSSHUU.get_I4();
+        legB1.SHUU_MATRIX = LIBSSHUU.multiply(legB1.SHUU_MATRIX, SHUU_MATRIX2);
+        legB1.SHUU_MATRIX = LIBSSHUU.multiply(legB1.SHUU_MATRIX, legB1.INDIVIDUAL_MATRIX);
         //concat legB1 done
         //legB1B2
-        legB2.INDIVIDUAL_MATRIX = LIBS.get_I4();
-        legB2.SHUU_MATRIX = LIBS.get_I4();
-        legB2.SHUU_MATRIX = LIBS.multiply(legB2.SHUU_MATRIX, SHUU_MATRIX2);
-        legB2.SHUU_MATRIX = LIBS.multiply(legB2.SHUU_MATRIX, legB2.INDIVIDUAL_MATRIX);
+        legB2.INDIVIDUAL_MATRIX = LIBSSHUU.get_I4();
+        legB2.SHUU_MATRIX = LIBSSHUU.get_I4();
+        legB2.SHUU_MATRIX = LIBSSHUU.multiply(legB2.SHUU_MATRIX, SHUU_MATRIX2);
+        legB2.SHUU_MATRIX = LIBSSHUU.multiply(legB2.SHUU_MATRIX, legB2.INDIVIDUAL_MATRIX);
         //legB1B2 done
         //Concat legC1
-        legC1.INDIVIDUAL_MATRIX = LIBS.get_I4();
-        legC1.SHUU_MATRIX = LIBS.get_I4();
-        legC1.SHUU_MATRIX = LIBS.multiply(legC1.SHUU_MATRIX, SHUU_MATRIX2);
-        legC1.SHUU_MATRIX = LIBS.multiply(legC1.SHUU_MATRIX, legC1.INDIVIDUAL_MATRIX);
+        legC1.INDIVIDUAL_MATRIX = LIBSSHUU.get_I4();
+        legC1.SHUU_MATRIX = LIBSSHUU.get_I4();
+        legC1.SHUU_MATRIX = LIBSSHUU.multiply(legC1.SHUU_MATRIX, SHUU_MATRIX2);
+        legC1.SHUU_MATRIX = LIBSSHUU.multiply(legC1.SHUU_MATRIX, legC1.INDIVIDUAL_MATRIX);
         //concat legC1 done
         //legC1C2
-        legC2.INDIVIDUAL_MATRIX = LIBS.get_I4();
-        legC2.SHUU_MATRIX = LIBS.get_I4();
-        legC2.SHUU_MATRIX = LIBS.multiply(legC2.SHUU_MATRIX, SHUU_MATRIX2);
-        legC2.SHUU_MATRIX = LIBS.multiply(legC2.SHUU_MATRIX, legC2.INDIVIDUAL_MATRIX);
+        legC2.INDIVIDUAL_MATRIX = LIBSSHUU.get_I4();
+        legC2.SHUU_MATRIX = LIBSSHUU.get_I4();
+        legC2.SHUU_MATRIX = LIBSSHUU.multiply(legC2.SHUU_MATRIX, SHUU_MATRIX2);
+        legC2.SHUU_MATRIX = LIBSSHUU.multiply(legC2.SHUU_MATRIX, legC2.INDIVIDUAL_MATRIX);
         //legC1C2 done
         //Concat legD1
-        legD1.INDIVIDUAL_MATRIX = LIBS.get_I4();
-        legD1.SHUU_MATRIX = LIBS.get_I4();
-        legD1.SHUU_MATRIX = LIBS.multiply(legD1.SHUU_MATRIX, SHUU_MATRIX2);
-        legD1.SHUU_MATRIX = LIBS.multiply(legD1.SHUU_MATRIX, legD1.INDIVIDUAL_MATRIX);
+        legD1.INDIVIDUAL_MATRIX = LIBSSHUU.get_I4();
+        legD1.SHUU_MATRIX = LIBSSHUU.get_I4();
+        legD1.SHUU_MATRIX = LIBSSHUU.multiply(legD1.SHUU_MATRIX, SHUU_MATRIX2);
+        legD1.SHUU_MATRIX = LIBSSHUU.multiply(legD1.SHUU_MATRIX, legD1.INDIVIDUAL_MATRIX);
         //concat legD1 done
         //legD1D2
-        legD2.INDIVIDUAL_MATRIX = LIBS.get_I4();
-        legD2.SHUU_MATRIX = LIBS.get_I4();
-        legD2.SHUU_MATRIX = LIBS.multiply(legD2.SHUU_MATRIX, SHUU_MATRIX2);
-        legD2.SHUU_MATRIX = LIBS.multiply(legD2.SHUU_MATRIX, legD2.INDIVIDUAL_MATRIX);
+        legD2.INDIVIDUAL_MATRIX = LIBSSHUU.get_I4();
+        legD2.SHUU_MATRIX = LIBSSHUU.get_I4();
+        legD2.SHUU_MATRIX = LIBSSHUU.multiply(legD2.SHUU_MATRIX, SHUU_MATRIX2);
+        legD2.SHUU_MATRIX = LIBSSHUU.multiply(legD2.SHUU_MATRIX, legD2.INDIVIDUAL_MATRIX);
         //legD1D2 done
 
         //WarnBox
-        warning.INDIVIDUAL_MATRIX = LIBS.get_I4();
-        warning.SHUU_MATRIX = LIBS.get_I4();
-        warning.SHUU_MATRIX = LIBS.multiply(warning.SHUU_MATRIX, SHUU_MATRIX2);
-        warning.SHUU_MATRIX = LIBS.multiply(warning.SHUU_MATRIX, warning.INDIVIDUAL_MATRIX);
+        warning.INDIVIDUAL_MATRIX = LIBSSHUU.get_I4();
+        warning.SHUU_MATRIX = LIBSSHUU.get_I4();
+        warning.SHUU_MATRIX = LIBSSHUU.multiply(warning.SHUU_MATRIX, SHUU_MATRIX2);
+        warning.SHUU_MATRIX = LIBSSHUU.multiply(warning.SHUU_MATRIX, warning.INDIVIDUAL_MATRIX);
         //WarnBox done
 
         //warntrg
-        warntriangle.INDIVIDUAL_MATRIX = LIBS.get_I4();
-        warntriangle.SHUU_MATRIX = LIBS.get_I4();
-        warntriangle.SHUU_MATRIX = LIBS.multiply(warntriangle.SHUU_MATRIX, SHUU_MATRIX2);
-        warntriangle.SHUU_MATRIX = LIBS.multiply(warntriangle.SHUU_MATRIX, warntriangle.INDIVIDUAL_MATRIX);
+        warntriangle.INDIVIDUAL_MATRIX = LIBSSHUU.get_I4();
+        warntriangle.SHUU_MATRIX = LIBSSHUU.get_I4();
+        warntriangle.SHUU_MATRIX = LIBSSHUU.multiply(warntriangle.SHUU_MATRIX, SHUU_MATRIX2);
+        warntriangle.SHUU_MATRIX = LIBSSHUU.multiply(warntriangle.SHUU_MATRIX, warntriangle.INDIVIDUAL_MATRIX);
         //warntrg done
 
         //btgseru
-        tandaseru.INDIVIDUAL_MATRIX = LIBS.get_I4();
-        tandaseru.SHUU_MATRIX = LIBS.get_I4();
-        tandaseru.SHUU_MATRIX = LIBS.multiply(tandaseru.SHUU_MATRIX, SHUU_MATRIX2);
-        tandaseru.SHUU_MATRIX = LIBS.multiply(tandaseru.SHUU_MATRIX, tandaseru.INDIVIDUAL_MATRIX);
+        tandaseru.INDIVIDUAL_MATRIX = LIBSSHUU.get_I4();
+        tandaseru.SHUU_MATRIX = LIBSSHUU.get_I4();
+        tandaseru.SHUU_MATRIX = LIBSSHUU.multiply(tandaseru.SHUU_MATRIX, SHUU_MATRIX2);
+        tandaseru.SHUU_MATRIX = LIBSSHUU.multiply(tandaseru.SHUU_MATRIX, tandaseru.INDIVIDUAL_MATRIX);
         //btgseru done
 
         //ttkseru
-        titikseru.INDIVIDUAL_MATRIX = LIBS.get_I4();
-        titikseru.SHUU_MATRIX = LIBS.get_I4();
-        titikseru.SHUU_MATRIX = LIBS.multiply(titikseru.SHUU_MATRIX, SHUU_MATRIX2);
-        titikseru.SHUU_MATRIX = LIBS.multiply(titikseru.SHUU_MATRIX, titikseru.INDIVIDUAL_MATRIX);
+        titikseru.INDIVIDUAL_MATRIX = LIBSSHUU.get_I4();
+        titikseru.SHUU_MATRIX = LIBSSHUU.get_I4();
+        titikseru.SHUU_MATRIX = LIBSSHUU.multiply(titikseru.SHUU_MATRIX, SHUU_MATRIX2);
+        titikseru.SHUU_MATRIX = LIBSSHUU.multiply(titikseru.SHUU_MATRIX, titikseru.INDIVIDUAL_MATRIX);
         //ttkseru done
 
         //scale warning
@@ -1073,31 +1061,31 @@ function main() {
         if (scale > 1) {
             scale = 1;
         }
-        LIBS.scale(warning.SHUU_MATRIX, scale, scale, scale);
-        LIBS.scale(warntriangle.SHUU_MATRIX, scale, scale, scale);
-        LIBS.scale(tandaseru.SHUU_MATRIX, scale, scale, scale);
-        LIBS.scale(titikseru.SHUU_MATRIX, scale, scale, scale);
-        warning.SHUU_MATRIX = LIBS.multiply(warning.SHUU_MATRIX, SHUU_MATRIX2);
-        warning.SHUU_MATRIX = LIBS.multiply(warning.SHUU_MATRIX, warning.INDIVIDUAL_MATRIX);
-        warntriangle.SHUU_MATRIX = LIBS.multiply(warntriangle.SHUU_MATRIX, SHUU_MATRIX2);
-        warntriangle.SHUU_MATRIX = LIBS.multiply(warntriangle.SHUU_MATRIX, warntriangle.INDIVIDUAL_MATRIX);
-        tandaseru.SHUU_MATRIX = LIBS.multiply(tandaseru.SHUU_MATRIX, SHUU_MATRIX2);
-        tandaseru.SHUU_MATRIX = LIBS.multiply(tandaseru.SHUU_MATRIX, tandaseru.INDIVIDUAL_MATRIX);
-        titikseru.SHUU_MATRIX = LIBS.multiply(titikseru.SHUU_MATRIX, SHUU_MATRIX2);
-        titikseru.SHUU_MATRIX = LIBS.multiply(titikseru.SHUU_MATRIX, titikseru.INDIVIDUAL_MATRIX);
+        LIBSSHUU.scale(warning.SHUU_MATRIX, scale, scale, scale);
+        LIBSSHUU.scale(warntriangle.SHUU_MATRIX, scale, scale, scale);
+        LIBSSHUU.scale(tandaseru.SHUU_MATRIX, scale, scale, scale);
+        LIBSSHUU.scale(titikseru.SHUU_MATRIX, scale, scale, scale);
+        warning.SHUU_MATRIX = LIBSSHUU.multiply(warning.SHUU_MATRIX, SHUU_MATRIX2);
+        warning.SHUU_MATRIX = LIBSSHUU.multiply(warning.SHUU_MATRIX, warning.INDIVIDUAL_MATRIX);
+        warntriangle.SHUU_MATRIX = LIBSSHUU.multiply(warntriangle.SHUU_MATRIX, SHUU_MATRIX2);
+        warntriangle.SHUU_MATRIX = LIBSSHUU.multiply(warntriangle.SHUU_MATRIX, warntriangle.INDIVIDUAL_MATRIX);
+        tandaseru.SHUU_MATRIX = LIBSSHUU.multiply(tandaseru.SHUU_MATRIX, SHUU_MATRIX2);
+        tandaseru.SHUU_MATRIX = LIBSSHUU.multiply(tandaseru.SHUU_MATRIX, tandaseru.INDIVIDUAL_MATRIX);
+        titikseru.SHUU_MATRIX = LIBSSHUU.multiply(titikseru.SHUU_MATRIX, SHUU_MATRIX2);
+        titikseru.SHUU_MATRIX = LIBSSHUU.multiply(titikseru.SHUU_MATRIX, titikseru.INDIVIDUAL_MATRIX);
         //scale done
-        legB1.INDIVIDUAL_MATRIX = LIBS.get_I4();
-        legB1.SHUU_MATRIX = LIBS.get_I4();
-        legB2.INDIVIDUAL_MATRIX = LIBS.get_I4();
-        legB2.SHUU_MATRIX = LIBS.get_I4();
-        legC1.INDIVIDUAL_MATRIX = LIBS.get_I4();
-        legC1.SHUU_MATRIX = LIBS.get_I4();
-        legC2.INDIVIDUAL_MATRIX = LIBS.get_I4();
-        legC2.SHUU_MATRIX = LIBS.get_I4();
-        legD1.INDIVIDUAL_MATRIX = LIBS.get_I4();
-        legD1.SHUU_MATRIX = LIBS.get_I4();
-        legD2.INDIVIDUAL_MATRIX = LIBS.get_I4();
-        legD2.SHUU_MATRIX = LIBS.get_I4();
+        legB1.INDIVIDUAL_MATRIX = LIBSSHUU.get_I4();
+        legB1.SHUU_MATRIX = LIBSSHUU.get_I4();
+        legB2.INDIVIDUAL_MATRIX = LIBSSHUU.get_I4();
+        legB2.SHUU_MATRIX = LIBSSHUU.get_I4();
+        legC1.INDIVIDUAL_MATRIX = LIBSSHUU.get_I4();
+        legC1.SHUU_MATRIX = LIBSSHUU.get_I4();
+        legC2.INDIVIDUAL_MATRIX = LIBSSHUU.get_I4();
+        legC2.SHUU_MATRIX = LIBSSHUU.get_I4();
+        legD1.INDIVIDUAL_MATRIX = LIBSSHUU.get_I4();
+        legD1.SHUU_MATRIX = LIBSSHUU.get_I4();
+        legD2.INDIVIDUAL_MATRIX = LIBSSHUU.get_I4();
+        legD2.SHUU_MATRIX = LIBSSHUU.get_I4();
 
 
         //Rotate legs
@@ -1111,81 +1099,80 @@ function main() {
         var axisD2 = [1.5, -1.5, -1.5];
         if (timesecond < 2) {
             //legA
-            LIBS.rotateObjectAroundArbitraryAxis(legA2, axisA2, timesecond - 2);
+            LIBSSHUU.rotateObjectAroundArbitraryAxis(legA2, axisA2, timesecond - 2);
             //legB
-            LIBS.rotateObjectAroundArbitraryAxis(legB2, axisB2, timesecond - 2);
+            LIBSSHUU.rotateObjectAroundArbitraryAxis(legB2, axisB2, timesecond - 2);
             //legC
-            LIBS.rotateObjectAroundArbitraryAxis(legC2, axisC2, timesecond - 2);
+            LIBSSHUU.rotateObjectAroundArbitraryAxis(legC2, axisC2, timesecond - 2);
             //legD
-            LIBS.rotateObjectAroundArbitraryAxis(legD2, axisD2, timesecond - 2);
+            LIBSSHUU.rotateObjectAroundArbitraryAxis(legD2, axisD2, timesecond - 2);
         }
         else if (timesecond > 2 && timesecond < 3.5) {
             //legA
-            LIBS.rotateObjectAroundArbitraryAxis(legA1, axisA1, -(timesecond - 2));
-            LIBS.translateX(legA2.SHUU_MATRIX, 0.6 * -(timesecond - 2));
-            LIBS.translateY(legA2.SHUU_MATRIX, 1 * (timesecond - 2));
-            LIBS.translateZ(legA2.SHUU_MATRIX, 0.89 * (timesecond - 2));
+            LIBSSHUU.rotateObjectAroundArbitraryAxis(legA1, axisA1, -(timesecond - 2));
+            LIBSSHUU.translateX(legA2.SHUU_MATRIX, 0.6 * -(timesecond - 2));
+            LIBSSHUU.translateY(legA2.SHUU_MATRIX, 1 * (timesecond - 2));
+            LIBSSHUU.translateZ(legA2.SHUU_MATRIX, 0.89 * (timesecond - 2));
             //legB
-            LIBS.rotateObjectAroundArbitraryAxis(legB1, axisB1, -(timesecond - 2));
-            LIBS.translateX(legB2.SHUU_MATRIX, 0.6 * (timesecond - 2));
-            LIBS.translateY(legB2.SHUU_MATRIX, 0.89 * (timesecond - 2));
-            LIBS.translateZ(legB2.SHUU_MATRIX, 1 * -(timesecond - 2));
+            LIBSSHUU.rotateObjectAroundArbitraryAxis(legB1, axisB1, -(timesecond - 2));
+            LIBSSHUU.translateX(legB2.SHUU_MATRIX, 0.6 * (timesecond - 2));
+            LIBSSHUU.translateY(legB2.SHUU_MATRIX, 0.89 * (timesecond - 2));
+            LIBSSHUU.translateZ(legB2.SHUU_MATRIX, 1 * -(timesecond - 2));
             //legC
-            LIBS.rotateObjectAroundArbitraryAxis(legC1, axisC1, -(timesecond - 2));
-            LIBS.translateX(legC2.SHUU_MATRIX, 0.89 * -(timesecond - 2));
-            LIBS.translateY(legC2.SHUU_MATRIX, 1 * (timesecond - 2));
-            LIBS.translateZ(legC2.SHUU_MATRIX, 0.6 * -(timesecond - 2));
+            LIBSSHUU.rotateObjectAroundArbitraryAxis(legC1, axisC1, -(timesecond - 2));
+            LIBSSHUU.translateX(legC2.SHUU_MATRIX, 0.89 * -(timesecond - 2));
+            LIBSSHUU.translateY(legC2.SHUU_MATRIX, 1 * (timesecond - 2));
+            LIBSSHUU.translateZ(legC2.SHUU_MATRIX, 0.6 * -(timesecond - 2));
             //legD
-            LIBS.rotateObjectAroundArbitraryAxis(legD1, axisD1, -(timesecond - 2));
-            LIBS.translateX(legD2.SHUU_MATRIX, 0.89 * (timesecond - 2));
-            LIBS.translateY(legD2.SHUU_MATRIX, 1 * (timesecond - 2));
-            LIBS.translateZ(legD2.SHUU_MATRIX, 0.6 * (timesecond - 2));
+            LIBSSHUU.rotateObjectAroundArbitraryAxis(legD1, axisD1, -(timesecond - 2));
+            LIBSSHUU.translateX(legD2.SHUU_MATRIX, 0.89 * (timesecond - 2));
+            LIBSSHUU.translateY(legD2.SHUU_MATRIX, 1 * (timesecond - 2));
+            LIBSSHUU.translateZ(legD2.SHUU_MATRIX, 0.6 * (timesecond - 2));
 
         }
         else if (timesecond >= 3.5) {
             //legA
-            LIBS.rotateObjectAroundArbitraryAxis(legA1, axisA1, 1.5);
-            LIBS.translateX(legA2.SHUU_MATRIX, -1.5);
+            LIBSSHUU.rotateObjectAroundArbitraryAxis(legA1, axisA1, 1.5);
+            LIBSSHUU.translateX(legA2.SHUU_MATRIX, -1.5);
             //legB
-            LIBS.rotateObjectAroundArbitraryAxis(legB1, axisB1, 1.5);
-            LIBS.translateX(legB2.SHUU_MATRIX, 1.5);
+            LIBSSHUU.rotateObjectAroundArbitraryAxis(legB1, axisB1, 1.5);
+            LIBSSHUU.translateX(legB2.SHUU_MATRIX, 1.5);
             //legC
-            LIBS.rotateObjectAroundArbitraryAxis(legC1, axisC1, 1.5);
-            LIBS.translateZ(legC2.SHUU_MATRIX, -1.5);
+            LIBSSHUU.rotateObjectAroundArbitraryAxis(legC1, axisC1, 1.5);
+            LIBSSHUU.translateZ(legC2.SHUU_MATRIX, -1.5);
             //legC
-            LIBS.rotateObjectAroundArbitraryAxis(legD1, axisD1, 1.5);
-            LIBS.translateZ(legD2.SHUU_MATRIX, 1.5);
+            LIBSSHUU.rotateObjectAroundArbitraryAxis(legD1, axisD1, 1.5);
+            LIBSSHUU.translateZ(legD2.SHUU_MATRIX, 1.5);
         }
         //legA
-        LIBS.rotateObjectAroundArbitraryAxis(legA2, axisA2, 2);
-        legA1.SHUU_MATRIX = LIBS.multiply(legA1.SHUU_MATRIX, SHUU_MATRIX2);
-        legA1.SHUU_MATRIX = LIBS.multiply(legA1.SHUU_MATRIX, legA1.INDIVIDUAL_MATRIX);
-        legA2.SHUU_MATRIX = LIBS.multiply(legA2.SHUU_MATRIX, SHUU_MATRIX2);
-        legA2.SHUU_MATRIX = LIBS.multiply(legA2.SHUU_MATRIX, legA2.INDIVIDUAL_MATRIX);
+        LIBSSHUU.rotateObjectAroundArbitraryAxis(legA2, axisA2, 2);
+        legA1.SHUU_MATRIX = LIBSSHUU.multiply(legA1.SHUU_MATRIX, SHUU_MATRIX2);
+        legA1.SHUU_MATRIX = LIBSSHUU.multiply(legA1.SHUU_MATRIX, legA1.INDIVIDUAL_MATRIX);
+        legA2.SHUU_MATRIX = LIBSSHUU.multiply(legA2.SHUU_MATRIX, SHUU_MATRIX2);
+        legA2.SHUU_MATRIX = LIBSSHUU.multiply(legA2.SHUU_MATRIX, legA2.INDIVIDUAL_MATRIX);
         //legB
-        LIBS.rotateObjectAroundArbitraryAxis(legB2, axisB2, 2);
-        legB1.SHUU_MATRIX = LIBS.multiply(legB1.SHUU_MATRIX, SHUU_MATRIX2);
-        legB1.SHUU_MATRIX = LIBS.multiply(legB1.SHUU_MATRIX, legB1.INDIVIDUAL_MATRIX);
-        legB2.SHUU_MATRIX = LIBS.multiply(legB2.SHUU_MATRIX, SHUU_MATRIX2);
-        legB2.SHUU_MATRIX = LIBS.multiply(legB2.SHUU_MATRIX, legB2.INDIVIDUAL_MATRIX);
+        LIBSSHUU.rotateObjectAroundArbitraryAxis(legB2, axisB2, 2);
+        legB1.SHUU_MATRIX = LIBSSHUU.multiply(legB1.SHUU_MATRIX, SHUU_MATRIX2);
+        legB1.SHUU_MATRIX = LIBSSHUU.multiply(legB1.SHUU_MATRIX, legB1.INDIVIDUAL_MATRIX);
+        legB2.SHUU_MATRIX = LIBSSHUU.multiply(legB2.SHUU_MATRIX, SHUU_MATRIX2);
+        legB2.SHUU_MATRIX = LIBSSHUU.multiply(legB2.SHUU_MATRIX, legB2.INDIVIDUAL_MATRIX);
         //legC
-        LIBS.rotateObjectAroundArbitraryAxis(legC2, axisC2, 2);
-        legC1.SHUU_MATRIX = LIBS.multiply(legC1.SHUU_MATRIX, SHUU_MATRIX2);
-        legC1.SHUU_MATRIX = LIBS.multiply(legC1.SHUU_MATRIX, legC1.INDIVIDUAL_MATRIX);
-        legC2.SHUU_MATRIX = LIBS.multiply(legC2.SHUU_MATRIX, SHUU_MATRIX2);
-        legC2.SHUU_MATRIX = LIBS.multiply(legC2.SHUU_MATRIX, legC2.INDIVIDUAL_MATRIX);
+        LIBSSHUU.rotateObjectAroundArbitraryAxis(legC2, axisC2, 2);
+        legC1.SHUU_MATRIX = LIBSSHUU.multiply(legC1.SHUU_MATRIX, SHUU_MATRIX2);
+        legC1.SHUU_MATRIX = LIBSSHUU.multiply(legC1.SHUU_MATRIX, legC1.INDIVIDUAL_MATRIX);
+        legC2.SHUU_MATRIX = LIBSSHUU.multiply(legC2.SHUU_MATRIX, SHUU_MATRIX2);
+        legC2.SHUU_MATRIX = LIBSSHUU.multiply(legC2.SHUU_MATRIX, legC2.INDIVIDUAL_MATRIX);
         //legD
-        LIBS.rotateObjectAroundArbitraryAxis(legD2, axisD2, 2);
-        legD1.SHUU_MATRIX = LIBS.multiply(legD1.SHUU_MATRIX, SHUU_MATRIX2);
-        legD1.SHUU_MATRIX = LIBS.multiply(legD1.SHUU_MATRIX, legD1.INDIVIDUAL_MATRIX);
-        legD2.SHUU_MATRIX = LIBS.multiply(legD2.SHUU_MATRIX, SHUU_MATRIX2);
-        legD2.SHUU_MATRIX = LIBS.multiply(legD2.SHUU_MATRIX, legD2.INDIVIDUAL_MATRIX);
+        LIBSSHUU.rotateObjectAroundArbitraryAxis(legD2, axisD2, 2);
+        legD1.SHUU_MATRIX = LIBSSHUU.multiply(legD1.SHUU_MATRIX, SHUU_MATRIX2);
+        legD1.SHUU_MATRIX = LIBSSHUU.multiply(legD1.SHUU_MATRIX, legD1.INDIVIDUAL_MATRIX);
+        legD2.SHUU_MATRIX = LIBSSHUU.multiply(legD2.SHUU_MATRIX, SHUU_MATRIX2);
+        legD2.SHUU_MATRIX = LIBSSHUU.multiply(legD2.SHUU_MATRIX, legD2.INDIVIDUAL_MATRIX);
         //rotate legs done
 
 
 
         // object2.render(VIEW_MATRIX, PROJECTION_MATRIX);
->>>>>>> cfe4ae289ea5b27382b4080884d875aa568219e6
 
 
 

@@ -468,3 +468,260 @@ function JgenerateSaturnRingIndices(){
   }
   return faces;
 }
+
+
+function McreateSphere(x, y, z, xRadius, yRadius, zRadius, latitudeBands, longitudeBands, r, g, b) {
+  const positions = [];
+  const indices = [];
+
+  for (let lat = 0; lat <= latitudeBands; lat++) {
+      const theta = lat * Math.PI / latitudeBands;
+      const sinTheta = Math.sin(theta);
+      const cosTheta = Math.cos(theta);
+
+      for (let long = 0; long <= longitudeBands; long++) {
+          const phi = long * 2 * Math.PI / longitudeBands;
+          const sinPhi = Math.sin(phi);
+          const cosPhi = Math.cos(phi);
+
+          const xPosition = x + xRadius * cosPhi * sinTheta;
+          const yPosition = y + yRadius * sinPhi * sinTheta;
+          const zPosition = z + zRadius * cosTheta;
+
+          positions.push(xPosition, yPosition, zPosition, r, g, b);
+      }
+  }
+
+  for (let lat = 0; lat < latitudeBands; lat++) {
+      for (let long = 0; long < longitudeBands; long++) {
+          const first = (lat * (longitudeBands + 1)) + long;
+          const second = first + longitudeBands + 1;
+
+          indices.push(first, second, first + 1);
+          indices.push(second, second + 1, first + 1);
+      }
+  }
+
+  return { positions, indices };
+}
+
+
+function MgenerateBlockVertices(startX, startY, startZ, p, l, t, r, g, b,) {
+
+  var vertices = [];
+
+  vertices.push(startX, startY, startZ, r, g, b);//0 - kiri bwh
+  vertices.push(startX + p, startY, startZ, r, g, b);//1 - kanan bwh
+  vertices.push(startX + p, startY + t, startZ, r, g, b);//2 - kanan atas
+  vertices.push(startX, startY + t, startZ, r, g, b);//3 - kiri atas
+
+  vertices.push(startX, startY, startZ - l, r, g, b);//4 -kiri bwh
+  vertices.push(startX + p, startY, startZ - l, r, g, b);//5 - kanan bwh
+  vertices.push(startX + p, startY + t, startZ - l, r, g, b);//6 - kanan atas
+  vertices.push(startX, startY + t, startZ - l, r, g, b);//7 - kiri atas
+
+  return vertices;
+}
+function shuuBlockIndices() {
+  var indices = [];
+
+  indices.push(0);
+  indices.push(1);
+  indices.push(2);
+
+  indices.push(2);
+  indices.push(0);
+  indices.push(3);
+
+  indices.push(1);
+  indices.push(2);
+  indices.push(5);
+
+  indices.push(2);
+  indices.push(5);
+  indices.push(6);
+
+  indices.push(4);
+  indices.push(5);
+  indices.push(6);
+
+  indices.push(4);
+  indices.push(6);
+  indices.push(7);
+
+  indices.push(3);
+  indices.push(0);
+  indices.push(4);
+
+  indices.push(3);
+  indices.push(4);
+  indices.push(7);
+
+  indices.push(3);
+  indices.push(2);
+  indices.push(7);
+
+  indices.push(2);
+  indices.push(6);
+  indices.push(7);
+
+  indices.push(0);
+  indices.push(1);
+  indices.push(4);
+
+  indices.push(1);
+  indices.push(4);
+  indices.push(5);
+
+  return indices;
+}
+
+
+
+
+
+function UFOBody(radius, segments) {
+  const vertices = [];
+  const indices = [];
+  const texCoords = []; // New array for texture coordinates
+
+  // Generate vertices for both the top and bottom halves of the frisbee
+  for (let i = 0; i <= segments; i++) {
+      const lat = Math.PI * i / segments;
+      const sinLat = Math.sin(lat);
+      const cosLat = Math.cos(lat);
+
+      // Adjust the y-coordinate based on the latitude to create a frisbee-like shape
+      const adjustedY = cosLat * 0.2; // Adjust this value to make the shape flatter or rounder
+
+      for (let j = 0; j <= segments; j++) {
+          const lng = 2 * Math.PI * j / segments;
+          const sinLng = Math.sin(lng);
+          const cosLng = Math.cos(lng);
+
+          const x = cosLng * sinLat;
+          const y = adjustedY; // Use the adjusted y-coordinate
+          const z = sinLng * sinLat;
+
+          // Push vertices for the top half of the frisbee
+          vertices.push(radius * x, radius * y, radius * z, 0.35, 0.3, 0.3);
+
+          // Push vertices for the bottom half of the frisbee
+          vertices.push(radius * x, -radius * y, radius * z, 0.3, 0.3, 0.3);
+
+          // Push texture coordinates
+          texCoords.push(j / segments, i / segments); // u, v
+
+          if (i < segments && j < segments) {
+              let first = i * (segments + 1) + j;
+              let second = first + segments + 1;
+
+              // Push indices for the top half of the frisbee
+              indices.push(first, second, first + 1);
+              indices.push(second, second + 1, first + 1);
+
+              // Push indices for the bottom half of the frisbee
+              indices.push(first + segments + 1, second + segments + 1, first + segments + 2);
+              indices.push(second + segments + 1, second + segments + 2, first + segments + 2);
+          }
+      }
+  }
+
+  return { vertices, indices, texCoords }; // Include texCoords in the returned object
+}
+
+function createDome(radius, segments, capSegments) {
+  const vertices = [];
+  const indices = [];
+
+  for (let i = 0; i <= segments; i++) {
+      const lat = Math.PI * i / 2 / segments;
+      const sinLat = Math.sin(lat);
+      const cosLat = Math.cos(lat);
+
+      for (let j = 0; j <= segments; j++) {
+          const lng = 2 * Math.PI * j / segments;
+          const sinLng = Math.sin(lng);
+          const cosLng = Math.cos(lng);
+          const tanLng = Math.tan(lng);
+          const secLng = 1 / Math.cos(lng);
+
+
+          const x = cosLng * sinLat;
+          const y = cosLat;
+          const z = sinLng * sinLat;
+
+          vertices.push(radius * x, radius * y, radius * z, 0.5, 0.5, 0.5);
+
+          if (i < segments && j < segments) {
+              let first = i * (segments + 1) + j;
+              let second = first + segments + 1;
+
+              indices.push(first, second, first + 1);
+              indices.push(second, second + 1, first + 1);
+          }
+      }
+  }
+
+  return { vertices, indices };
+}
+
+function createCylinder(radius, height, segments, xoff, yoff, zoff) {
+  const vertices = [];
+  const indices = [];
+
+  // Generate the vertices and indices for the sides of the cylinder
+  for (let i = 0; i < segments; i++) {
+      const angle = 2 * Math.PI * i / segments;
+      const nextAngle = 2 * Math.PI * (i + 1) / segments;
+
+      const x1 = radius * Math.cos(angle);
+      const z1 = radius * Math.sin(angle);
+
+      const x2 = radius * Math.cos(nextAngle);
+      const z2 = radius * Math.sin(nextAngle);
+
+      // Push the vertices for this segment
+      vertices.push(x1 + xoff, height / 2 + yoff, z1 + zoff, 0.8, 0.8, 0.8);
+      vertices.push(x2 + xoff, height / 2 + yoff, z2 + zoff, 0.8, 0.8, 0.8);
+      vertices.push(x1 + xoff, -height / 2 + yoff, z1 + zoff, 0.8, 0.8, 0.8);
+      vertices.push(x2 + xoff, -height / 2 + yoff, z2 + zoff, 0.8, 0.8, 0.8);
+
+      // Push the indices that form the quad for this segment
+      const first = i * 2;
+      indices.push(first, first + 2, first + 1); // Changed the order here
+      indices.push(first + 1, first + 2, first + 3); // And here
+  }
+
+  // Generate the vertices and indices for the top cap of the cylinder
+  for (let i = 0; i < 360; i++) {
+      const angle = (i / 180) * Math.PI;
+
+      // Top cap
+      vertices.push(radius * Math.cos(angle) + xoff, height / 2 + yoff, radius * Math.sin(angle) + zoff, 0.8, 0.8, 0.8);
+
+      // Indices
+      if (i < 359) {
+          const start = segments * 2;
+          indices.push(start, start + i + 1, start + i + 2);
+      }
+  }
+
+  // Generate the vertices and indices for the bottom cap of the cylinder
+  for (let i = 0; i <= 720; i++) { // Changed the loop condition to <= 360
+      const angle = (i / 180) * Math.PI;
+
+      // Bottom cap
+      vertices.push(xoff, -height / 2 + yoff, zoff, 0.8, 0.8, 0.8); // Center point
+      vertices.push(radius * Math.cos(angle) + xoff, -height / 2 + yoff, radius * Math.sin(angle) + zoff, 0.8, 0.8, 0.8); // Current point
+      vertices.push(radius * Math.cos((angle + 1 / 180 * Math.PI)) + xoff, -height / 2 + yoff, radius * Math.sin((angle + 1 / 180 * Math.PI)) + zoff, 0.8, 0.8, 0.8); // Next point
+
+      // Indices
+      if (i < 720) { // Changed the condition to < 360
+          const start = segments * 4 + 360 + i * 3;
+          indices.push(start, start + 1, start + 2);
+      }
+  }
+
+  return { vertices, indices };
+}

@@ -553,3 +553,42 @@ function generateBlockIndices() {
 
   return indices;
 }
+
+function generateRandomSizedAsteroid(desiredSize) {
+  randomRadius = desiredSize + Math.random() * 0.1;
+  return randomRadius;
+}
+function JcreateAsteroid(x, y, z, xRadius, yRadius, zRadius, latitudeBands, longitudeBands, r, g, b) {
+  const positions = [];
+  const indices = [];
+
+  for (let lat = 0; lat <= latitudeBands; lat++) {
+    const theta = lat * Math.PI / latitudeBands;
+    const sinTheta = Math.sin(theta);
+    const cosTheta = Math.cos(theta);
+
+    for (let long = 0; long <= longitudeBands; long++) {
+      const phi = long * 2 * Math.PI / longitudeBands;
+      const sinPhi = Math.sin(phi);
+      const cosPhi = Math.cos(phi);
+
+      const xPosition = x + xRadius * cosPhi * sinTheta * generateRandomSizedAsteroid(0.85);
+      const yPosition = y + yRadius * sinPhi * sinTheta * generateRandomSizedAsteroid(0.85);
+      const zPosition = z + zRadius * cosTheta * generateRandomSizedAsteroid(0.85);
+
+      positions.push(xPosition, yPosition, zPosition, r, g, b);
+    }
+  }
+
+  for (let lat = 0; lat < latitudeBands; lat++) {
+    for (let long = 0; long < longitudeBands; long++) {
+      const first = (lat * (longitudeBands + 1)) + long;
+      const second = first + longitudeBands + 1;
+
+      indices.push(first, second, first + 1);
+      indices.push(second, second + 1, first + 1);
+    }
+  }
+
+  return { positions, indices };
+}

@@ -1192,9 +1192,6 @@ function main() {
         // LIBSSHUU.rotateX(SHUU_MATRIX2, 0.2);
         // LIBSSHUU.rotateY(SHUU_MATRIX2, -0.5);
 
-        LIBSSHUU.rotateY(SHUU_MATRIX2, -THETA);
-        LIBSSHUU.rotateX(SHUU_MATRIX2, -ALPHA);
-
         //PENTING! UTK ROTASI DAN GESER SELURUH OBJEK
         var temp = LIBSSHUU.get_I4();
         //LIBSSHUU.rotateY(temp, 1);

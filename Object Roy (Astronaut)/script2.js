@@ -556,11 +556,6 @@ function main() {
     var rightHand = new MyObjectJavier(JcreateSphere(5.7, -2.5, 0, 0.85, 0.7, 0.5, 100, 100, 0.5176470588235295, 0.6, 0.1843137254901961).positions, JcreateSphere(2, 2, 2, 2, 1, 3, 100, 100, 1, 0, 0).indices, shader_vertex_source, shader_fragment_source);
     rightHand.setup();
 
-    var rightRedFlag = new MyObjectJavier(generateBlockVertices(0, 6, 0, 3.8, 1, 2, 1, 0, 0), generateBlockIndices(), shader_vertex_source, shader_fragment_source);
-    rightRedFlag.setup();
-    var leftRedFlag = new MyObjectJavier(generateBlockVertices(0, 6, 0, -3.8, 1, 2, 1, 0, 0), generateBlockIndices(), shader_vertex_source, shader_fragment_source);
-    leftRedFlag.setup();
-
     cpRightPole = [
         5.8, -2.5, 0, 1, 1, 1,
         8, 6, 0, 1, 1, 1,
@@ -600,7 +595,7 @@ function main() {
     object.child.push(black2);
     object.child.push(black3);
     object.child.push(anthena);
-    object.child.push(anthenaBall);
+    anthena.child.push(anthenaBall);
     object.child.push(mouth);
     object.child.push(belt);
     object.child.push(leftEar);
@@ -615,8 +610,6 @@ function main() {
     object.child.push(rightHand);
     object.child.push(rightPole);
     object.child.push(leftPole);
-    object.child.push(rightRedFlag);
-    object.child.push(leftRedFlag);
     // object.child.push(leftFinger1);
     // object.child.push(leftFinger2);
     // object.child.push(leftFinger3);
@@ -624,7 +617,7 @@ function main() {
     // object.child.push(rightFinger2);
     // object.child.push(rightFinger3);
     //---------------------------------------------------------------------MALVIN--------------------------------------------------------------------------------------------
-    var UFO = new ShuuObject(McreateSphere(0, 0, 0, 8, 1.6, 8, 64, 64, 0.816, 0.149, 0.153).positions, McreateSphere(0, 0, 0, 8, 1.6, 8, 64, 64, 0.35, 0.3, 0.3).indices, shuu_vertex_source, shuu_fragment_source);
+    var UFO = new ShuuObject(McreateSphere(0, 0, 0, 8, 1.6, 8, 64, 64, 0.316, 0.15, 0.15).positions, McreateSphere(0, 0, 0, 8, 1.6, 8, 64, 64, 0.35, 0.3, 0.3).indices, shuu_vertex_source, shuu_fragment_source);
     UFO.setup();
     // Apply any transformations to the UFO object here...
     var UFOMatrix = LIBSSHUU.get_I4();
@@ -709,11 +702,11 @@ function main() {
     engine.setup();
     engine.SHUU_MATRIX = LIBSSHUU.get_I4();
 
-    var fire = new ShuuObject(createEliptCone(1, 16, 16, -7, 2, 0, 0.678, 0.678, 0.678).vertices, createEliptCone(1, 16, 16, -7, 2, 0, 0.3, 0.4, 1).indices, shuu_vertex_source, shuu_fragment_source);
+    var fire = new ShuuObject(createEliptCone(1, 16, 16, -7, 2, 0, 1, 0.7, 0.7).vertices, createEliptCone(1, 16, 16, -7, 2, 0, 1, 0.7, 0.7).indices, shuu_vertex_source, shuu_fragment_source);
     fire.setup();
     fire.SHUU_MATRIX = LIBSSHUU.get_I4();
 
-    var firetail = new ShuuObject(createEliptCone(0.7, 16, 16, -7, 2, 0, 1, 0.694, 0.012).vertices, createEliptCone(0.7, 16, 16, -7, 2, 0, 1, 0, 7, 0, 2).indices, shuu_vertex_source, shuu_fragment_source);
+    var firetail = new ShuuObject(createEliptCone(0.7, 16, 16, -7, 2, 0, 1, 0, 1, 0.7, 0).vertices, createEliptCone(0.7, 16, 16, -7, 2, 0, 1, 0, 1, 0, 2).indices, shuu_vertex_source, shuu_fragment_source);
     firetail.setup();
     firetail.SHUU_MATRIX = LIBSSHUU.get_I4();
 
@@ -963,7 +956,7 @@ function main() {
         var pos_y = radius * Math.sin(JtranslateY);
         var pos_z = radius * Math.cos(JtranslateY) * Math.cos(JtranslateX);
 
-        var startPointXJav = -10
+        var startPointXJav = -5
 
         head_model = LIBS.get_I4();
         // LIBS.rotateZ(head_model, JrotateZ);
@@ -991,6 +984,41 @@ function main() {
         // LIBS.translateY(left_hand_model, JtranslateY);
         // LIBS.translateZ(left_hand_model, JtranslateZ);
         // LIBS.setPosition(left_hand_model,0,0,+pos_z);
+        left_leg_model = LIBS.get_I4();
+        LIBS.rotateX(left_leg_model, JrotateX);
+        LIBS.rotateY(left_leg_model, JrotateY);
+        LIBS.rotateZ(left_leg_model, JrotateZ);
+        LIBS.translateX(left_leg_model, startPointXJav + JtranslateX);
+        right_leg_model = LIBS.get_I4();
+        LIBS.rotateX(right_leg_model, JrotateX);
+        LIBS.rotateY(right_leg_model, JrotateY);
+        LIBS.rotateZ(right_leg_model, -JrotateZ);
+        LIBS.translateX(right_leg_model, startPointXJav + JtranslateX);
+        left_shoe_model = LIBS.get_I4();
+        LIBS.rotateX(left_shoe_model, JrotateX);
+        LIBS.rotateY(left_shoe_model, JrotateY);
+        LIBS.rotateZ(left_shoe_model, JrotateZ);
+        LIBS.translateX(left_shoe_model, startPointXJav + JtranslateX);
+        right_shoe_model = LIBS.get_I4();
+        LIBS.rotateX(right_shoe_model, JrotateX);
+        LIBS.rotateY(right_shoe_model, JrotateY);
+        LIBS.rotateZ(right_shoe_model, -JrotateZ);
+        LIBS.translateX(right_shoe_model, startPointXJav + JtranslateX);
+        mata1 = LIBS.get_I4();
+        LIBS.rotateX(mata1, JrotateX);
+        LIBS.rotateY(mata1, JrotateY);
+        LIBS.rotateZ(mata1, JrotateZ);
+        LIBS.translateX(mata1, startPointXJav + JtranslateX);
+        mata2 = LIBS.get_I4();
+        LIBS.rotateX(mata2, JrotateX);
+        LIBS.rotateY(mata2, JrotateY);
+        LIBS.rotateZ(mata2, -JrotateZ);
+        LIBS.translateX(mata2, startPointXJav + JtranslateX);
+        mata3 = LIBS.get_I4();
+        LIBS.rotateX(mata3, JrotateX);
+        LIBS.rotateY(mata3, JrotateY);
+        LIBS.rotateZ(mata3, JrotateZ);
+        LIBS.translateX(mata3, startPointXJav + JtranslateX);
 
         right_hand_model = LIBS.get_I4();
         LIBS.rotateX(right_hand_model, JrotateX);
@@ -1061,16 +1089,13 @@ function main() {
         rightHand.MODEL_MATRIX = body_Model;
         rightPole.MODEL_MATRIX = body_Model;
         leftPole.MODEL_MATRIX = body_Model;
-        rightRedFlag.MODEL_MATRIX = body_Model;
-        leftRedFlag.MODEL_MATRIX = body_Model;
         // leftFinger1.MODEL_MATRIX = body_Model;
         // leftFinger2.MODEL_MATRIX = body_Model;
         // leftFinger3.MODEL_MATRIX = body_Model;
         // rightFinger1.MODEL_MATRIX = body_Model;
         // rightFinger2.MODEL_MATRIX = body_Model;
         // rightFinger3.MODEL_MATRIX = body_Model;
-
-
+        
 
         LIBS.rotateY(head_model, -5);
         LIBS.rotateY(body_Model, -5);
@@ -1080,21 +1105,22 @@ function main() {
         LIBS.rotateY(right_shoe_model, -5);
         randomLegMovement = true;
         console.log(legchoice);
+
         if (timesecond < 5) {
             if (legchoice == false) {
                 legmove += 0.1;
-                LIBS.translateY(left_leg_model, -legmove * 1);
-                LIBS.translateY(right_leg_model, legmove * 1);
-                LIBS.translateY(left_shoe_model, -legmove * 1);
-                LIBS.translateY(right_shoe_model, legmove * 1);
+                LIBS.translateY(left_leg_model, -legmove * 0.5);
+                LIBS.translateY(right_leg_model, legmove * 0.5);
+                LIBS.translateY(left_shoe_model, -legmove * 0.5);
+                LIBS.translateY(right_shoe_model, legmove * 0.5);
 
             }
             else {
                 legmove -= 0.1;
-                LIBS.translateY(left_leg_model, legmove * 1);
-                LIBS.translateY(right_leg_model, -legmove * 1);
-                LIBS.translateY(left_shoe_model, legmove * 1);
-                LIBS.translateY(right_shoe_model, -legmove * 1);
+                LIBS.translateY(left_leg_model, legmove * 0.5);
+                LIBS.translateY(right_leg_model, -legmove * 0.5);
+                LIBS.translateY(left_shoe_model, legmove * 0.5);
+                LIBS.translateY(right_shoe_model, -legmove * 0.5);
             }
             if (legmove >= 1 || legmove <= -1) {
                 if (legchoice == true) {
@@ -1105,8 +1131,52 @@ function main() {
                 }
                 legmove = 0;
             }
-
         }
+        if (timesecond >= 5 && timesecond < 8) {
+            LIBS.translateY(head_model, (timesecond - 4)*1.8);
+            LIBS.translateY(body_Model, (timesecond - 4)*1.8);
+            LIBS.translateY(left_leg_model, (timesecond - 4)*1.8);
+            LIBS.translateY(left_shoe_model, (timesecond - 4)*1.8);
+            LIBS.translateY(left_hand_model, (timesecond - 4)*1.8);
+            LIBS.translateY(right_hand_model, (timesecond - 4)*1.8);
+            LIBS.translateY(right_leg_model, (timesecond - 4)*1.8);
+            LIBS.translateY(right_shoe_model, (timesecond - 4)*1.8);
+            LIBS.scale(body_Model, 1 / ((timesecond - 4) * 3), 1 / ((timesecond - 4) * 3), 1 / ((timesecond - 4) * 3));
+            LIBS.scale(head_model, 1 / ((timesecond - 4) * 3), 1 / ((timesecond - 4) * 3), 1 / ((timesecond - 4) * 3));
+            LIBS.scale(left_leg_model, 1 / ((timesecond - 4) * 3), 1 / ((timesecond - 4) * 3), 1 / ((timesecond - 4) * 3));
+            LIBS.scale(left_hand_model, 1 / ((timesecond - 4) * 3), 1 / ((timesecond - 4) * 3), 1 / ((timesecond - 4) * 3));
+            LIBS.scale(left_shoe_model, 1 / ((timesecond - 4) * 3), 1 / ((timesecond - 4) * 3), 1 / ((timesecond - 4) * 3));
+            LIBS.scale(right_hand_model, 1 / ((timesecond - 4) * 3), 1 / ((timesecond - 4) * 3), 1 / ((timesecond - 4) * 3));
+            LIBS.scale(right_leg_model, 1 / ((timesecond - 4) * 3), 1 / ((timesecond - 4) * 3), 1 / ((timesecond - 4) * 3));
+            LIBS.scale(right_shoe_model, 1 / ((timesecond - 4) * 3), 1 / ((timesecond - 4) * 3), 1 / ((timesecond - 4) * 3));
+        }
+        else if (timesecond >= 8) {
+            LIBS.translateY(head_model, 7.2);
+            LIBS.translateY(body_Model, 7.2);
+            LIBS.translateY(left_leg_model, 7.2);
+            LIBS.translateY(left_shoe_model, 7.2);
+            LIBS.translateY(left_hand_model, 7.2);
+            LIBS.translateY(right_hand_model, 7.2);
+            LIBS.translateY(right_leg_model, 7.2);
+            LIBS.translateY(right_shoe_model, 7.2);
+            LIBS.scale(body_Model, 0.02, 0.02, 0.02);
+            LIBS.scale(head_model, 0.02, 0.02, 0.02);
+            LIBS.scale(left_leg_model, 0.02, 0.02, 0.02);
+            LIBS.scale(left_hand_model, 0.02, 0.02, 0.02);
+            LIBS.scale(left_shoe_model, 0.02, 0.02, 0.02);
+            LIBS.scale(right_hand_model, 0.02, 0.02, 0.02);
+            LIBS.scale(right_leg_model, 0.02, 0.02, 0.02);
+            LIBS.scale(right_shoe_model, 0.02, 0.02, 0.02);
+            LIBS.translateX(head_model, 4+(timesecond-8.4)*4);
+            LIBS.translateX(body_Model, 4+(timesecond-8.4)*4);
+            LIBS.translateX(left_leg_model, 4+(timesecond-8.4)*4);
+            LIBS.translateX(left_shoe_model, 4+(timesecond-8.4)*4);
+            LIBS.translateX(left_hand_model, 4+(timesecond-8.4)*4);
+            LIBS.translateX(right_hand_model, 4+(timesecond-8.4)*4);
+            LIBS.translateX(right_leg_model, 4+(timesecond-8.4)*4);
+            LIBS.translateX(right_shoe_model, 4+(timesecond-8.4)*4);
+        }
+
 
         object.render(VIEW_MATRIX, PROJECTION_MATRIX);
 
@@ -1131,12 +1201,16 @@ function main() {
         if (timesecond < 3) {
             LIBSSHUU.translateX(temp, timesecond * 2);
         }
-        else {
+        else if(timesecond >= 3 && timesecond < 8) {
             LIBSSHUU.translateX(temp, 6);
         }
+        else if (timesecond >= 8) {
+            LIBSSHUU.translateX(temp, 6+(timesecond-8.3)*4);
+        }
+        console.log(timesecond);
+        LIBSSHUU.translateY(temp, 7);
         SHUU_MATRIX2 = LIBSSHUU.multiply(SHUU_MATRIX2, temp);
         temp = LIBSSHUU.get_I4();
-
 
 
 
@@ -1270,6 +1344,12 @@ function main() {
         }
         if (scale > 1) {
             scale = 1;
+        }
+        if(timesecond >= 8) {
+            scale = 1-(timesecond-8.3);
+            if(scale < 0) {
+                scale = 0;
+            }
         }
         LIBSSHUU.scale(warning.SHUU_MATRIX, scale, scale, scale);
         LIBSSHUU.scale(warntriangle.SHUU_MATRIX, scale, scale, scale);

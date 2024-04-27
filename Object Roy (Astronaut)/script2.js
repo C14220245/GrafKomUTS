@@ -247,7 +247,7 @@ function main() {
 
       gl_PointSize=20.0;
       }`;
-     var shuu_fragment_source = `
+    var shuu_fragment_source = `
       precision mediump float;
       varying vec3 vColor;
       varying vec2 vUV;
@@ -705,15 +705,15 @@ function main() {
     titikseru.setup();
     titikseru.SHUU_MATRIX = LIBSSHUU.get_I4();
 
-    var engine = new ShuuObject(createEliptPara(0.5,32,32,-5.5,2,0).vertices, createEliptPara(0.5,32,32,-5.5,2,0).indices, shuu_vertex_source, shuu_fragment_source);
+    var engine = new ShuuObject(createEliptPara(0.5, 32, 32, -5.5, 2, 0).vertices, createEliptPara(0.5, 32, 32, -5.5, 2, 0).indices, shuu_vertex_source, shuu_fragment_source);
     engine.setup();
     engine.SHUU_MATRIX = LIBSSHUU.get_I4();
 
-    var fire = new ShuuObject(createEliptCone(1,16,16, -7, 2, 0, 0.3, 0.4, 1).vertices, createEliptCone(1,16,16, -7, 2, 0, 0.3, 0.4, 1).indices, shuu_vertex_source, shuu_fragment_source);
+    var fire = new ShuuObject(createEliptCone(1, 16, 16, -7, 2, 0, 0.3, 0.4, 1).vertices, createEliptCone(1, 16, 16, -7, 2, 0, 0.3, 0.4, 1).indices, shuu_vertex_source, shuu_fragment_source);
     fire.setup();
     fire.SHUU_MATRIX = LIBSSHUU.get_I4();
 
-    var firetail = new ShuuObject(createEliptCone(0.7,16,16, -7, 2, 0, 1, 0,7, 0,2).vertices, createEliptCone(0.7,16,16, -7, 2, 0, 1, 0,7, 0,2).indices, shuu_vertex_source, shuu_fragment_source);
+    var firetail = new ShuuObject(createEliptCone(0.7, 16, 16, -7, 2, 0, 1, 0, 7, 0, 2).vertices, createEliptCone(0.7, 16, 16, -7, 2, 0, 1, 0, 7, 0, 2).indices, shuu_vertex_source, shuu_fragment_source);
     firetail.setup();
     firetail.SHUU_MATRIX = LIBSSHUU.get_I4();
 
@@ -732,7 +732,7 @@ function main() {
     warning.child.push(titikseru);
     UFO.child.push(engine);
     engine.child.push(fire);
-    engine.child.push(firetail);    
+    engine.child.push(firetail);
     // -----------------------------------------------------------------------------------------------------------------------------------------------------------------
     //---------------------------------------------------------------------ENVIRONMENT ATTRIBUTE------------------------------------------------------------
     var moon = new MyObjectJavier(JcreateMoon(0, 0, 0, 10, 10, 9.5, 100, 100, 0.7, 0.7, 0.7).positions, JcreateSphere(0, 0, 0, 2, 2, 2, 100, 100, 1, 1, 1).indices, shader_vertex_source, shader_fragment_source);
@@ -779,6 +779,8 @@ function main() {
 
     var time_prev = 0;
     var timereference = 0;
+    var legmove = 0;
+    var legchoice = true;
     var animate = function (time) {
         var ratioAnimation = 0.005;
         timereference = timereference + 1;
@@ -891,21 +893,15 @@ function main() {
         cubeObject.render(VIEW_MATRIX, PROJECTION_MATRIX);
 
         // // --------------------------------------------JAVIER---------------------------------------------------------------------------------------------------
+        // // --------------------------------------------JAVIER---------------------------------------------------------------------------------------------------
         var radius = 1;
         var pos_x = radius * Math.cos(JtranslateY) * Math.sin(JtranslateX);
         var pos_y = radius * Math.sin(JtranslateY);
         var pos_z = radius * Math.cos(JtranslateY) * Math.cos(JtranslateX);
 
-        var tempJav = LIBS.get_I4();
-        JAV_MASTER_MATRIX = LIBS.get_I4();
-        JAV_MASTER_MATRIX2 = LIBS.get_I4();
-        LIBS.rotateY(JAV_MASTER_MATRIX2, -THETA);
-        LIBS.rotateX(JAV_MASTER_MATRIX2, -ALPHA);
-        LIBS.rotateX(tempJav, 5);        var startPointXJav = -10
+        var startPointXJav = -10
 
         head_model = LIBS.get_I4();
-        LIBS.rotateX(head_model, JrotateX);
-        LIBS.rotateY(head_model, JrotateY + headAlienGeserX);
         // LIBS.rotateZ(head_model, JrotateZ);
         LIBS.translateX(head_model, startPointXJav + JtranslateX);
         LIBS.translateY(head_model, JtranslateY);
@@ -940,6 +936,41 @@ function main() {
         // LIBS.translateY(right_hand_model, JtranslateY);
         // LIBS.translateZ(right_hand_model, JtranslateZ);
         // LIBS.setPosition(right_hand_model,0,0,+pos_z);
+        left_leg_model = LIBS.get_I4();
+        LIBS.rotateX(left_leg_model, JrotateX);
+        LIBS.rotateY(left_leg_model, JrotateY);
+        LIBS.rotateZ(left_leg_model, JrotateZ);
+        LIBS.translateX(left_leg_model, startPointXJav + JtranslateX);
+        right_leg_model = LIBS.get_I4();
+        LIBS.rotateX(right_leg_model, JrotateX);
+        LIBS.rotateY(right_leg_model, JrotateY);
+        LIBS.rotateZ(right_leg_model, -JrotateZ);
+        LIBS.translateX(right_leg_model, startPointXJav + JtranslateX);
+        left_shoe_model = LIBS.get_I4();
+        LIBS.rotateX(left_shoe_model, JrotateX);
+        LIBS.rotateY(left_shoe_model, JrotateY);
+        LIBS.rotateZ(left_shoe_model, JrotateZ);
+        LIBS.translateX(left_shoe_model, startPointXJav + JtranslateX);
+        right_shoe_model = LIBS.get_I4();
+        LIBS.rotateX(right_shoe_model, JrotateX);
+        LIBS.rotateY(right_shoe_model, JrotateY);
+        LIBS.rotateZ(right_shoe_model, -JrotateZ);
+        LIBS.translateX(right_shoe_model, startPointXJav + JtranslateX);
+        mata1 = LIBS.get_I4();
+        LIBS.rotateX(mata1, JrotateX);
+        LIBS.rotateY(mata1, JrotateY);
+        LIBS.rotateZ(mata1, JrotateZ);
+        LIBS.translateX(mata1, startPointXJav + JtranslateX);
+        mata2 = LIBS.get_I4();
+        LIBS.rotateX(mata2, JrotateX);
+        LIBS.rotateY(mata2, JrotateY);
+        LIBS.rotateZ(mata2, -JrotateZ);
+        LIBS.translateX(mata2, startPointXJav + JtranslateX);
+        mata3 = LIBS.get_I4();
+        LIBS.rotateX(mata3, JrotateX);
+        LIBS.rotateY(mata3, JrotateY);
+        LIBS.rotateZ(mata3, JrotateZ);
+        LIBS.translateX(mata3, startPointXJav + JtranslateX);
 
         object.MODEL_MATRIX = head_model;
         eyes1.MODEL_MATRIX = head_model;
@@ -956,10 +987,10 @@ function main() {
 
         body.MODEL_MATRIX = body_Model;
         belt.MODEL_MATRIX = body_Model;
-        leftLeg.MODEL_MATRIX = body_Model;
-        rightLeg.MODEL_MATRIX = body_Model;
-        leftShoe.MODEL_MATRIX = body_Model;
-        rightShoe.MODEL_MATRIX = body_Model;
+        leftLeg.MODEL_MATRIX = left_leg_model;
+        rightLeg.MODEL_MATRIX = right_leg_model;
+        leftShoe.MODEL_MATRIX = left_shoe_model;
+        rightShoe.MODEL_MATRIX = right_shoe_model;
         leftArm.MODEL_MATRIX = body_Model;
         rightArm.MODEL_MATRIX = body_Model;
         leftHand.MODEL_MATRIX = body_Model;
@@ -974,6 +1005,44 @@ function main() {
         // rightFinger1.MODEL_MATRIX = body_Model;
         // rightFinger2.MODEL_MATRIX = body_Model;
         // rightFinger3.MODEL_MATRIX = body_Model;
+
+
+
+        LIBS.rotateY(head_model, -5);
+        LIBS.rotateY(body_Model, -5);
+        LIBS.rotateY(left_leg_model, -5);
+        LIBS.rotateY(right_leg_model, -5);
+        LIBS.rotateY(left_shoe_model, -5);
+        LIBS.rotateY(right_shoe_model, -5);
+        randomLegMovement = true;
+        console.log(legchoice);
+        if (timesecond < 5) {
+            if (legchoice == false) {
+                legmove += 0.1;
+                LIBS.translateY(left_leg_model, -legmove * 1);
+                LIBS.translateY(right_leg_model, legmove * 1);
+                LIBS.translateY(left_shoe_model, -legmove * 1);
+                LIBS.translateY(right_shoe_model, legmove * 1);
+
+            }
+            else {
+                legmove -= 0.1;
+                LIBS.translateY(left_leg_model, legmove * 1);
+                LIBS.translateY(right_leg_model, -legmove * 1);
+                LIBS.translateY(left_shoe_model, legmove * 1);
+                LIBS.translateY(right_shoe_model, -legmove * 1);
+            }
+            if (legmove >= 1 || legmove <= -1) {
+                if (legchoice == true) {
+                    legchoice = false;
+                }
+                else {
+                    legchoice = true;
+                }
+                legmove = 0;
+            }
+
+        }
 
         object.render(VIEW_MATRIX, PROJECTION_MATRIX);
 

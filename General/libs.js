@@ -205,23 +205,36 @@ var LIBS = {
         m[10] = z;
     },
 
-    rotateAroundArbitraryAxis: function (m, axis, angle) {
-        var c = Math.cos(angle);
-        var s = Math.sin(angle);
-        var t = 1 - c;
-        var x = axis[0], y = axis[1], z = axis[2];
-        var len = Math.sqrt(x * x + y * y + z * z);
-        x /= len; y /= len; z /= len;
-    
-        var rotationMatrix = [
-            t * x * x + c, t * x * y - z * s, t * x * z + y * s, 0,
-            t * x * y + z * s, t * y * y + c, t * y * z - x * s, 0,
-            t * x * z - y * s, t * y * z + x * s, t * z * z + c, 0,
+    rotateAroundAxis: function(matrix, angle, axis) {
+        // Normalize the axis vector
+        const len = Math.sqrt(axis[0] * axis[0] + axis[1] * axis[1] + axis[2] * axis[2]);
+        const rlen = 1 / len;
+        const x = axis[0] * rlen;
+        const y = axis[1] * rlen;
+        const z = axis[2] * rlen;
+
+        const c = Math.cos(angle);
+        const s = Math.sin(angle);
+        const t = 1 - c;
+
+        // Create the rotation matrix
+        const rotationMatrix = [
+            x * x * t + c, x * y * t - z * s, x * z * t + y * s, 0,
+            y * x * t + z * s, y * y * t + c, y * z * t - x * s, 0,
+            z * x * t - y * s, z * y * t + x * s, z * z * t + c, 0,
             0, 0, 0, 1
         ];
-    
-        return this.multiply(m, rotationMatrix);
+
+        // Multiply the original matrix by the rotation matrix
+        for (let i = 0; i < 16; i++) {
+            const temp = matrix[i];
+            matrix[i] = 0;
+            for (let j = 0; j < 4; j++) {
+                matrix[i] += temp * rotationMatrix[j * 4 + i % 4];
+            }
+        }
     }
+
   
   };
   

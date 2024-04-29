@@ -862,3 +862,67 @@ function createEliptCone(radius, segments, capSegments, xoff, yoff, zoff, r, g, 
 
   return { vertices, indices };
 }
+
+function createHyperboloid(x, y, z, radius, segments, capSegments) {
+  const vertices = [];
+  const indices = [];
+
+  for (let i = 0; i <= segments; i++) {
+    const lat = Math.PI * i / segments;
+    const sinLat = Math.sin(lat);
+    const cosLat = Math.cos(lat);
+    const secLat = 1 / Math.cos(lat);
+    const tanLat = Math.tan(lat);
+
+    for (let j = 0; j <= segments; j++) {
+      const lng = 2 * Math.PI * j / segments;
+      const sinLng = Math.sin(lng);
+      const cosLng = Math.cos(lng);
+
+      const newX = x + radius * secLat * cosLng;
+      const newY = y + radius * secLat * sinLng;
+      const newZ = z + radius * tanLat;
+
+      vertices.push(newX, newY, newZ);
+
+      if (i < segments && j < segments) {
+        let first = i * (segments + 1) + j;
+        let second = first + segments + 1;
+
+        indices.push(first, second, first + 1);
+        indices.push(second, second + 1, first + 1);
+      }
+    }
+  }
+
+  const start = vertices.length / 3;
+  for (let i = 0; i <= capSegments; i++) {
+    const lat = Math.PI * (segments + i) / (segments + capSegments);
+    const sinLat = Math.sin(lat);
+    const cosLat = Math.cos(lat);
+    const secLat = 1 / Math.cos(lat);
+    const tanLat = Math.tan(lat);
+
+    for (let j = 0; j <= segments; j++) {
+      const lng = 2 * Math.PI * j / segments;
+      const sinLng = Math.sin(lng);
+      const cosLng = Math.cos(lng);
+
+      const newX = x + radius * secLat * cosLng;
+      const newY = y + radius * secLat * sinLng;
+      const newZ = z + radius * tanLat;
+
+      vertices.push(newX, newY, newZ);
+
+      if (i < capSegments && j < segments) {
+        let first = start + i * (segments + 1) + j;
+        let second = first + segments + 1;
+
+        indices.push(first, second, first + 1);
+        indices.push(second, second + 1, first + 1);
+      }
+    }
+  }
+
+  return { vertices, indices };
+}

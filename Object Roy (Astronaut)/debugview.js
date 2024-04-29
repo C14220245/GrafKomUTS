@@ -30,7 +30,7 @@ function main() {
     var JtranslateY = 0;
     var JtranslateZ = 0;
 
-    var FRICTION = 1;
+    var FRICTION = 0.990;
 
 
     var mouseDown = function (e) {
@@ -420,7 +420,28 @@ function main() {
 
 
     // ZOOM
-    LIBS.translateZ(VIEW_MATRIX, -60);
+
+
+    // urutttttt
+
+    // nyalain ini buat astronot
+    LIBS.translateX(VIEW_MATRIX, 20);
+    LIBS.translateZ(VIEW_MATRIX, -20);
+
+    // // // nyalain ini buat alien
+    // LIBS.translateX(VIEW_MATRIX, -20);
+    // LIBS.translateZ(VIEW_MATRIX, -20);
+
+    // // // // nyalain ini buat ufo
+    // LIBS.translateZ(VIEW_MATRIX, 10);
+    // LIBS.translateY(VIEW_MATRIX, -10);
+    // LIBS.translateX(VIEW_MATRIX, 5);
+
+    // // nyalain ini buat nunjukin api
+    // LIBS.translateX(VIEW_MATRIX, 15);
+
+
+    // LIBS.translateX(VIEW_MATRIX, 20);
 
 
 
@@ -752,9 +773,9 @@ function main() {
 
         var sizeRatio = Math.random(); // random size between 1 and 4
 
-        var sizeX = 1.3 * sizeRatio;
-        var sizeY = 1.5 * sizeRatio;
-        var sizeZ = 1.5 * sizeRatio;
+        var sizeX = 3 * sizeRatio;
+        var sizeY = 3 * sizeRatio;
+        var sizeZ = 3 * sizeRatio;
 
         var asteroid1 = new MyObjectJavier(JcreateAsteroid(x, y, z, sizeX, sizeY, sizeZ, 100, 100, 0.5, 0.5, 0.5).positions, JcreateAsteroid(0, 25, 0, 1, 1, 1, 100, 100, 1, 1, 1).indices, shader_vertex_source, shader_fragment_source);
         asteroidParent.child.push(asteroid1);
@@ -889,8 +910,8 @@ function main() {
 
 
 
-
-        LIBS.translateX(ASTRONOUT_MODEL, -50 + astronautMasuk);
+        
+        // LIBS.translateX(ASTRONOUT_MODEL, -50 + astronautMasuk);
         if (astronautMasuk >= 70) {
             astronautScaleY = 1 - ((astronautMasuk - 69) / 10);
             astronautScaleX = 1 - ((astronautMasuk - 69) / 10);
@@ -907,7 +928,7 @@ function main() {
             timeDiamondRoy = 0;
         }
 
-        LIBS.scale(ASTRONOUT_MODEL, astronautScaleX, astronautScaleY, astronautScaleZ);
+        // LIBS.scale(ASTRONOUT_MODEL, astronautScaleX, astronautScaleY, astronautScaleZ);
 
 
 
@@ -962,8 +983,8 @@ function main() {
         LIBS.translateZ(DIAMOND_MODEL_MATRIX, 0.95);
 
 
-        LIBS.translateX(DIAMOND_MODEL_MATRIX, -50 + astronautMasuk);
-        LIBS.scale(DIAMOND_MODEL_MATRIX, astronautScaleX, astronautScaleY, astronautScaleZ);
+        // LIBS.translateX(DIAMOND_MODEL_MATRIX, -50 + astronautMasuk);
+        // LIBS.scale(DIAMOND_MODEL_MATRIX, astronautScaleX, astronautScaleY, astronautScaleZ);
 
         LIBS.rotateX(DIAMOND_MODEL_MATRIX, -250);
         LIBS.rotateY(DIAMOND_MODEL_MATRIX, 5);
@@ -1018,8 +1039,12 @@ function main() {
 
         head_model = LIBS.get_I4();
         // LIBS.rotateZ(head_model, JrotateZ);
-        LIBS.translateX(head_model, startPointXJav + JtranslateX);
-        LIBS.translateY(head_model, JtranslateY);
+
+
+        // LIBS.translateX(head_model, startPointXJav + JtranslateX);
+        // LIBS.translateY(head_model, JtranslateY);
+
+
         // LIBS.translateZ(head_model, JtranslateZ);
         // LIBS.setPosition(head_model, 0, 0, 0);
         // LIBS.scalling(head_Model, JscaleX, JscaleY, JscaleZ);
@@ -1028,7 +1053,11 @@ function main() {
         LIBS.rotateX(body_Model, JrotateX);
         LIBS.rotateY(body_Model, 0 + JrotateY);
         // LIBS.rotateZ(body_Model, JrotateZ);
-        LIBS.translateX(body_Model, startPointXJav + JtranslateX);
+
+
+        // LIBS.translateX(body_Model, startPointXJav + JtranslateX);
+        
+        
         // LIBS.translateY(body_Model, JtranslateY);
         // LIBS.translateZ(body_Model, JtranslateZ);
         // LIBS.setPosition(body_Model, 0, 0, 0);
@@ -1038,7 +1067,9 @@ function main() {
         LIBS.rotateX(left_hand_model, JrotateX);
         LIBS.rotateY(left_hand_model, JrotateY);
         LIBS.rotateZ(left_hand_model, JrotateZ);
-        LIBS.translateX(left_hand_model, startPointXJav + JtranslateX);
+
+        // LIBS.translateX(left_hand_model, startPointXJav + JtranslateX);
+
         // LIBS.translateY(left_hand_model, JtranslateY);
         // LIBS.translateZ(left_hand_model, JtranslateZ);
         // LIBS.setPosition(left_hand_model,0,0,+pos_z);
@@ -1046,22 +1077,36 @@ function main() {
         LIBS.rotateX(left_leg_model, JrotateX);
         LIBS.rotateY(left_leg_model, JrotateY);
         LIBS.rotateZ(left_leg_model, JrotateZ);
-        LIBS.translateX(left_leg_model, startPointXJav + JtranslateX);
+
+
+        // LIBS.translateX(left_leg_model, startPointXJav + JtranslateX);
+
+
         right_leg_model = LIBS.get_I4();
         LIBS.rotateX(right_leg_model, JrotateX);
         LIBS.rotateY(right_leg_model, JrotateY);
         LIBS.rotateZ(right_leg_model, -JrotateZ);
-        LIBS.translateX(right_leg_model, startPointXJav + JtranslateX);
+
+
+        // LIBS.translateX(right_leg_model, startPointXJav + JtranslateX);
+
+
         left_shoe_model = LIBS.get_I4();
         LIBS.rotateX(left_shoe_model, JrotateX);
         LIBS.rotateY(left_shoe_model, JrotateY);
         LIBS.rotateZ(left_shoe_model, JrotateZ);
-        LIBS.translateX(left_shoe_model, startPointXJav + JtranslateX);
+
+
+        // LIBS.translateX(left_shoe_model, startPointXJav + JtranslateX);
+
+
         right_shoe_model = LIBS.get_I4();
         LIBS.rotateX(right_shoe_model, JrotateX);
         LIBS.rotateY(right_shoe_model, JrotateY);
         LIBS.rotateZ(right_shoe_model, -JrotateZ);
-        LIBS.translateX(right_shoe_model, startPointXJav + JtranslateX);
+
+
+        // LIBS.translateX(right_shoe_model, startPointXJav + JtranslateX);
 
 
 
@@ -1069,7 +1114,9 @@ function main() {
         LIBS.rotateX(mata1, JrotateX);
         LIBS.rotateY(mata1, JrotateY);
         LIBS.rotateZ(mata1, JrotateZ);
-        LIBS.translateX(mata1, startPointXJav + JtranslateX);
+
+
+        // LIBS.translateX(mata1, startPointXJav + JtranslateX);
 
 
 
@@ -1077,18 +1124,26 @@ function main() {
         LIBS.rotateX(mata2, JrotateX);
         LIBS.rotateY(mata2, JrotateY);
         LIBS.rotateZ(mata2, -JrotateZ);
-        LIBS.translateX(mata2, startPointXJav + JtranslateX);
+
+
+        // LIBS.translateX(mata2, startPointXJav + JtranslateX);
+        
         mata3 = LIBS.get_I4();
         LIBS.rotateX(mata3, JrotateX);
         LIBS.rotateY(mata3, JrotateY);
         LIBS.rotateZ(mata3, JrotateZ);
-        LIBS.translateX(mata3, startPointXJav + JtranslateX);
+        
+        // LIBS.translateX(mata3, startPointXJav + JtranslateX);
 
         right_hand_model = LIBS.get_I4();
         LIBS.rotateX(right_hand_model, JrotateX);
         LIBS.rotateY(right_hand_model, JrotateY);
         LIBS.rotateZ(right_hand_model, -JrotateZ);
-        LIBS.translateX(right_hand_model, startPointXJav + JtranslateX);
+
+
+        // LIBS.translateX(right_hand_model, startPointXJav + JtranslateX);
+        
+        
         // LIBS.translateY(right_hand_model, JtranslateY);
         // LIBS.translateZ(right_hand_model, JtranslateZ);
         // LIBS.setPosition(right_hand_model,0,0,+pos_z);
@@ -1096,22 +1151,31 @@ function main() {
         LIBS.rotateX(left_leg_model, JrotateX);
         LIBS.rotateY(left_leg_model, JrotateY);
         LIBS.rotateZ(left_leg_model, JrotateZ);
-        LIBS.translateX(left_leg_model, startPointXJav + JtranslateX);
+
+
+        // LIBS.translateX(left_leg_model, startPointXJav + JtranslateX);
+        
+        
         right_leg_model = LIBS.get_I4();
         LIBS.rotateX(right_leg_model, JrotateX);
         LIBS.rotateY(right_leg_model, JrotateY);
         LIBS.rotateZ(right_leg_model, -JrotateZ);
-        LIBS.translateX(right_leg_model, startPointXJav + JtranslateX);
+        
+        // LIBS.translateX(right_leg_model, startPointXJav + JtranslateX);
+        
         left_shoe_model = LIBS.get_I4();
         LIBS.rotateX(left_shoe_model, JrotateX);
         LIBS.rotateY(left_shoe_model, JrotateY);
         LIBS.rotateZ(left_shoe_model, JrotateZ);
-        LIBS.translateX(left_shoe_model, startPointXJav + JtranslateX);
+        
+        // LIBS.translateX(left_shoe_model, startPointXJav + JtranslateX);
+        
         right_shoe_model = LIBS.get_I4();
         LIBS.rotateX(right_shoe_model, JrotateX);
         LIBS.rotateY(right_shoe_model, JrotateY);
         LIBS.rotateZ(right_shoe_model, -JrotateZ);
-        LIBS.translateX(right_shoe_model, startPointXJav + JtranslateX);
+        
+        // LIBS.translateX(right_shoe_model, startPointXJav + JtranslateX);
 
 
 
@@ -1119,7 +1183,8 @@ function main() {
         LIBS.rotateX(mata1, JrotateX);
         LIBS.rotateY(mata1, JrotateY);
         LIBS.rotateZ(mata1, JrotateZ);
-        LIBS.translateX(mata1, startPointXJav + JtranslateX);
+        
+        // LIBS.translateX(mata1, startPointXJav + JtranslateX);
 
 
 
@@ -1127,17 +1192,23 @@ function main() {
         LIBS.rotateX(mata2, JrotateX);
         LIBS.rotateY(mata2, JrotateY);
         LIBS.rotateZ(mata2, -JrotateZ);
-        LIBS.translateX(mata2, startPointXJav + JtranslateX);
+        
+        // LIBS.translateX(mata2, startPointXJav + JtranslateX);
+        
         mata3 = LIBS.get_I4();
         LIBS.rotateX(mata3, JrotateX);
         LIBS.rotateY(mata3, JrotateY);
         LIBS.rotateZ(mata3, JrotateZ);
-        LIBS.translateX(mata3, startPointXJav + JtranslateX);
+        
+        // LIBS.translateX(mata3, startPointXJav + JtranslateX);
+        
         BINTANG_MODEL = LIBS.get_I4();
         LIBS.rotateX(BINTANG_MODEL, JrotateX);
         LIBS.rotateY(BINTANG_MODEL, JrotateY);
         LIBS.rotateZ(BINTANG_MODEL, JrotateZ);
-        LIBS.translateX(BINTANG_MODEL, startPointXJav + JtranslateX);
+
+        // LIBS.translateX(BINTANG_MODEL, startPointXJav + JtranslateX);
+        LIBS.translateX(BINTANG_MODEL, -10);
 
         LIBS.rotateY(head_model, -THETA);
         LIBS.rotateX(head_model, -ALPHA);
@@ -1225,53 +1296,53 @@ function main() {
             }
         }
         if (timesecond >= 5 && timesecond < 8) {
-            LIBS.translateY(head_model, (timesecond - 4)*1.8);
-            LIBS.translateY(body_Model, (timesecond - 4)*1.8);
-            LIBS.translateY(left_leg_model, (timesecond - 4)*1.8);
-            LIBS.translateY(left_shoe_model, (timesecond - 4)*1.8);
-            LIBS.translateY(left_hand_model, (timesecond - 4)*1.8);
-            LIBS.translateY(right_hand_model, (timesecond - 4)*1.8);
-            LIBS.translateY(right_leg_model, (timesecond - 4)*1.8);
-            LIBS.translateY(right_shoe_model, (timesecond - 4)*1.8);
-            LIBS.translateY(BINTANG_MODEL, (timesecond - 4)*1.8);
+            // LIBS.translateY(head_model, (timesecond - 4)*1.8);
+            // LIBS.translateY(body_Model, (timesecond - 4)*1.8);
+            // LIBS.translateY(left_leg_model, (timesecond - 4)*1.8);
+            // LIBS.translateY(left_shoe_model, (timesecond - 4)*1.8);
+            // LIBS.translateY(left_hand_model, (timesecond - 4)*1.8);
+            // LIBS.translateY(right_hand_model, (timesecond - 4)*1.8);
+            // LIBS.translateY(right_leg_model, (timesecond - 4)*1.8);
+            // LIBS.translateY(right_shoe_model, (timesecond - 4)*1.8);
+            // LIBS.translateY(BINTANG_MODEL, (timesecond - 4)*1.8);
 
-            LIBS.scale(body_Model, 1 / ((timesecond - 4) * 3), 1 / ((timesecond - 4) * 3), 1 / ((timesecond - 4) * 3));
-            LIBS.scale(head_model, 1 / ((timesecond - 4) * 3), 1 / ((timesecond - 4) * 3), 1 / ((timesecond - 4) * 3));
-            LIBS.scale(left_leg_model, 1 / ((timesecond - 4) * 3), 1 / ((timesecond - 4) * 3), 1 / ((timesecond - 4) * 3));
-            LIBS.scale(left_hand_model, 1 / ((timesecond - 4) * 3), 1 / ((timesecond - 4) * 3), 1 / ((timesecond - 4) * 3));
-            LIBS.scale(left_shoe_model, 1 / ((timesecond - 4) * 3), 1 / ((timesecond - 4) * 3), 1 / ((timesecond - 4) * 3));
-            LIBS.scale(right_hand_model, 1 / ((timesecond - 4) * 3), 1 / ((timesecond - 4) * 3), 1 / ((timesecond - 4) * 3));
-            LIBS.scale(right_leg_model, 1 / ((timesecond - 4) * 3), 1 / ((timesecond - 4) * 3), 1 / ((timesecond - 4) * 3));
-            LIBS.scale(right_shoe_model, 1 / ((timesecond - 4) * 3), 1 / ((timesecond - 4) * 3), 1 / ((timesecond - 4) * 3));
-            LIBS.scale(BINTANG_MODEL, 1 / ((timesecond - 4) * 3), 1 / ((timesecond - 4) * 3), 1 / ((timesecond - 4) * 3));
+            // LIBS.scale(body_Model, 1 / ((timesecond - 4) * 3), 1 / ((timesecond - 4) * 3), 1 / ((timesecond - 4) * 3));
+            // LIBS.scale(head_model, 1 / ((timesecond - 4) * 3), 1 / ((timesecond - 4) * 3), 1 / ((timesecond - 4) * 3));
+            // LIBS.scale(left_leg_model, 1 / ((timesecond - 4) * 3), 1 / ((timesecond - 4) * 3), 1 / ((timesecond - 4) * 3));
+            // LIBS.scale(left_hand_model, 1 / ((timesecond - 4) * 3), 1 / ((timesecond - 4) * 3), 1 / ((timesecond - 4) * 3));
+            // LIBS.scale(left_shoe_model, 1 / ((timesecond - 4) * 3), 1 / ((timesecond - 4) * 3), 1 / ((timesecond - 4) * 3));
+            // LIBS.scale(right_hand_model, 1 / ((timesecond - 4) * 3), 1 / ((timesecond - 4) * 3), 1 / ((timesecond - 4) * 3));
+            // LIBS.scale(right_leg_model, 1 / ((timesecond - 4) * 3), 1 / ((timesecond - 4) * 3), 1 / ((timesecond - 4) * 3));
+            // LIBS.scale(right_shoe_model, 1 / ((timesecond - 4) * 3), 1 / ((timesecond - 4) * 3), 1 / ((timesecond - 4) * 3));
+            // LIBS.scale(BINTANG_MODEL, 1 / ((timesecond - 4) * 3), 1 / ((timesecond - 4) * 3), 1 / ((timesecond - 4) * 3));
 
         }
         else if (timesecond >= 8) {
-            LIBS.translateY(head_model, 7.2);
-            LIBS.translateY(body_Model, 7.2);
-            LIBS.translateY(left_leg_model, 7.2);
-            LIBS.translateY(left_shoe_model, 7.2);
-            LIBS.translateY(left_hand_model, 7.2);
-            LIBS.translateY(right_hand_model, 7.2);
-            LIBS.translateY(right_leg_model, 7.2);
-            LIBS.translateY(right_shoe_model, 7.2);
-            LIBS.scale(body_Model, 0.02, 0.02, 0.02);
-            LIBS.scale(head_model, 0.02, 0.02, 0.02);
-            LIBS.scale(left_leg_model, 0.02, 0.02, 0.02);
-            LIBS.scale(left_hand_model, 0.02, 0.02, 0.02);
-            LIBS.scale(left_shoe_model, 0.02, 0.02, 0.02);
-            LIBS.scale(right_hand_model, 0.02, 0.02, 0.02);
-            LIBS.scale(right_leg_model, 0.02, 0.02, 0.02);
-            LIBS.scale(right_shoe_model, 0.02, 0.02, 0.02);
-            LIBS.translateX(head_model, 4+(timesecond-8.4)*4);
-            LIBS.translateX(body_Model, 4+(timesecond-8.4)*4);
-            LIBS.translateX(left_leg_model, 4+(timesecond-8.4)*4);
-            LIBS.translateX(left_shoe_model, 4+(timesecond-8.4)*4);
-            LIBS.translateX(left_hand_model, 4+(timesecond-8.4)*4);
-            LIBS.translateX(right_hand_model, 4+(timesecond-8.4)*4);
-            LIBS.translateX(right_leg_model, 4+(timesecond-8.4)*4);
-            LIBS.translateX(right_shoe_model, 4+(timesecond-8.4)*4);
-            LIBS.scale(BINTANG_MODEL, 0);
+            // LIBS.translateY(head_model, 7.2);
+            // LIBS.translateY(body_Model, 7.2);
+            // LIBS.translateY(left_leg_model, 7.2);
+            // LIBS.translateY(left_shoe_model, 7.2);
+            // LIBS.translateY(left_hand_model, 7.2);
+            // LIBS.translateY(right_hand_model, 7.2);
+            // LIBS.translateY(right_leg_model, 7.2);
+            // LIBS.translateY(right_shoe_model, 7.2);
+            // LIBS.scale(body_Model, 0.02, 0.02, 0.02);
+            // LIBS.scale(head_model, 0.02, 0.02, 0.02);
+            // LIBS.scale(left_leg_model, 0.02, 0.02, 0.02);
+            // LIBS.scale(left_hand_model, 0.02, 0.02, 0.02);
+            // LIBS.scale(left_shoe_model, 0.02, 0.02, 0.02);
+            // LIBS.scale(right_hand_model, 0.02, 0.02, 0.02);
+            // LIBS.scale(right_leg_model, 0.02, 0.02, 0.02);
+            // LIBS.scale(right_shoe_model, 0.02, 0.02, 0.02);
+            // LIBS.translateX(head_model, 4+(timesecond-8.4)*4);
+            // LIBS.translateX(body_Model, 4+(timesecond-8.4)*4);
+            // LIBS.translateX(left_leg_model, 4+(timesecond-8.4)*4);
+            // LIBS.translateX(left_shoe_model, 4+(timesecond-8.4)*4);
+            // LIBS.translateX(left_hand_model, 4+(timesecond-8.4)*4);
+            // LIBS.translateX(right_hand_model, 4+(timesecond-8.4)*4);
+            // LIBS.translateX(right_leg_model, 4+(timesecond-8.4)*4);
+            // LIBS.translateX(right_shoe_model, 4+(timesecond-8.4)*4);
+            // LIBS.scale(BINTANG_MODEL, 0);
         }
         LIBS.translateZ(BINTANG_MODEL, 1);
 
@@ -1280,7 +1351,7 @@ function main() {
         // LIBS.rotateAroundAxis(DIAMOND_MODEL_MATRIX, 1 + tanganMuter, axisRotasiAstronot);
 
         LIBS.rotateAroundAxis(BINTANG_MODEL, 1 + (tanganMuter-5), [0, 1, 1]);
-        LIBS.translateX(BINTANG_MODEL, -5)
+        LIBS.translateX(BINTANG_MODEL, 1)
         LIBS.translateY(BINTANG_MODEL, -3)
         object.render(VIEW_MATRIX, PROJECTION_MATRIX);
 
@@ -1300,19 +1371,21 @@ function main() {
         var temp = LIBSSHUU.get_I4();
         //LIBSSHUU.rotateY(temp, 1);
         if (timesecond < 3) {
-            LIBSSHUU.translateX(temp, timesecond * 2);
+            // LIBSSHUU.translateX(temp, timesecond * 2);
         }
         else if(timesecond >= 3 && timesecond < 8) {
-            LIBSSHUU.translateX(temp, 6);
+            // LIBSSHUU.translateX(temp, 6);
         }
         else if (timesecond >= 8) {
-            LIBSSHUU.translateX(temp, 6+(timesecond-8.3)*4);
+            // LIBSSHUU.translateX(temp, 6+(timesecond-8.3)*4);
         }
         // console.log(timesecond);
         LIBSSHUU.translateY(temp, 7);
         SHUU_MATRIX2 = LIBSSHUU.multiply(SHUU_MATRIX2, temp);
         temp = LIBSSHUU.get_I4();
 
+        // LIBSSHUU.rotateY(temp, THETA);
+        // LIBSSHUU.rotateX(temp, ALPHA);
 
 
         UFO.render(VIEW_MATRIX, PROJECTION_MATRIX);
